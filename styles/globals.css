@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: hsl(0, 0%, 98%);
+    --color-elements: hsl(0, 0%, 100%);
+
+    /* --color-primary-main: hsl(26, 100%, 55%);
+    --color-primary-shadow: hsl(26, 85%, 81%);
+    --color-primary-light: hsl(25, 100%, 94%); */
+
+    --color-neutral-light: hsl(223, 64%, 98%);
+
+    --color-text-default: hsl(200, 15%, 8%);
+    --color-text-muted: hsl(219, 9%, 45%);
+    --color-text-light: hsl(220, 14%, 75%);
+    --color-text-inverted: hsl(0, 0%, 100%);
+  }
+
+  .dark {
+    --color-background: hsl(207, 26%, 17%);
+    --color-elements: hsl(209, 23%, 22%);
+    --color-text-default: hsl(0, 0%, 100%);
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html {
+    scrollbar-width: none;
+    background-color: var(--color-background);
+  }
+}

@@ -1,6 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// *
+// *
+// * PRISMA
+// *
+// *
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,32 +12,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+// *
+// *
 // * User and Auth Models
+// *
+// *
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id                String            @id @default(cuid())
+  email             String?           @unique
+  emailVerified     DateTime?
+  image             String?
+  name              String?
+  firstName         String?
+  preferredName     String?
+  lastName          String?
+  middleName        String?
+  preferredPronouns String?
+  jobTitle          String?
+  organization      Organization?     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  organizationId    String?
+  department        Department?       @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+  departmentId      String?
+  createdAt         DateTime          @default(now())
+  phone             String?
+  phoneAlt          String?
+  accounts          Account[]
+  sessions          Session[]
+  assets            Asset[]
+  assetHistory      AssetAssignment[]
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  //@db.Text
-  access_token       String?  //@db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  //@db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? //@db.Text
+  access_token      String? //@db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? //@db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -59,3 +79,115 @@ model VerificationToken {
 }
 
 // *
+// *
+// * Company / Organization related schema
+// *
+// *
+
+model Organization {
+  id    String @id @default(cuid())
+  name  String
+  users User[]
+}
+
+model Department {
+  id        String     @id @default(cuid())
+  name      String
+  code      String
+  divisions Division[]
+  employees User[]
+}
+
+model Division {
+  id           String     @id @default(cuid())
+  name         String
+  code         String
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+}
+
+model Program {
+  id   String @id @default(cuid())
+  name String
+  code String
+}
+
+// *
+// *
+// * Asset Related Schema
+// *
+// *
+
+model Asset {
+  id             String            @id @default(cuid())
+  name           String            @unique
+  description    String
+  imageUrl       String
+  type           String
+  manufacturer   String
+  purchase       AssetPurchase     @relation(fields: [purchaseId], references: [id])
+  purchaseId     String            @unique
+  assignedTo     User              @relation(fields: [assignedToId], references: [id])
+  assignedToId   String            @unique
+  ownerHistory   AssetAssignment[]
+  condition      String
+  conditionNotes String
+  status         String
+}
+
+model AssetAssignment {
+  id         String    @id @default(cuid())
+  asset      Asset     @relation(fields: [assetId], references: [id])
+  assetId    String
+  owner      User      @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  assignedAt DateTime  @default(now())
+  returnedAt DateTime?
+  active     Boolean   @default(true)
+}
+
+model AssetPurchase {
+  id            String   @id @default(cuid())
+  asset         Asset?
+  purchaseDate  DateTime
+  receivedDate  DateTime
+  orderNumber   String
+  purchasePrice Int
+  purchasedFrom String
+}
+
+// *
+// *
+// * Enumerations (For when SQLite is replaced)
+// *
+// *
+
+// enum ConditionStatus {
+//   DAMAGED
+//   VERY_POOR
+//   WORN
+//   AVERAGE
+//   GOOD
+//   EXCELLENT
+//   NEW
+// }
+
+// enum AssetStatus {
+//   RECYCLED
+//   DONATED
+//   ASSIGNED
+//   AVAILABLE
+//   REPAIR
+//   LOST
+//   ORDERED
+// }
+
+// enum AssetType {
+//   LAPTOP
+//   DESKTOP
+//   TABLET
+//   CELL_PHONE
+//   OFFICE_PHONE
+//   SOFTWARE
+//   LICENSE
+// }

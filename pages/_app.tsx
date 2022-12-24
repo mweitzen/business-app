@@ -2,11 +2,14 @@ import "@/styles/globals.css";
 //
 import type { AppType, AppProps } from "next/app";
 //
-import { trpc } from "@/lib/trpc";
+// import { trpc } from "@/lib/trpc";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 //
 import { NextPageWithLayout } from "@/types";
 import DefaultLayout from "@/layouts/default";
+
+const queryClient = new QueryClient();
 
 /*
  *
@@ -31,14 +34,18 @@ const App = (({
 
   return getLayout(
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </SessionProvider>
   );
 }) as AppType;
+
+export default App;
 
 /*
  *
  * tRPC WRAPPER
  *
  */
-export default trpc.withTRPC(App);
+// export default trpc.withTRPC(App);

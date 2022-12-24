@@ -1,4 +1,4 @@
-import { router } from "../trpc";
+import { router } from "../utils";
 import { authRouter } from "./auth";
 import { exampleRouter } from "./example";
 
