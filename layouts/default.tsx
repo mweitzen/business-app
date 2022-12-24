@@ -1,5 +1,9 @@
 import Head from "next/head";
 import { WithChildren } from "@/types";
+//
+import { useThemeContext } from "@/context";
+import { useEffect } from "react";
+import Link from "next/link";
 
 const title = "Asset Assignment";
 const description = "Messing this all up";
@@ -9,6 +13,17 @@ const companyTwitter = "@twitter";
 const userTwitter = "@twitter";
 
 const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
+  const { mode, toggleMode } = useThemeContext();
+  const darkMode = mode === "dark";
+
+  useEffect(() => {
+    if (darkMode) {
+      document.getElementsByTagName("html")[0].classList.add("dark");
+    } else {
+      document.getElementsByTagName("html")[0].classList.remove("dark");
+    }
+  }, [mode]);
+
   return (
     <>
       <Head>
@@ -37,7 +52,19 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={logo} />
       </Head>
-      <main className="">{children}</main>
+
+      <header className="flex w-full justify-between bg-element py-4 px-8 text-main">
+        <Link href="/" className="font-bold">
+          Home
+        </Link>
+        <button onClick={toggleMode} className="font-bold">
+          Dark
+        </button>
+      </header>
+
+      <main className="min-h-screen bg-default py-4 px-8 text-main">
+        {children}
+      </main>
     </>
   );
 };

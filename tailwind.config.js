@@ -12,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-family-default)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-family-base)", ...defaultTheme.fontFamily.sans],
       },
       backgroundColor: {
         default: "var(--color-background)",
