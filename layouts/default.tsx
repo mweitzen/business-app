@@ -62,9 +62,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         </button>
       </header>
 
-      <main className="min-h-screen bg-default py-4 px-8 text-main">
-        {children}
-      </main>
+      <main className="bg-default py-4 px-8 text-main">{children}</main>
     </>
   );
 };

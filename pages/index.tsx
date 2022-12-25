@@ -12,6 +12,10 @@ const HomePage: NextPageWithLayout = () => {
             text: "Assets List",
           },
           {
+            href: "/assets/create",
+            text: "Create Asset",
+          },
+          {
             href: "/assets/assignment-history",
             text: "Assignment History",
           },

@@ -19,7 +19,7 @@ import DefaultLayout from "@/layouts/default";
 const queryClient = new QueryClient();
 
 const inter = Inter({
-  weight: ["400", "500", "700"],
+  weight: ["100", "200", "300", "400", "500", "700"],
   variable: "--font-family-base",
 });
 

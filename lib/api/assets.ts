@@ -17,3 +17,10 @@ export async function updateAsset(id: string, data: User) {
 export async function getAsset(id: string) {
   // get user by id
 }
+
+export async function getAllAssets() {
+  // get all assets
+  const data = await prisma.asset.findMany();
+
+  return data;
+}

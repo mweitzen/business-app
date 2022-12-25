@@ -20,7 +20,7 @@ datasource db {
 
 model User {
   id                String            @id @default(cuid())
-  email             String?           @unique
+  email             String            @unique
   emailVerified     DateTime?
   image             String?
   name              String?
@@ -121,18 +121,19 @@ model Program {
 model Asset {
   id             String            @id @default(cuid())
   name           String            @unique
-  description    String
-  imageUrl       String
+  description    String?
+  imageUrl       String?
   type           String
-  manufacturer   String
+  brand          String
+  serialNumber   String
   purchase       AssetPurchase     @relation(fields: [purchaseId], references: [id])
   purchaseId     String            @unique
-  assignedTo     User              @relation(fields: [assignedToId], references: [id])
-  assignedToId   String            @unique
+  assignedTo     User?             @relation(fields: [assignedToId], references: [id])
+  assignedToId   String?           @unique
   ownerHistory   AssetAssignment[]
-  condition      String
-  conditionNotes String
-  status         String
+  condition      String            @default("new")
+  conditionNotes String?
+  status         String            @default("avaialable")
 }
 
 model AssetAssignment {
