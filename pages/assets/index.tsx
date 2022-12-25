@@ -1,8 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 const AssetsListPage = () => {
+  const router = useRouter();
+
   // const [filter,]
 
   const {
@@ -11,9 +14,12 @@ const AssetsListPage = () => {
     isLoading,
   } = useQuery({
     queryKey: ["assets"],
-    queryFn: async () => await axios.get("/api/assets"),
+    queryFn: async () => {
+      const { data } = await axios.get("/api/assets");
+      return data;
+    },
   });
-  // return console.log(assets);
+
   return (
     <div>
       <header className="flex justify-between">
@@ -41,11 +47,14 @@ const AssetsListPage = () => {
             </tr>
           ) : assets?.length > 0 ? (
             assets?.map((asset) => (
-              <tr className="odd:bg-slate-50">
-                <td>a</td>
-                <td>b</td>
-                <td>c</td>
-                <td>d</td>
+              <tr
+                className="odd:bg-slate-50"
+                onClick={() => router.push(`/assets/${asset.id}`)}
+              >
+                <td>{asset.name}</td>
+                <td>{asset.type}</td>
+                <td>{asset.assignedTo || "-"}</td>
+                <td>{asset.status}</td>
               </tr>
             ))
           ) : (

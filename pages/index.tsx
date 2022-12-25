@@ -8,19 +8,19 @@ const HomePage: NextPageWithLayout = () => {
       <div className="grid gap-4">
         {[
           {
-            href: "/assets",
-            text: "Assets List",
-          },
-          {
             href: "/assets/create",
             text: "Create Asset",
+          },
+          {
+            href: "/assets",
+            text: "Assets List",
           },
           {
             href: "/assets/assignment-history",
             text: "Assignment History",
           },
           {
-            href: "/assets/test",
+            href: "/assets/clc2u9p2500009kj30nftk70m",
             text: "Asset Detail",
           },
           {

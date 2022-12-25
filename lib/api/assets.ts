@@ -32,8 +32,15 @@ export async function updateAsset(id: string, data: User) {
   // create user with id and new data
 }
 
-export async function getAsset(id: string) {
+export async function getAsset(assetId: string) {
   // get user by id
+  const data = await prisma.asset.findUnique({
+    where: {
+      id: assetId,
+    },
+  });
+
+  return data;
 }
 
 export async function getAllAssets() {

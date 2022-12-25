@@ -62,14 +62,12 @@ const CreateAssetPage = () => {
     values: FormikValues,
     formikHelpers: FormikHelpers<FormikValues>
   ) {
-    console.log(values);
-    console.log(formikHelpers);
     formikHelpers.setSubmitting(false);
 
     const { data } = await axios.post("/api/assets/create", {
       name: "seafood",
     });
-    console.log(data);
+
     return data;
   }
 
@@ -78,102 +76,118 @@ const CreateAssetPage = () => {
       {/* header */}
       <h1 className="text-2xl">Create Asset | Stage {formStage}</h1>
 
-      {/* form */}
-      <Formik
-        initialValues={initialValues}
-        validationSchema={toFormikValidationSchema(CreateAssetSchema)}
-        onSubmit={handleFormSubmit}
-      >
-        {({ isSubmitting, errors }) => (
-          <Form>
-            {/* step 1 */}
-            <section className={classNames(formStage !== 1 ? "hidden" : "")}>
-              <h2 className="mb-2 text-xl font-extralight">Asset Details</h2>
-              <div className="grid gap-y-2">
-                <TextInput
-                  label="Asset Nickname"
-                  name="name"
-                  placeholder="Use something that easily identifies"
-                />
-                <SelectInput label="Asset Type" name="assetType">
-                  {ASSET_TYPES.map((type) => (
-                    <option key={type} value={type}>
-                      {type.toLowerCase().replace("_", " ")}
-                    </option>
-                  ))}
-                </SelectInput>
-                <TextInput
-                  label="Brand or Manufacturer"
-                  name="brand"
-                  placeholder="Company that produces asset"
-                />
-                <TextInput
-                  label="Serial Number"
-                  name="serialNumber"
-                  placeholder="The serial number associated with asset"
-                />
-              </div>
-            </section>
+      <div className="rounded-lg bg-element p-4 shadow-md">
+        {/* form */}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={toFormikValidationSchema(CreateAssetSchema)}
+          onSubmit={handleFormSubmit}
+        >
+          {({ isSubmitting, errors }) => (
+            <Form>
+              {/* step 1 */}
+              <section className={classNames(formStage !== 1 ? "hidden" : "")}>
+                <h2 className="mb-2 text-xl font-extralight">Asset Details</h2>
 
-            {/* step 2 */}
-            <section className={classNames(formStage !== 2 ? "hidden" : "")}>
-              <h2 className="mb-2 text-xl font-extralight">Step 2</h2>
-              <span className="grid gap-y-2">
-                <label>Add Purchase Details</label>
-                <TextAreaInput
-                  label="Description (optional)"
-                  name="description"
-                  placeholder="Add a brief description that might help you identify this asset later"
-                />
-              </span>
-            </section>
+                <div className="grid gap-y-2">
+                  <TextInput
+                    label="Asset Nickname"
+                    name="name"
+                    placeholder="Use something that easily identifies"
+                  />
 
-            {/* step 3 */}
-            <section className={classNames(formStage !== 3 ? "hidden" : "")}>
-              <h2 className="mb-2 text-xl font-extralight">Step 3</h2>
-              <span className="grid gap-y-2">
-                <label>Assign to User (optional)</label>
-              </span>
-            </section>
+                  <SelectInput
+                    label="Asset Type"
+                    name="assetType"
+                    defaultOption="Select an asset type"
+                  >
+                    {ASSET_TYPES.map((type) => (
+                      <option key={type} value={type}>
+                        {type.toLowerCase().replace("_", " ")}
+                      </option>
+                    ))}
+                  </SelectInput>
 
-            {/* step 4 */}
-            <section className={classNames(formStage !== 4 ? "hidden" : "")}>
-              <h2 className="mb-2 text-xl font-extralight">Review & Confirm</h2>
+                  <TextInput
+                    label="Brand or Manufacturer"
+                    name="brand"
+                    placeholder="Company that produces asset"
+                  />
 
-              <button
-                type="submit"
-                disabled={
-                  isSubmitting ||
-                  formStage !== 4 ||
-                  Object.keys(errors).length !== 0
-                }
-                className="bg-green-300 disabled:bg-blue-100"
-              >
-                Confirm
-              </button>
-            </section>
-          </Form>
-        )}
-      </Formik>
+                  <TextInput
+                    label="Serial Number"
+                    name="serialNumber"
+                    placeholder="The serial number associated with asset"
+                  />
+                </div>
+              </section>
 
-      {/* form stage actions */}
-      <div className="flex justify-between">
-        <span>
-          <button
-            onClick={decreaseFormStage}
-            className={classNames(formStage === 1 ? "hidden" : "")}
-          >
-            Back
-          </button>
-        </span>
-        <span>
-          <button
-            onClick={increaseFormStage}
-            className={classNames(formStage === 4 ? "hidden" : "")}
-          >
-            Next
-          </button>
-        </span>
+              {/* step 2 */}
+              <section className={classNames(formStage !== 2 ? "hidden" : "")}>
+                <h2 className="mb-2 text-xl font-extralight">Step 2</h2>
+                <span className="grid gap-y-2">
+                  <label>Add Purchase Details</label>
+
+                  <TextAreaInput
+                    label="Description (optional)"
+                    name="description"
+                    placeholder="Add a brief description that might help you identify this asset later"
+                  />
+                </span>
+              </section>
+
+              {/* step 3 */}
+              <section className={classNames(formStage !== 3 ? "hidden" : "")}>
+                <h2 className="mb-2 text-xl font-extralight">Step 3</h2>
+                <span className="grid gap-y-2">
+                  <label>Assign to User (optional)</label>
+                </span>
+              </section>
+
+              {/* step 4 */}
+              <section className={classNames(formStage !== 4 ? "hidden" : "")}>
+                <h2 className="mb-2 text-xl font-extralight">
+                  Review & Confirm
+                </h2>
+                <button
+                  type="submit"
+                  disabled={
+                    isSubmitting ||
+                    formStage !== 4 ||
+                    Object.keys(errors).length !== 0
+                  }
+                  className="bg-green-300 disabled:bg-blue-100"
+                >
+                  Confirm
+                </button>
+              </section>
+            </Form>
+          )}
+        </Formik>
+
+        {/* form stage actions */}
+        <div className="mt-4 flex justify-between">
+          <span>
+            <button
+              onClick={decreaseFormStage}
+              className={classNames(
+                formStage === 1 ? "hidden" : "rounded-md bg-green-300 py-2 px-8"
+              )}
+            >
+              Back
+            </button>
+          </span>
+          <span>
+            <button
+              onClick={increaseFormStage}
+              className={classNames(
+                formStage === 4 ? "hidden" : "rounded-md bg-green-300 py-2 px-8"
+              )}
+            >
+              Next
+            </button>
+          </span>
+        </div>
       </div>
     </div>
   );
