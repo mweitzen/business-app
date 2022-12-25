@@ -48,6 +48,7 @@ const AssetsListPage = () => {
           ) : assets?.length > 0 ? (
             assets?.map((asset) => (
               <tr
+                key={asset.id}
                 className="odd:bg-slate-50"
                 onClick={() => router.push(`/assets/${asset.id}`)}
               >

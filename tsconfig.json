@@ -26,6 +26,12 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "prisma/seed.mjs",
+    "prisma/seed-data.ts"
+  ],
   "exclude": ["node_modules"]
 }

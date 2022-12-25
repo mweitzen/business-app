@@ -53,7 +53,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         <meta name="twitter:image" content={logo} />
       </Head>
 
-      <header className="flex w-full justify-between bg-element py-4 px-8 text-main">
+      <header className="flex w-full justify-between bg-element py-4 px-8 text-main shadow-lg ">
         <Link href="/" className="font-bold">
           Home
         </Link>
