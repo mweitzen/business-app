@@ -9,6 +9,7 @@ import { Formik, Form, FormikHelpers, FormikValues } from "formik";
 import TextInput from "@/components/form/input-text";
 import SelectInput from "@/components/form/input-select";
 import TextAreaInput from "@/components/form/input-textarea";
+import axios from "axios";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -43,6 +44,7 @@ const CreateAssetPage = () => {
     assetType: "",
     brand: "",
     serialNumber: "",
+    description: "",
   };
 
   function increaseFormStage() {
@@ -56,13 +58,19 @@ const CreateAssetPage = () => {
     });
   }
 
-  function handleFormSubmit(
+  async function handleFormSubmit(
     values: FormikValues,
     formikHelpers: FormikHelpers<FormikValues>
-  ): void | Promise<any> {
+  ) {
     console.log(values);
     console.log(formikHelpers);
     formikHelpers.setSubmitting(false);
+
+    const { data } = await axios.post("/api/assets/create", {
+      name: "seafood",
+    });
+    console.log(data);
+    return data;
   }
 
   return (

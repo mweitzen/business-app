@@ -148,10 +148,10 @@ model AssetAssignment {
 }
 
 model AssetPurchase {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   asset         Asset?
   purchaseDate  DateTime
-  receivedDate  DateTime
+  receivedDate  DateTime?
   orderNumber   String
   purchasePrice Int
   purchasedFrom String

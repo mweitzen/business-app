@@ -7,7 +7,7 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   const allowedMethods = ["POST", "GET"];
 
   if (!allowedMethods.includes(method!)) {
-    return res.status(405).json({});
+    return res.status(405).json({ error: "Error" });
   }
 
   if (method === "POST") {
