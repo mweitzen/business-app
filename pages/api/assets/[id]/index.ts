@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { getAsset, deleteAsset, updateAsset } from "@/lib/api/assets";
+import prisma from "@/lib/prisma";
 
 /*
  *
@@ -26,7 +26,14 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
    * GET REQUEST
    */
   if (method === "GET") {
-    const asset = await getAsset(assetId as string);
+    const asset = await prisma.asset.findUnique({
+      where: {
+        id: assetId as string,
+      },
+      include: {
+        assignedTo: true,
+      },
+    });
 
     if (!asset) {
       return res.status(404).json("Asset does not exist");

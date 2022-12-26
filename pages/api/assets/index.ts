@@ -1,25 +1,62 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { createAsset, getAllAssets } from "@/lib/api/assets";
+import prisma from "@/lib/prisma";
 
+/*
+ *
+ * ASSETS [CRUD] API
+ *
+ */
 const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, method } = req;
 
+  /*
+   * REQUEST GUARDS
+   */
   const allowedMethods = ["POST", "GET"];
 
   if (!allowedMethods.includes(method!)) {
     return res.status(405).json({ error: "Error" });
   }
 
+  /*
+   * POST | CREATE ASSET
+   */
   if (method === "POST") {
     // create user
-    const data = await createAsset({});
+    const data = await prisma.asset.create({
+      data: {
+        name: "",
+        type: "LAPTOP",
+        brand: "",
+        serialNumber: "",
+        purchase: {
+          create: {
+            purchaseDate: new Date(),
+            purchasedFrom: "amazon.com",
+            purchasePrice: 300,
+            orderNumber: "0123-ffsc-3fd",
+          },
+        },
+      },
+    });
     return res.status(200).json(data);
   }
 
+  /*
+   * GET | RETRIEVE ALL ASSETS
+   */
   if (method === "GET") {
     // get assets
     // implement filter, search, orderBy
-    const data = await getAllAssets();
+    const data = await prisma.asset.findMany({
+      include: {
+        assignedTo: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
     return res.status(200).json(data);
   }
 

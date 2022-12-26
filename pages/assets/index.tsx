@@ -49,12 +49,12 @@ const AssetsListPage = () => {
             assets?.map((asset) => (
               <tr
                 key={asset.id}
-                className="odd:bg-slate-50"
+                className="odd:bg-slate-50 hover:cursor-pointer hover:bg-slate-100"
                 onClick={() => router.push(`/assets/${asset.id}`)}
               >
                 <td>{asset.name}</td>
                 <td>{asset.type}</td>
-                <td>{asset.assignedTo || "-"}</td>
+                <td>{asset.assignedTo ? asset.assignedTo.name : "-"}</td>
                 <td>{asset.status}</td>
               </tr>
             ))

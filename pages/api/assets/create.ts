@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { createAsset } from "@/lib/api/assets";
+import prisma from "@/lib/prisma";
 
 /*
  *
@@ -19,7 +19,22 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   /*
    * CREATE USER
    */
-  const data = await createAsset(body);
+  const data = await prisma.asset.create({
+    data: {
+      name: "",
+      type: "LAPTOP",
+      brand: "",
+      serialNumber: "",
+      purchase: {
+        create: {
+          purchaseDate: new Date(),
+          purchasedFrom: "amazon.com",
+          purchasePrice: 300,
+          orderNumber: "0123-ffsc-3fd",
+        },
+      },
+    },
+  });
 
   return res.status(200).json(data);
 };
