@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NextPageWithLayout } from "@/types";
+import axios from "axios";
 
 const HomePage: NextPageWithLayout = () => {
   return (
@@ -40,6 +41,22 @@ const HomePage: NextPageWithLayout = () => {
             {link.text}
           </Link>
         ))}
+        <button
+          onClick={async () => {
+            try {
+              const { data } = await axios.post(
+                "/api/assets/clc34ych200009kyrkpp8w5c3/unassign"
+              );
+              console.log(data);
+
+              return data;
+            } catch ({ response }) {
+              console.log((response as any).data);
+            }
+          }}
+        >
+          Test
+        </button>
       </div>
     </>
   );

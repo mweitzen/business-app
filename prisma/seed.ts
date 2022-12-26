@@ -4,14 +4,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const newUsers = await users.map(async (user) => {
+  const newUsers = users.map(async (user) => {
     const data = await prisma.user.create({
       data: {
         name: "",
         email: "",
       },
     });
-    return;
+    return data;
   });
 
   assets.forEach(async (asset) => {

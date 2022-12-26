@@ -4,7 +4,7 @@ export type User = {};
 
 export async function createAsset(user: User) {
   // create user with user data
-  const data = await prisma.asset.create({
+  const result = await prisma.asset.create({
     data: {
       name: "",
       type: "LAPTOP",
@@ -21,7 +21,7 @@ export async function createAsset(user: User) {
     },
   });
 
-  return data;
+  return result;
 }
 
 export async function deleteAsset(id: string) {
@@ -30,22 +30,30 @@ export async function deleteAsset(id: string) {
 
 export async function updateAsset(id: string, data: User) {
   // create user with id and new data
+  const result = await prisma.asset.update({
+    where: {
+      id,
+    },
+    data,
+  });
+
+  return result;
 }
 
 export async function getAsset(assetId: string) {
   // get user by id
-  const data = await prisma.asset.findUnique({
+  const result = await prisma.asset.findUnique({
     where: {
       id: assetId,
     },
   });
 
-  return data;
+  return result;
 }
 
 export async function getAllAssets() {
   // get all assets
-  const data = await prisma.asset.findMany();
+  const result = await prisma.asset.findMany();
 
-  return data;
+  return result;
 }

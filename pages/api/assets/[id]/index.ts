@@ -17,6 +17,9 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   if (method === "GET") {
     const asset = await getAsset(assetId as string);
 
+    if (!asset) {
+      return res.status(404).json("Asset does not exist");
+    }
     return res.status(200).json(asset);
   }
 };
