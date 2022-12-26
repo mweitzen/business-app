@@ -1,14 +1,24 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { createAsset, getAllAssets } from "@/lib/api/assets";
+import { createAsset } from "@/lib/api/assets";
 
+/*
+ *
+ * CREATE NEW ASSET HANDLER
+ *
+ */
 const assets = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { query, method, body } = req;
+  const { method, body } = req;
 
+  /*
+   * REQUEST GUARDS
+   */
   if (method !== "POST") {
     return res.status(405).json({ error: "error" });
   }
 
-  //   create user
+  /*
+   * CREATE USER
+   */
   const data = await createAsset(body);
 
   return res.status(200).json(data);

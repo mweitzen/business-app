@@ -1,19 +1,25 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-//
+
 import prisma from "@/lib/prisma";
 
+/*
+ *
+ * ASSIGN ASSET TO USER HANDLER
+ *
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, method, body } = req;
 
   const assetId = query.id as string;
   const { userId } = body;
 
-  // POST only
+  /*
+   * REQUEST GUARDS
+   */
   if (method !== "POST") {
     return res.status(405).json({ error: "Error" });
   }
 
-  // must provide user id in body
   if (!userId) {
     return res
       .status(400)
@@ -22,7 +28,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
   }
 
-  // retrieve asset, make sure it exists, and is available
+  /*
+   * GET ASSET
+   */
   const asset = await prisma.asset.findUnique({
     where: {
       id: assetId,
@@ -41,7 +49,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
   }
 
-  // retrieve the user, make sure they exist
+  /*
+   * GET USER
+   */
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -52,7 +62,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404).json("User does not exist");
   }
 
-  // everything exists and asset available, assign asset to user
+  /*
+   * TRANSACTION | UPDATE ASSET + CREATE ASSET ASSIGNMENT
+   */
   const [_, assetAssignment] = await prisma.$transaction([
     prisma.asset.update({
       where: {

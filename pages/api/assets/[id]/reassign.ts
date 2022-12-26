@@ -1,18 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 
+/*
+ *
+ * RE-ASSIGN ASSET TO NEW USER HANDLER
+ *
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, method, body } = req;
 
   const assetId = query.id as string;
   const { userId, condition } = body;
 
-  // POST only
+  /*
+   * REQUEST GUARDS
+   */
   if (method !== "POST") {
     return res.status(405).json("This endpoint only accepts POST requests");
   }
 
-  // must provide user id in body
   if (!userId) {
     return res
       .status(400)
@@ -21,7 +27,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
   }
 
-  // retrieve asset, make sure it exists, and is available
+  /*
+   * GET ASSET
+   */
   const asset = await prisma.asset.findUnique({
     where: {
       id: assetId,
@@ -40,7 +48,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       );
   }
 
-  // retrieve the user, make sure they exist
+  /*
+   * GET USER
+   */
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -51,7 +61,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404).json("User does not exist");
   }
 
-  // retrieve the original asset assignment
+  /*
+   * GET ORIGINAL ASSET ASSIGNMENT
+   */
   const originalAssignment = await prisma.assetAssignment.findFirst({
     where: {
       assetId: assetId,
@@ -63,7 +75,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404).json("Cannot find the original asset assignment");
   }
 
-  // everything exists and asset is ready to transfer
+  /*
+   * TRANSACTION | UPDATE ASSET/ASSIGNMENT + CREATE NEW ASSIGNMENT
+   */
   const [, , assetAssignment] = await prisma.$transaction([
     // inactivate the old asset assignment and add unassignedAt as today
     prisma.assetAssignment.update({
