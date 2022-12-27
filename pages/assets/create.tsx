@@ -6,9 +6,9 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 //
 import { Formik, Form, FormikHelpers, FormikValues } from "formik";
 //
-import TextInput from "@/components/form/input-text";
-import SelectInput from "@/components/form/input-select";
-import TextAreaInput from "@/components/form/input-textarea";
+import TextInput from "@/components/input-text";
+import SelectInput from "@/components/input-select";
+import TextAreaInput from "@/components/input-textarea";
 import axios from "axios";
 
 const ASSET_TYPES = [

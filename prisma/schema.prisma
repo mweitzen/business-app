@@ -129,7 +129,7 @@ model Asset {
   purchase       AssetPurchase     @relation(fields: [purchaseId], references: [id])
   purchaseId     String            @unique
   assignedTo     User?             @relation(fields: [assignedToId], references: [id])
-  assignedToId   String?           @unique
+  assignedToId   String?
   ownerHistory   AssetAssignment[]
   condition      String            @default("new")
   conditionNotes String?

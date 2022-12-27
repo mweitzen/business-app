@@ -18,6 +18,7 @@ const AssetsListPage = () => {
       const { data } = await axios.get("/api/assets");
       return data;
     },
+    refetchOnWindowFocus: false,
   });
 
   return (
@@ -46,7 +47,7 @@ const AssetsListPage = () => {
               <td colSpan={5}>Loading</td>
             </tr>
           ) : assets?.length > 0 ? (
-            assets?.map((asset) => (
+            assets?.map((asset: any) => (
               <tr
                 key={asset.id}
                 className="odd:bg-slate-50 hover:cursor-pointer hover:bg-slate-100"
