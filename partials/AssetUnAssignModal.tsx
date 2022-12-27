@@ -84,9 +84,8 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
         {/* stage 3 | pick user */}
         {displayStep === 3 ? (
           <div>
-            <h3>Step 3 | Pick User</h3>
-            <p>user dropdown</p>
-            <p>user quick details</p>
+            <h3>Step 3 | Confirm</h3>
+            <p>Are you sure you want to unassign this asset?</p>
             <button
               className="mx-auto rounded-lg bg-green-300 p-4"
               onClick={async () => {

@@ -16,7 +16,7 @@ const ModalBase = ({ show, handleClose, children }: ModalProps) => {
         </Transition.Child>
         <div className="fixed inset-0 grid place-content-center">
           <Transition.Child>
-            <Dialog.Panel className="rounded-lg bg-element shadow-lg">
+            <Dialog.Panel className="rounded-lg bg-element p-8 shadow-lg">
               {children}
             </Dialog.Panel>
           </Transition.Child>
