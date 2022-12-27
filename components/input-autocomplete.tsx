@@ -27,7 +27,20 @@ const AutocompleteInput = ({
 
   return (
     <div className="w-72">
-      <Combobox value={selected} onChange={setSelected}>
+      <Combobox
+        value={selected}
+        onChange={setSelected}
+        onFocus={() => {
+          if (selected.id === 0) {
+            setSelected({ id: -1, name: "" });
+          }
+        }}
+        onBlur={() => {
+          if (selected.id === -1) {
+            setSelected({ id: 0, name: placeholder });
+          }
+        }}
+      >
         <div className="relative mt-1">
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input

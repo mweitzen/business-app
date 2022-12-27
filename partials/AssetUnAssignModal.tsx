@@ -1,6 +1,7 @@
-import ModalBase from "@/components/modal";
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
+//
+import ModalBase from "@/components/modal";
 
 const AssetUnAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -10,7 +11,6 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
   const [conditionNotes, setConditionNotes] = useState<string>(
     asset.conditionNotes
   );
-  const [userId, setUserId] = useState<string>();
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -18,7 +18,6 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
     setAssetConfirmed(false);
     setCondition("");
     setConditionNotes("");
-    setUserId("");
   }
 
   return (

@@ -6,10 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   const newUsers = users.map(async (user) => {
     const data = await prisma.user.create({
-      data: {
-        name: "",
-        email: "",
-      },
+      data: user,
     });
     return data;
   });

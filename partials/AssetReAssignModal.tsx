@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+//
 import ModalBase from "@/components/modal";
-import AutocompleteInput from "@/components/input-autocomplete";
+import SelectUser from "@/components/select-user";
 
 const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -11,7 +12,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const [conditionNotes, setConditionNotes] = useState<string>(
     asset.conditionNotes
   );
-  const [userId, setUserId] = useState<string>();
+  const [user, setUser] = useState<{ id: string; name: string } | null>();
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -19,7 +20,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
     setAssetConfirmed(false);
     setCondition("");
     setConditionNotes("");
-    setUserId("");
+    setUser(null);
   }
 
   return (
@@ -87,16 +88,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
           <div>
             <h3>Step 3 | Pick User</h3>
             <p>user dropdown</p>
-            <AutocompleteInput
-              options={[
-                { id: 1, name: "Wade Cooper" },
-                { id: 2, name: "Arlene Mccoy" },
-                { id: 3, name: "Devon Webb" },
-                { id: 4, name: "Tom Cook" },
-                { id: 5, name: "Tanya Fox" },
-                { id: 6, name: "Hellen Schmidt" },
-              ]}
-            />
+            <SelectUser user={user} setUser={setUser} />
             <p>user quick details</p>
             <button
               className="mx-auto rounded-lg bg-green-300 p-4"
