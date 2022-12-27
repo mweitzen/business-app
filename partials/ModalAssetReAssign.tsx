@@ -4,7 +4,7 @@ import axios from "axios";
 import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
 
-const AssetAssignModal = ({ asset }: { asset: any }) => {
+const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
   const [displayStep, setDisplayStep] = useState<number>(1);
   const [assetConfirmed, setAssetConfirmed] = useState(false);
@@ -12,7 +12,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
   const [conditionNotes, setConditionNotes] = useState<string>(
     asset.conditionNotes
   );
-  const [user, setUser] = useState<{ id: string; name: string } | null>(null);
+  const [user, setUser] = useState<{ id: string; name: string } | null>();
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -29,7 +29,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
         className="mx-auto rounded-lg bg-green-300 p-4"
         onClick={handleClose}
       >
-        Assign
+        Re-Assign
       </button>
 
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
@@ -39,6 +39,8 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
             <h3>Step 1 | Confirm Asset</h3>
             <p>Serial Number</p>
             <p>{asset.serialNumber}</p>
+            <p>Currently Assigned To</p>
+            <p>{asset.assignedTo.name}</p>
             <p>
               Before you assign this asset, confirm this is the correct serial
               number.
@@ -58,8 +60,10 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
         {displayStep === 2 ? (
           <div>
             <h3>Step 2 | Confirm Condition</h3>
-            <p>Condition</p>
+            <p>Last Known Condition</p>
             <p>{condition}</p>
+            <p>Has the condition changed?</p>
+            <p>Change condition</p>
             <p>Condition Notes</p>
             <textarea
               rows={3}
@@ -90,14 +94,14 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
               className="mx-auto rounded-lg bg-green-300 p-4"
               onClick={async () => {
                 const { data } = await axios.post(
-                  `/api/assets/${asset.id}/assign`,
+                  `/api/assets/${asset.id}/reassign`,
                   {
-                    userId: "clc5b1ho600009keho34goxwt",
+                    userId: "clc5o0n5o00019kh2y1khup60",
                   }
                 );
               }}
             >
-              Assign
+              Re-Assign
             </button>
           </div>
         ) : null}
@@ -106,4 +110,4 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
   );
 };
 
-export default AssetAssignModal;
+export default AssetReAssignModal;

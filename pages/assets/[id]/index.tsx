@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
-import AssetAssignModal from "partials/AssetAssignModal";
-import AssetReAssignModal from "partials/AssetReAssignModal";
-import AssetUnassignModal from "partials/AssetUnAssignModal";
+import AssetAssignModal from "partials/ModalAssetAssign";
+import AssetReAssignModal from "partials/ModalAssetReAssign";
+import AssetUnassignModal from "partials/ModalAssetUnAssign";
 
 const AssetDetailPage = () => {
   const {
@@ -17,7 +17,16 @@ const AssetDetailPage = () => {
       return data;
     },
     refetchOnWindowFocus: false,
+    retry: false,
   });
+
+  if (fetchStatus === "idle" && !asset)
+    return (
+      <div className="text-center">
+        <h1>Error Boundary</h1>
+        <p>Asset does not exist</p>
+      </div>
+    );
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import { WithChildren } from "@/types";
 import { useField } from "formik";
+import InputErrorText from "./input-error-text";
 
 export interface ISelectInput extends WithChildren {
   label: string;
@@ -18,7 +19,7 @@ const SelectInput: React.FC<ISelectInput> = ({
   });
 
   return (
-    <>
+    <div className="grid gap-y-1">
       <label htmlFor={name}>{label}</label>
       <select
         {...field}
@@ -27,10 +28,8 @@ const SelectInput: React.FC<ISelectInput> = ({
         <option value="">{defaultOption}</option>
         {children}
       </select>
-      {meta.touched && meta.error ? (
-        <span className="text-xs text-red-500">* {meta.error}</span>
-      ) : null}
-    </>
+      <InputErrorText meta={meta} />
+    </div>
   );
 };
 

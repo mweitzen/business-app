@@ -16,12 +16,8 @@ const HomePage: NextPageWithLayout = () => {
             text: "Assets List",
           },
           {
-            href: "/assets/assignment-history",
+            href: "/assets/history",
             text: "Assignment History",
-          },
-          {
-            href: "/assets/clc34ych200009kyrkpp8w5c3",
-            text: "Asset Detail",
           },
           {
             href: "/users",

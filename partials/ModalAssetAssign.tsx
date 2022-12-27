@@ -4,7 +4,7 @@ import axios from "axios";
 import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
 
-const AssetReAssignModal = ({ asset }: { asset: any }) => {
+const AssetAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
   const [displayStep, setDisplayStep] = useState<number>(1);
   const [assetConfirmed, setAssetConfirmed] = useState(false);
@@ -12,7 +12,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const [conditionNotes, setConditionNotes] = useState<string>(
     asset.conditionNotes
   );
-  const [user, setUser] = useState<{ id: string; name: string } | null>();
+  const [user, setUser] = useState<{ id: string; name: string } | null>(null);
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -29,23 +29,22 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
         className="mx-auto rounded-lg bg-green-300 p-4"
         onClick={handleClose}
       >
-        Re-Assign
+        Assign
       </button>
 
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
         {/* stage 1 | confirm asset */}
         {displayStep === 1 && !assetConfirmed ? (
-          <div>
-            <h3>Step 1 | Confirm Asset</h3>
+          <div className="text-center">
+            <h3 className="text-xl font-extralight">Step 1 | Confirm Asset</h3>
             <p>Serial Number</p>
             <p>{asset.serialNumber}</p>
-            <p>Currently Assigned To</p>
-            <p>{asset.assignedTo.name}</p>
             <p>
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
             <button
+              className="mx-auto rounded-lg bg-green-300 p-4"
               onClick={() => {
                 setAssetConfirmed(true);
                 setDisplayStep(2);
@@ -58,22 +57,26 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
 
         {/* stage 2 | confirm condition */}
         {displayStep === 2 ? (
-          <div>
-            <h3>Step 2 | Confirm Condition</h3>
-            <p>Last Known Condition</p>
+          <div className="text-center">
+            <h3 className="text-xl font-extralight">
+              Step 2 | Confirm Condition
+            </h3>
+            <p>Condition</p>
             <p>{condition}</p>
-            <p>Has the condition changed?</p>
-            <p>Change condition</p>
             <p>Condition Notes</p>
-            <textarea
-              rows={3}
-              className="resize-y"
-              value={conditionNotes}
-              onChange={(e) => {
-                setConditionNotes(e.target.value);
-              }}
-            />
+            <div>
+              <textarea
+                rows={3}
+                className="resize-y rounded-lg border"
+                value={conditionNotes}
+                onChange={(e) => {
+                  setConditionNotes(e.target.value);
+                }}
+              />
+            </div>
+
             <button
+              className="mx-auto rounded-lg bg-green-300 p-4"
               onClick={() => {
                 setDisplayStep(3);
               }}
@@ -85,8 +88,8 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
 
         {/* stage 3 | pick user */}
         {displayStep === 3 ? (
-          <div>
-            <h3>Step 3 | Pick User</h3>
+          <div className="text-center">
+            <h3 className="text-xl font-extralight">Step 3 | Pick User</h3>
             <p>user dropdown</p>
             <SelectUser user={user} setUser={setUser} />
             <p>user quick details</p>
@@ -94,14 +97,14 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
               className="mx-auto rounded-lg bg-green-300 p-4"
               onClick={async () => {
                 const { data } = await axios.post(
-                  `/api/assets/${asset.id}/reassign`,
+                  `/api/assets/${asset.id}/assign`,
                   {
-                    userId: "clc5cwmxw00009kh89p6szob6",
+                    userId: "clc5o1uoy00009ki0wcc7rd5a",
                   }
                 );
               }}
             >
-              Re-Assign
+              Assign
             </button>
           </div>
         ) : null}
@@ -110,4 +113,4 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
   );
 };
 
-export default AssetReAssignModal;
+export default AssetAssignModal;

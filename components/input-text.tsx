@@ -1,5 +1,6 @@
 import { classNames } from "@/lib/helpers";
 import { Field, ErrorMessage, useField } from "formik";
+import InputErrorText from "./input-error-text";
 
 export interface ITextInput {
   label: string;
@@ -19,7 +20,7 @@ const TextInput: React.FC<ITextInput> = ({
   });
 
   return (
-    <>
+    <div className="grid gap-y-1">
       <label htmlFor={name}>{label}</label>
       <input
         {...field}
@@ -29,10 +30,8 @@ const TextInput: React.FC<ITextInput> = ({
           className
         )}
       />
-      {meta.touched && meta.error ? (
-        <span className="text-xs text-red-500">* {meta.error}</span>
-      ) : null}
-    </>
+      <InputErrorText meta={meta} />
+    </div>
   );
 };
 

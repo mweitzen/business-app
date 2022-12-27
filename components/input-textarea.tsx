@@ -1,6 +1,7 @@
 import { Field, ErrorMessage, useField } from "formik";
 import { classNames } from "@/lib/helpers";
 import { ITextInput } from "./input-text";
+import InputErrorText from "./input-error-text";
 
 interface ITextAreaInput extends ITextInput {}
 
@@ -15,7 +16,7 @@ const TextAreaInput: React.FC<ITextAreaInput> = ({
   });
 
   return (
-    <>
+    <div className="grid gap-y-1">
       <label htmlFor={name}>{label}</label>
       <textarea
         {...field}
@@ -26,10 +27,8 @@ const TextAreaInput: React.FC<ITextAreaInput> = ({
           className
         )}
       />
-      {meta.touched && meta.error ? (
-        <span className="text-xs text-red-500">* {meta.error}</span>
-      ) : null}
-    </>
+      <InputErrorText meta={meta} />
+    </div>
   );
 };
 

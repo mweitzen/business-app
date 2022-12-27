@@ -8,11 +8,7 @@ const AssetsListPage = () => {
 
   // const [filter,]
 
-  const {
-    data: assets,
-    isFetching,
-    isLoading,
-  } = useQuery({
+  const { data: assets, isFetching } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
       const { data } = await axios.get("/api/assets");
@@ -59,25 +55,7 @@ const AssetsListPage = () => {
                 <td>{asset.status}</td>
               </tr>
             ))
-          ) : (
-            <>
-              <tr className="odd:bg-slate-200">
-                <td colSpan={5}>No Assets</td>
-              </tr>
-              <tr className="odd:bg-slate-200">
-                <td colSpan={5}>No Assets</td>
-              </tr>
-              <tr className="odd:bg-slate-200">
-                <td colSpan={5}>No Assets</td>
-              </tr>
-              <tr className="odd:bg-slate-200">
-                <td colSpan={5}>No Assets</td>
-              </tr>
-              <tr className="odd:bg-slate-200">
-                <td colSpan={5}>No Assets</td>
-              </tr>
-            </>
-          )}
+          ) : null}
         </tbody>
       </table>
     </div>
