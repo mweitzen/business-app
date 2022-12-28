@@ -4,8 +4,10 @@ import { NextPageWithLayout } from "@/types";
 const HomePage: NextPageWithLayout = () => {
   return (
     <>
-      <div className="py-8 text-center text-9xl">App</div>
-      <div className="grid gap-4">
+      <div className="py-4 text-center">
+        <h1 className="text-5xl font-thin">Asset Assignment</h1>
+      </div>
+      <div className="grid gap-6 py-6">
         {[
           {
             href: "/assets/create",
@@ -31,7 +33,7 @@ const HomePage: NextPageWithLayout = () => {
           <Link
             key={link.href}
             href={link.href}
-            className="mx-8 rounded-xl bg-element py-2 px-8 text-center shadow-md"
+            className="rounded-full bg-element py-4 px-8 text-center shadow shadow-purple-300 md:mx-24"
           >
             {link.text}
           </Link>

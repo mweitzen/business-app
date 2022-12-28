@@ -20,6 +20,7 @@ const queryClient = new QueryClient();
 
 export const inter = Inter({
   weight: ["100", "200", "300", "400", "500", "700"],
+  subsets: ["latin"],
   variable: "--font-family-base",
 });
 

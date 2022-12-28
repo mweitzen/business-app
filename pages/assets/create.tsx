@@ -86,9 +86,9 @@ const CreateAssetPage = () => {
   return (
     <div>
       {/* header */}
-      <h1 className="py-8 text-4xl">Create Asset | Stage {formStep}</h1>
+      <h1 className="text-2xl">Create Asset | Stage {formStep}</h1>
 
-      <div className="rounded-lg bg-element p-8 shadow-md">
+      <div className="my-4 rounded-lg bg-element p-8 shadow-md">
         {/* form */}
         <Formik
           initialValues={initialValues}
@@ -99,7 +99,7 @@ const CreateAssetPage = () => {
             <Form>
               {/* step 1 */}
               <section className={classNames(formStep !== 1 ? "hidden" : "")}>
-                <h2 className="mb-4 text-xl font-extralight">Asset Details</h2>
+                <h2 className="mb-4 text-xl font-light">Asset Details</h2>
 
                 <div className="grid gap-y-4">
                   <TextInput

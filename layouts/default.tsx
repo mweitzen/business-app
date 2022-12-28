@@ -1,10 +1,16 @@
-import Head from "next/head";
-import { WithChildren } from "@/types";
-//
-import { useThemeContext } from "@/context";
 import { useEffect } from "react";
+//
+import Head from "next/head";
 import Link from "next/link";
+//
+import { WithChildren } from "@/types";
+import { useThemeContext } from "@/context";
 
+/*
+ *
+ * CONSTANTS
+ *
+ */
 const title = "Asset Assignment";
 const description = "Messing this all up";
 const logo = "/favicon.ico";
@@ -12,6 +18,11 @@ const themeColor = "#7b46f6";
 const companyTwitter = "@twitter";
 const userTwitter = "@twitter";
 
+/*
+ *
+ * DEFAULT LAYOUT
+ *
+ */
 const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
   const { mode, toggleMode } = useThemeContext();
   const darkMode = mode === "dark";
@@ -25,7 +36,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
   }, [mode]);
 
   return (
-    <>
+    <div className="font-light text-main">
       <Head>
         <title>{title}</title>
         <link rel="icon" href={logo} />
@@ -53,17 +64,19 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         <meta name="twitter:image" content={logo} />
       </Head>
 
-      <header className="flex w-full justify-between bg-element py-4 px-8 text-main shadow-lg ">
-        <Link href="/" className="font-bold">
-          Home
+      <header className="relative z-10 flex w-full justify-between bg-element py-4 px-8 font-medium shadow shadow-purple-300">
+        <Link href="/" className="text-sm">
+          App Home
         </Link>
-        <button onClick={toggleMode} className="font-bold">
-          Dark
+        <button onClick={toggleMode} className="text-sm">
+          switch
         </button>
       </header>
 
-      <main className="bg-default py-4 px-8 text-main">{children}</main>
-    </>
+      <main className="relative overflow-x-hidden bg-default py-4 px-8">
+        {children}
+      </main>
+    </div>
   );
 };
 

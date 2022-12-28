@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { createUser, getAllUsers } from "@/lib/api/users";
+import prisma from "@/lib/prisma";
 
 const users = async (req: NextApiRequest, res: NextApiResponse) => {
   const { query, method } = req;
@@ -12,14 +12,32 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (method === "POST") {
     // create user
-    const data = await createUser({});
-    return res.status(200).json(data);
+    // const data = await createUser({});
+    // return res.status(200).json(data);
   }
 
   if (method === "GET") {
     // get users
-    // implement filter, search, orderBy
-    const data = await getAllUsers();
+    const { filter, search, orderBy } = query;
+
+    if (!!search) {
+      const data = await prisma.user.findMany({
+        where: {
+          OR: [
+            {
+              email: {
+                contains: search,
+              },
+            },
+            {
+              name: { contains: search },
+            },
+          ],
+        },
+      });
+      return res.status(200).json(data);
+    }
+    const data = await prisma.user.findMany();
     return res.status(200).json(data);
   }
 
