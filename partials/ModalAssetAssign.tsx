@@ -19,11 +19,11 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
   const mutation = useMutation({
     mutationFn: (data) =>
       axios.post(`/api/assets/${asset.id}/assign`, {
-        userId: "clc6xm1vg00009kv3r7jtaeu3",
+        userId: "clc8b4re100009k0mrqatd6cp",
       }),
     onSuccess: (data) => {
       console.log("Successful mutation");
-      queryClient.invalidateQueries({ queryKey: ["assets", asset.id] });
+      queryClient.invalidateQueries({ queryKey: ["asset", asset.id] });
     },
   });
 

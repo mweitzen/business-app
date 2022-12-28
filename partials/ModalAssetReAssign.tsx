@@ -121,7 +121,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
                 const { data } = await axios.post(
                   `/api/assets/${asset.id}/reassign`,
                   {
-                    userId: "clc5o0n5o00019kh2y1khup60",
+                    userId: "clc8b4re100009k0mrqatd6cp",
                   }
                 );
               }}
