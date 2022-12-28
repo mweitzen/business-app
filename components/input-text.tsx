@@ -1,6 +1,6 @@
 import { classNames } from "@/lib/helpers";
-import { Field, ErrorMessage, useField } from "formik";
-import InputErrorText from "./input-error-text";
+import { useField } from "formik";
+import InputErrorMessage from "./input-error-message";
 
 export interface ITextInput {
   label: string;
@@ -30,7 +30,7 @@ const TextInput: React.FC<ITextInput> = ({
           className
         )}
       />
-      <InputErrorText meta={meta} />
+      <InputErrorMessage meta={meta} />
     </div>
   );
 };

@@ -91,7 +91,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
           <div className="text-center">
             <h3 className="text-xl font-extralight">Step 3 | Pick User</h3>
             <p>user dropdown</p>
-            <SelectUser user={user} setUser={setUser} />
+            <SelectUser />
             <p>user quick details</p>
             <button
               className="mx-auto rounded-lg bg-green-300 p-4"

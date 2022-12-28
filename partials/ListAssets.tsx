@@ -27,7 +27,7 @@ const AssetsList = () => {
             <div
               key={option}
               className={classNames(
-                `rounded-full border px-8 py-2 shadow shadow-purple-300`
+                `rounded-full border px-8 py-2 text-xs shadow shadow-purple-300`
               )}
             >
               {option}
@@ -43,10 +43,18 @@ const AssetsList = () => {
         </colgroup>
         <thead>
           <tr>
-            <th className="py-1.5 text-left">Name</th>
-            <th className="py-1.5 text-left">Type</th>
-            <th className="py-1.5 text-left">Assigned To</th>
-            <th className="py-1.5 text-left">Status</th>
+            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+              Name
+            </th>
+            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+              Type
+            </th>
+            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+              Assigned To
+            </th>
+            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+              Status
+            </th>
           </tr>
         </thead>
         <tbody>

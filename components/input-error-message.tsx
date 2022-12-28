@@ -1,6 +1,6 @@
 import { FieldMetaProps } from "formik";
 
-const InputErrorText = ({ meta }: { meta: FieldMetaProps<any> }) => {
+const InputErrorMessage = ({ meta }: { meta: FieldMetaProps<any> }) => {
   return meta.touched && meta.error ? (
     <span className="text-xs leading-3 text-purple-600">* {meta.error}</span>
   ) : (
@@ -8,4 +8,4 @@ const InputErrorText = ({ meta }: { meta: FieldMetaProps<any> }) => {
   );
 };
 
-export default InputErrorText;
+export default InputErrorMessage;

@@ -1,7 +1,7 @@
-import { Field, ErrorMessage, useField } from "formik";
+import { useField } from "formik";
 import { classNames } from "@/lib/helpers";
 import { ITextInput } from "./input-text";
-import InputErrorText from "./input-error-text";
+import InputErrorMessage from "./input-error-message";
 
 interface ITextAreaInput extends ITextInput {}
 
@@ -27,7 +27,7 @@ const TextAreaInput: React.FC<ITextAreaInput> = ({
           className
         )}
       />
-      <InputErrorText meta={meta} />
+      <InputErrorMessage meta={meta} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { WithChildren } from "@/types";
 import { useField } from "formik";
-import InputErrorText from "./input-error-text";
+import InputErrorMessage from "./input-error-message";
 
 export interface ISelectInput extends WithChildren {
   label: string;
@@ -28,7 +28,7 @@ const SelectInput: React.FC<ISelectInput> = ({
         <option value="">{defaultOption}</option>
         {children}
       </select>
-      <InputErrorText meta={meta} />
+      <InputErrorMessage meta={meta} />
     </div>
   );
 };
