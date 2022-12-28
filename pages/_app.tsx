@@ -16,7 +16,13 @@ import DefaultLayout from "@/layouts/default";
  * INITIALIZERS
  *
  */
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 // export const inter = Inter({
 // weight: ["100", "200", "300", "400", "500", "700"],

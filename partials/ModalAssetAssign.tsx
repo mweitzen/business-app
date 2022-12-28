@@ -3,6 +3,8 @@ import axios from "axios";
 //
 import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "pages/_app";
 
 const AssetAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -13,6 +15,17 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
     asset.conditionNotes
   );
   const [user, setUser] = useState<{ id: string; name: string } | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: (data) =>
+      axios.post(`/api/assets/${asset.id}/assign`, {
+        userId: "clc6xm1vg00009kv3r7jtaeu3",
+      }),
+    onSuccess: (data) => {
+      console.log("Successful mutation");
+      queryClient.invalidateQueries({ queryKey: ["assets", asset.id] });
+    },
+  });
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -116,12 +129,8 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
             <button
               className="w-full rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
               onClick={async () => {
-                const { data } = await axios.post(
-                  `/api/assets/${asset.id}/assign`,
-                  {
-                    userId: "clc6xm1vg00009kv3r7jtaeu3",
-                  }
-                );
+                mutation.mutate();
+                handleClose();
               }}
             >
               Assign

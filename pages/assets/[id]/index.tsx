@@ -18,7 +18,7 @@ const AssetDetailPage = () => {
     query: { id: assetId },
   } = useRouter();
 
-  const { data: asset, fetchStatus } = useQuery({
+  const { data: asset, status } = useQuery({
     queryKey: ["asset", assetId],
     queryFn: async () => {
       const { data } = await axios.get(`/api/assets/${assetId}`);
@@ -28,7 +28,7 @@ const AssetDetailPage = () => {
     retry: false,
   });
 
-  if (fetchStatus === "idle" && !asset) {
+  if (status === "error" || !asset) {
     return (
       <div className="text-center">
         <h1>Error Boundary</h1>
@@ -44,7 +44,7 @@ const AssetDetailPage = () => {
       </header>
 
       <CardBase>
-        {fetchStatus === "fetching" ? (
+        {status === "loading" ? (
           <div className="text-center">Loading...</div>
         ) : (
           <div className="grid gap-y-4 p-8">
