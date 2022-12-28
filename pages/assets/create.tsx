@@ -1,19 +1,22 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { classNames } from "@/lib/helpers";
+import { WithChildren } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 //
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 //
 import { Formik, Form, FormikHelpers, FormikValues } from "formik";
 //
+import CardBase from "@/components/card";
+import InputLabel from "@/components/input-label";
 import TextInput from "@/components/input-text";
 import SelectInput from "@/components/input-select";
 import TextAreaInput from "@/components/input-textarea";
 import SelectUser from "@/components/select-user";
-import CardBase from "@/components/card";
-import { WithChildren } from "@/types";
-import InputLabel from "@/components/input-label";
+import { queryClient } from "pages/_app";
+import { useRouter } from "next/router";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -27,7 +30,7 @@ const ASSET_TYPES = [
 
 const CreateAssetSchema = z.object({
   name: z.string(),
-  assetType: z.enum([
+  type: z.enum([
     "LAPTOP",
     "DESKTOP",
     "TABLET",
@@ -46,15 +49,26 @@ const CreateAssetSchema = z.object({
  *
  */
 const CreateAssetPage = () => {
+  const router = useRouter();
+
   const [formStep, setFormStep] = useState<number>(1);
 
   const initialValues: FormikValues = {
     name: "",
-    assetType: "",
+    type: "",
     brand: "",
     serialNumber: "",
     description: "",
   };
+
+  const mutation = useMutation({
+    mutationFn: (data: any) => axios.post("/api/assets/create", { data }),
+    onMutate: async (data: any) => {},
+    onSuccess: (result, data, context) => {
+      queryClient.invalidateQueries({ queryKey: ["assets"] });
+    },
+    onError: (error, data, context) => {},
+  });
 
   /*
    * HANDLERS
@@ -76,12 +90,9 @@ const CreateAssetPage = () => {
   ) {
     formikHelpers.setSubmitting(false);
 
-    const { data } = await axios.post("/api/assets/create", {
-      data: values,
-    });
-    console.log(data);
+    mutation.mutate(values);
 
-    return data;
+    router.push("/assets");
   }
 
   /*
@@ -103,7 +114,7 @@ const CreateAssetPage = () => {
           validationSchema={toFormikValidationSchema(CreateAssetSchema)}
           onSubmit={handleFormSubmit}
         >
-          {({ isSubmitting, errors }) => (
+          {({ isSubmitting, errors, values }) => (
             <Form>
               {/* step 1 */}
               <FormSection
@@ -118,7 +129,7 @@ const CreateAssetPage = () => {
                 />
                 <SelectInput
                   label="Asset Type"
-                  name="assetType"
+                  name="type"
                   defaultOption="Select an asset type"
                 >
                   {ASSET_TYPES.map((type) => (
@@ -176,6 +187,24 @@ const CreateAssetPage = () => {
                 thisStep={4}
                 header="Review & Confirm"
               >
+                <div className="space-y-4 rounded-lg border p-4">
+                  <div>
+                    <InputLabel htmlFor="" label="Asset Name" />
+                    <p>{values.name}</p>
+                  </div>
+                  <div>
+                    <InputLabel htmlFor="" label="Type" />
+                    <p>{values.type}</p>
+                  </div>
+                  <div>
+                    <InputLabel htmlFor="" label="Brand" />
+                    <p>{values.brand}</p>
+                  </div>
+                  <div>
+                    <InputLabel htmlFor="" label="Serial Number" />
+                    <p>{values.serialNumber}</p>
+                  </div>
+                </div>
                 <button
                   type="submit"
                   disabled={

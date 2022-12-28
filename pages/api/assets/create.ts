@@ -9,9 +9,8 @@ import prisma from "@/lib/prisma";
 const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     method,
-    body: { data: _data },
+    body: { data: asset },
   } = req;
-  const { assetType: type, ...asset } = _data;
 
   /*
    * REQUEST GUARDS
@@ -26,7 +25,6 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = await prisma.asset.create({
     data: {
       ...asset,
-      type,
       purchase: {
         create: {
           purchaseDate: new Date(),
