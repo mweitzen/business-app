@@ -5,7 +5,14 @@ const UserDetailPage = () => {
     query: { id: userId },
   } = useRouter();
 
-  return <div>User Detail Page for {userId}</div>;
+  return (
+    <div>
+      <header className="flex items-center justify-between py-4">
+        <h1 className="text-4xl font-thin">User Detail Page</h1>
+      </header>
+      User Detail Page for {userId}
+    </div>
+  );
 };
 
 export default UserDetailPage;

@@ -17,7 +17,7 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   /*
-   * CREATE USER
+   * CREATE ASSET
    */
   const data = await prisma.asset.create({
     data: {

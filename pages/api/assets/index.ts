@@ -47,7 +47,35 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
    */
   if (method === "GET") {
     // get assets
-    // implement filter, search, orderBy
+    const { filter, search, orderBy } = query;
+
+    if (!!search) {
+      const data = await prisma.asset.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                contains: search,
+              },
+            },
+            {
+              assignedTo: {
+                name: {
+                  contains: search,
+                },
+              },
+            },
+          ],
+        },
+        include: {
+          assignedTo: true,
+        },
+        orderBy: {
+          name: "asc",
+        },
+      });
+      return res.status(200).json(data);
+    }
     const data = await prisma.asset.findMany({
       include: {
         assignedTo: true,
@@ -60,7 +88,7 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(data);
   }
 
-  res.status(200).json({
+  return res.status(200).json({
     query,
     method,
   });

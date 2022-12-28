@@ -23,7 +23,7 @@ const TextAreaInput: React.FC<ITextAreaInput> = ({
         rows={3}
         placeholder={placeholder}
         className={classNames(
-          `rounded-md border border-neutral-100 bg-default p-2`,
+          `rounded-lg border border-neutral-100 bg-default p-2`,
           className
         )}
       />

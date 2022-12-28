@@ -30,7 +30,9 @@ const AssetDetailPage = () => {
 
   return (
     <div>
-      <h1>Asset Detail Page</h1>
+      <header className="flex items-center justify-between py-4">
+        <h1 className="text-4xl font-thin">Asset Detail Page</h1>
+      </header>
 
       {fetchStatus === "fetching" ? (
         <div className="text-center">Loading...</div>

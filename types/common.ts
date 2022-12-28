@@ -5,3 +5,8 @@ export type WithChildren<T = {}> = T & PropsWithChildren<{}>;
 export type WithClassName<T = {}> = T & {
   className?: string;
 };
+
+export type OptionProps = {
+  id: string;
+  name: string;
+};

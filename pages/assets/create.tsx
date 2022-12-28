@@ -86,10 +86,14 @@ const CreateAssetPage = () => {
   return (
     <div>
       {/* header */}
-      <h1 className="text-2xl">Create Asset | Stage {formStep}</h1>
+      <header className="flex items-center justify-between py-4">
+        <h1 className="text-2xl font-thin sm:text-4xl">
+          Create Asset | Stage {formStep}
+        </h1>
+      </header>
 
-      <div className="my-4 rounded-lg bg-element p-8 shadow-md">
-        {/* form */}
+      {/* form */}
+      <div className="my-4 rounded-2xl bg-element p-8 shadow">
         <Formik
           initialValues={initialValues}
           validationSchema={toFormikValidationSchema(CreateAssetSchema)}
@@ -99,9 +103,11 @@ const CreateAssetPage = () => {
             <Form>
               {/* step 1 */}
               <section className={classNames(formStep !== 1 ? "hidden" : "")}>
-                <h2 className="mb-4 text-xl font-light">Asset Details</h2>
+                <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
+                  Asset Details
+                </h2>
 
-                <div className="grid gap-y-4">
+                <div className="grid gap-y-3">
                   <TextInput
                     label="Asset Nickname"
                     name="name"
@@ -184,7 +190,9 @@ const CreateAssetPage = () => {
             <button
               onClick={decreaseFormStep}
               className={classNames(
-                formStep === 1 ? "hidden" : "rounded-md bg-green-300 py-2 px-8"
+                formStep === 1
+                  ? "hidden"
+                  : "rounded-full bg-element py-2 px-8 shadow shadow-purple-300"
               )}
             >
               Back
@@ -194,7 +202,9 @@ const CreateAssetPage = () => {
             <button
               onClick={increaseFormStep}
               className={classNames(
-                formStep === 4 ? "hidden" : "rounded-md bg-green-300 py-2 px-8"
+                formStep === 4
+                  ? "hidden"
+                  : "rounded-full bg-element py-2 px-8 shadow shadow-purple-300"
               )}
             >
               Next

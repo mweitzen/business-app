@@ -2,10 +2,33 @@ import { createContext, useContext, useState } from "react";
 //
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { OptionProps } from "@/types";
 
-interface IAssetsContext {}
+interface IAssetsContext {
+  searchText: string;
+  selectedFilterTypes: OptionProps[];
+  selectedFilterBrand: OptionProps[];
+  selectedFilterStatus: OptionProps[];
+  setSearchText: (val: string) => void;
+  setSelectedFilterTypes: unknown;
+  setSelectedFilterBrand: unknown;
+  setSelectedFilterStatus: unknown;
+  assets: any[];
+  isFetching: boolean;
+}
 
-const initialState: IAssetsContext = {};
+const initialState: IAssetsContext = {
+  searchText: "",
+  selectedFilterTypes: [],
+  selectedFilterBrand: [],
+  selectedFilterStatus: [],
+  setSearchText: () => {},
+  setSelectedFilterTypes: () => {},
+  setSelectedFilterBrand: () => {},
+  setSelectedFilterStatus: () => {},
+  assets: [],
+  isFetching: false,
+};
 
 const AssetsContext = createContext<IAssetsContext>(initialState);
 

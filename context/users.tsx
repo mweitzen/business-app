@@ -1,11 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { createContext, useContext, useState } from "react";
-
-type OptionProps = {
-  id: string;
-  name: string;
-};
+import { createContext, useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { OptionProps } from "@/types";
 
 interface IUsersContext {
   searchText: string;
