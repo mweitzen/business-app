@@ -1,7 +1,13 @@
 import { classNames } from "@/lib/helpers";
 import { useField } from "formik";
-import InputErrorMessage from "./input-error-message";
+//
+import InputBase from "./input-base";
 
+/*
+ *
+ *
+ *
+ */
 export interface ITextInput {
   label: string;
   name: string;
@@ -9,6 +15,11 @@ export interface ITextInput {
   className?: string;
 }
 
+/*
+ *
+ *
+ *
+ */
 const TextInput: React.FC<ITextInput> = ({
   label,
   name,
@@ -20,8 +31,7 @@ const TextInput: React.FC<ITextInput> = ({
   });
 
   return (
-    <div className="grid gap-y-1">
-      <label htmlFor={name}>{label}</label>
+    <InputBase label={label} name={name} meta={meta}>
       <input
         {...field}
         placeholder={placeholder}
@@ -30,8 +40,7 @@ const TextInput: React.FC<ITextInput> = ({
           className
         )}
       />
-      <InputErrorMessage meta={meta} />
-    </div>
+    </InputBase>
   );
 };
 

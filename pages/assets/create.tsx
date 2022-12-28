@@ -12,6 +12,8 @@ import SelectInput from "@/components/input-select";
 import TextAreaInput from "@/components/input-textarea";
 import SelectUser from "@/components/select-user";
 import CardBase from "@/components/card";
+import { WithChildren } from "@/types";
+import InputLabel from "@/components/input-label";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -104,64 +106,76 @@ const CreateAssetPage = () => {
           {({ isSubmitting, errors }) => (
             <Form>
               {/* step 1 */}
-              <section className={classNames(formStep !== 1 ? "hidden" : "")}>
-                <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
-                  Asset Details
-                </h2>
-                <div className="grid gap-y-3">
-                  <TextInput
-                    label="Asset Nickname"
-                    name="name"
-                    placeholder="Use something that easily identifies"
-                  />
-                  <SelectInput
-                    label="Asset Type"
-                    name="assetType"
-                    defaultOption="Select an asset type"
-                  >
-                    {ASSET_TYPES.map((type) => (
-                      <option key={type} value={type}>
-                        {type.toLowerCase().replace("_", " ")}
-                      </option>
-                    ))}
-                  </SelectInput>
-                  <TextInput
-                    label="Brand or Manufacturer"
-                    name="brand"
-                    placeholder="Company that produces asset"
-                  />
-                  <TextInput
-                    label="Serial Number"
-                    name="serialNumber"
-                    placeholder="The serial number associated with asset"
-                  />
-                </div>
-              </section>
+              <FormSection
+                formStep={formStep}
+                thisStep={1}
+                header="Asset Details"
+              >
+                <TextInput
+                  label="Asset Nickname"
+                  name="name"
+                  placeholder="Use something that easily identifies the asset"
+                />
+                <SelectInput
+                  label="Asset Type"
+                  name="assetType"
+                  defaultOption="Select an asset type"
+                >
+                  {ASSET_TYPES.map((type) => (
+                    <option key={type} value={type}>
+                      {type.toLowerCase().replace("_", " ")}
+                    </option>
+                  ))}
+                </SelectInput>
+                <TextInput
+                  label="Brand or Manufacturer"
+                  name="brand"
+                  placeholder="Company that produces asset"
+                />
+                <TextInput
+                  label="Serial Number"
+                  name="serialNumber"
+                  placeholder="The serial number associated with asset"
+                />
+              </FormSection>
+
               {/* step 2 */}
-              <section className={classNames(formStep !== 2 ? "hidden" : "")}>
-                <h2 className="mb-2 text-xl font-extralight">Step 2</h2>
-                <span className="grid gap-y-4">
-                  <label>Add Purchase Details</label>
-                  <TextAreaInput
-                    label="Description (optional)"
-                    name="description"
-                    placeholder="Add a brief description that might help you identify this asset later"
-                  />
-                </span>
-              </section>
+              <FormSection
+                formStep={formStep}
+                thisStep={2}
+                header="Additional Details"
+              >
+                <TextAreaInput
+                  label="Add Purchase Details"
+                  name="xxx"
+                  placeholder="replace later"
+                />
+                <TextAreaInput
+                  label="Description (optional)"
+                  name="description"
+                  placeholder="Add a brief description that might help you identify this asset later"
+                />
+              </FormSection>
+
               {/* step 3 */}
-              <section className={classNames(formStep !== 3 ? "hidden" : "")}>
-                <h2 className="mb-2 text-xl font-extralight">Step 3</h2>
-                <span className="grid gap-y-4">
-                  <label>Assign to User (optional)</label>
-                  <SelectUser />
-                </span>
-              </section>
+              <FormSection
+                formStep={formStep}
+                thisStep={3}
+                header="Employee Assignment"
+              >
+                <InputLabel
+                  htmlFor="user"
+                  label="Assign to a User (optional)"
+                />
+                <SelectUser />
+              </FormSection>
+
               {/* step 4 */}
-              <section className={classNames(formStep !== 4 ? "hidden" : "")}>
-                <h2 className="mb-2 text-xl font-extralight">
-                  Review & Confirm
-                </h2>
+              <FormSection
+                formStep={formStep}
+                thisStep={4}
+                header="Review & Confirm"
+              >
                 <button
                   type="submit"
                   disabled={
@@ -169,11 +183,11 @@ const CreateAssetPage = () => {
                     formStep !== 4 ||
                     Object.keys(errors).length !== 0
                   }
-                  className="rounded-full bg-element py-2 px-8 shadow shadow-purple-300"
+                  className="rounded-full bg-element py-2 px-8 shadow shadow-purple-300 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-gray-200"
                 >
                   Confirm
                 </button>
-              </section>
+              </FormSection>
             </Form>
           )}
         </Formik>
@@ -210,3 +224,14 @@ const CreateAssetPage = () => {
 };
 
 export default CreateAssetPage;
+
+const FormSection: React.FC<
+  WithChildren & { formStep: number; thisStep: number; header: string }
+> = ({ children, formStep, thisStep, header }) => {
+  return (
+    <section className={classNames(formStep !== thisStep ? "hidden" : "")}>
+      <h2 className="mb-4 text-lg font-thin">{header}</h2>
+      <div className="grid gap-y-6">{children}</div>
+    </section>
+  );
+};

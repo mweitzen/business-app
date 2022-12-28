@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-// import { Inter } from "@next/font/google";
 //
 import type { AppProps } from "next/app";
 //
@@ -23,12 +22,6 @@ export const queryClient = new QueryClient({
     },
   },
 });
-
-// export const inter = Inter({
-// weight: ["100", "200", "300", "400", "500", "700"],
-// subsets: ["latin"],
-// variable: "--font-family-base",
-// });
 
 /*
  *
@@ -54,18 +47,15 @@ const App = ({
   // return getLayout(
 
   return (
-    // <div className={`${inter.variable} font-sans`}>
-    <div>
-      <SessionProvider session={session}>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider>
-            <DefaultLayout>
-              <Component {...pageProps} />
-            </DefaultLayout>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </SessionProvider>
-    </div>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <DefaultLayout>
+            <Component {...pageProps} />
+          </DefaultLayout>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 };
 
