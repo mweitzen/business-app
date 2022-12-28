@@ -73,7 +73,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         </button>
       </header>
 
-      <main className="relative overflow-x-hidden bg-default py-4 px-8">
+      <main className="relative overflow-x-hidden bg-default p-4 sm:p-8">
         {children}
       </main>
     </div>

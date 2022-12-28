@@ -26,7 +26,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
   return (
     <div>
       <button
-        className="mx-auto rounded-lg bg-green-300 p-4"
+        className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
         onClick={handleClose}
       >
         Re-Assign
@@ -35,17 +35,26 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
         {/* stage 1 | confirm asset */}
         {displayStep === 1 && !assetConfirmed ? (
-          <div>
+          <div className="space-y-4 text-center">
             <h3>Step 1 | Confirm Asset</h3>
-            <p>Serial Number</p>
-            <p>{asset.serialNumber}</p>
-            <p>Currently Assigned To</p>
-            <p>{asset.assignedTo.name}</p>
+            <div className="rounded-lg border py-2 px-4">
+              <p className="text-xs uppercase tracking-widest text-muted">
+                Serial Number
+              </p>
+              <p>{asset.serialNumber}</p>
+            </div>
+            <div className="rounded-lg border py-2 px-4">
+              <p className="text-xs uppercase tracking-widest text-muted">
+                Currently Assigned To
+              </p>
+              <p>{asset.assignedTo.name}</p>
+            </div>
             <p>
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
             <button
+              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
               onClick={() => {
                 setAssetConfirmed(true);
                 setDisplayStep(2);
@@ -58,22 +67,29 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
 
         {/* stage 2 | confirm condition */}
         {displayStep === 2 ? (
-          <div>
+          <div className="space-y-4 text-center">
             <h3>Step 2 | Confirm Condition</h3>
-            <p>Last Known Condition</p>
-            <p>{condition}</p>
+            <div className="rounded-lg border py-2 px-4">
+              <p className="text-xs uppercase tracking-widest text-muted">
+                Last Known Condition
+              </p>
+              <p>{condition}</p>
+            </div>
             <p>Has the condition changed?</p>
             <p>Change condition</p>
             <p>Condition Notes</p>
-            <textarea
-              rows={3}
-              className="resize-y"
-              value={conditionNotes}
-              onChange={(e) => {
-                setConditionNotes(e.target.value);
-              }}
-            />
+            <div>
+              <textarea
+                rows={3}
+                className="resize-y"
+                value={conditionNotes}
+                onChange={(e) => {
+                  setConditionNotes(e.target.value);
+                }}
+              />
+            </div>
             <button
+              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
               onClick={() => {
                 setDisplayStep(3);
               }}
@@ -85,13 +101,22 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
 
         {/* stage 3 | pick user */}
         {displayStep === 3 ? (
-          <div>
+          <div className="space-y-4 text-center">
             <h3>Step 3 | Pick User</h3>
-            <p>user dropdown</p>
-            <SelectUser />
-            <p>user quick details</p>
+
+            <div>
+              <p className="text-xs uppercase tracking-widest text-muted">
+                user dropdown
+              </p>
+              <SelectUser />
+            </div>
+            <div className="rounded-lg border py-2 px-4">
+              <p className="text-xs uppercase tracking-widest text-muted">
+                user quick details
+              </p>
+            </div>
             <button
-              className="mx-auto rounded-lg bg-green-300 p-4"
+              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
               onClick={async () => {
                 const { data } = await axios.post(
                   `/api/assets/${asset.id}/reassign`,

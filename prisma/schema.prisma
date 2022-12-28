@@ -131,9 +131,9 @@ model Asset {
   assignedTo     User?             @relation(fields: [assignedToId], references: [id])
   assignedToId   String?
   ownerHistory   AssetAssignment[]
-  condition      String            @default("new")
+  condition      String            @default("NEW")
   conditionNotes String?
-  status         String            @default("avaialable")
+  status         String            @default("available")
 }
 
 model AssetAssignment {

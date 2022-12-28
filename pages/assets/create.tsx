@@ -11,6 +11,7 @@ import TextInput from "@/components/input-text";
 import SelectInput from "@/components/input-select";
 import TextAreaInput from "@/components/input-textarea";
 import SelectUser from "@/components/select-user";
+import CardBase from "@/components/card";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -76,6 +77,7 @@ const CreateAssetPage = () => {
     const { data } = await axios.post("/api/assets/create", {
       data: values,
     });
+    console.log(data);
 
     return data;
   }
@@ -93,7 +95,7 @@ const CreateAssetPage = () => {
       </header>
 
       {/* form */}
-      <div className="my-4 rounded-2xl bg-element p-8 shadow">
+      <CardBase>
         <Formik
           initialValues={initialValues}
           validationSchema={toFormikValidationSchema(CreateAssetSchema)}
@@ -106,14 +108,12 @@ const CreateAssetPage = () => {
                 <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted">
                   Asset Details
                 </h2>
-
                 <div className="grid gap-y-3">
                   <TextInput
                     label="Asset Nickname"
                     name="name"
                     placeholder="Use something that easily identifies"
                   />
-
                   <SelectInput
                     label="Asset Type"
                     name="assetType"
@@ -125,13 +125,11 @@ const CreateAssetPage = () => {
                       </option>
                     ))}
                   </SelectInput>
-
                   <TextInput
                     label="Brand or Manufacturer"
                     name="brand"
                     placeholder="Company that produces asset"
                   />
-
                   <TextInput
                     label="Serial Number"
                     name="serialNumber"
@@ -139,13 +137,11 @@ const CreateAssetPage = () => {
                   />
                 </div>
               </section>
-
               {/* step 2 */}
               <section className={classNames(formStep !== 2 ? "hidden" : "")}>
                 <h2 className="mb-2 text-xl font-extralight">Step 2</h2>
                 <span className="grid gap-y-4">
                   <label>Add Purchase Details</label>
-
                   <TextAreaInput
                     label="Description (optional)"
                     name="description"
@@ -153,7 +149,6 @@ const CreateAssetPage = () => {
                   />
                 </span>
               </section>
-
               {/* step 3 */}
               <section className={classNames(formStep !== 3 ? "hidden" : "")}>
                 <h2 className="mb-2 text-xl font-extralight">Step 3</h2>
@@ -162,7 +157,6 @@ const CreateAssetPage = () => {
                   <SelectUser />
                 </span>
               </section>
-
               {/* step 4 */}
               <section className={classNames(formStep !== 4 ? "hidden" : "")}>
                 <h2 className="mb-2 text-xl font-extralight">
@@ -175,7 +169,7 @@ const CreateAssetPage = () => {
                     formStep !== 4 ||
                     Object.keys(errors).length !== 0
                   }
-                  className="bg-green-300 disabled:bg-blue-100"
+                  className="rounded-full bg-element py-2 px-8 shadow shadow-purple-300"
                 >
                   Confirm
                 </button>
@@ -183,7 +177,6 @@ const CreateAssetPage = () => {
             </Form>
           )}
         </Formik>
-
         {/* form stage actions */}
         <div className="mt-4 flex justify-between">
           <span>
@@ -211,7 +204,7 @@ const CreateAssetPage = () => {
             </button>
           </span>
         </div>
-      </div>
+      </CardBase>
     </div>
   );
 };

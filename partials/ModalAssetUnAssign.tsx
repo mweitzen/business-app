@@ -23,7 +23,7 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
   return (
     <div>
       <button
-        className="mx-auto rounded-lg bg-green-300 p-4"
+        className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
         onClick={handleClose}
       >
         Un-Assign
@@ -34,15 +34,24 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
         {displayStep === 1 && !assetConfirmed ? (
           <div>
             <h3>Step 1 | Confirm Asset</h3>
-            <p>Serial Number</p>
-            <p>{asset.serialNumber}</p>
-            <p>Currently Assigned To</p>
-            <p>{asset.assignedTo.name}</p>
+            <div>
+              <p className="text-xs uppercase tracking-widest text-muted">
+                Serial Number
+              </p>
+              <p>{asset.serialNumber}</p>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-widest text-muted">
+                Currently Assigned To
+              </p>
+              <p>{asset.assignedTo.name}</p>
+            </div>
             <p>
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
             <button
+              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
               onClick={() => {
                 setAssetConfirmed(true);
                 setDisplayStep(2);
@@ -57,8 +66,12 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
         {displayStep === 2 ? (
           <div>
             <h3>Step 2 | Confirm Condition</h3>
-            <p>Last Known Condition</p>
-            <p>{condition}</p>
+            <div>
+              <p className="text-xs uppercase tracking-widest text-muted">
+                Last Known Condition
+              </p>
+              <p>{condition}</p>
+            </div>
             <p>Has the condition changed?</p>
             <p>Change condition</p>
             <p>Condition Notes</p>
@@ -86,7 +99,7 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
             <h3>Step 3 | Confirm</h3>
             <p>Are you sure you want to unassign this asset?</p>
             <button
-              className="mx-auto rounded-lg bg-green-300 p-4"
+              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
               onClick={async () => {
                 const { data } = await axios.post(
                   `/api/assets/${asset.id}/unassign`
