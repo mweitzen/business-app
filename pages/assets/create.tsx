@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "pages/_app";
+//
 import { classNames } from "@/lib/helpers";
 import { WithChildren } from "@/types";
-import { useMutation } from "@tanstack/react-query";
 //
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -15,9 +18,9 @@ import TextInput from "@/components/input-text";
 import SelectInput from "@/components/input-select";
 import TextAreaInput from "@/components/input-textarea";
 import SelectUser from "@/components/select-user";
-import { queryClient } from "pages/_app";
-import { useRouter } from "next/router";
 import ButtonBase from "@/components/button";
+import LabelText from "@/components/text-label";
+import PriceInput from "@/components/input-price";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -42,6 +45,9 @@ const CreateAssetSchema = z.object({
   ]),
   brand: z.string(),
   serialNumber: z.string(),
+  purchasePrice: z.number().gt(0, "Price must be a positive number."),
+  purchasedFrom: z.string(),
+  orderNumber: z.string(),
 });
 
 /*
@@ -60,6 +66,9 @@ const CreateAssetPage = () => {
     brand: "",
     serialNumber: "",
     description: "",
+    purchasePrice: "",
+    purchasedFrom: "",
+    orderNumber: "",
   };
 
   const mutation = useMutation({
@@ -138,7 +147,7 @@ const CreateAssetPage = () => {
                 <TextInput
                   label="Brand or Manufacturer"
                   name="brand"
-                  placeholder="Company that produces asset"
+                  placeholder="eg: Apple, Sony, Dell"
                 />
                 <TextInput
                   label="Serial Number"
@@ -154,7 +163,7 @@ const CreateAssetPage = () => {
                   name="purchasedFrom"
                   placeholder="eg: Amazon, eBay"
                 />
-                <TextInput
+                <PriceInput
                   label="Purchase Price"
                   name="purchasePrice"
                   placeholder="eg: 300.56"
@@ -184,19 +193,19 @@ const CreateAssetPage = () => {
               <FormSection formStep={formStep} thisStep={4}>
                 <div className="space-y-4 rounded-lg border p-4">
                   <div>
-                    <InputLabel htmlFor="" label="Asset Name" />
+                    <LabelText>Asset Name</LabelText>
                     <p>{values.name}</p>
                   </div>
                   <div>
-                    <InputLabel htmlFor="" label="Type" />
+                    <LabelText>Type</LabelText>
                     <p>{values.type}</p>
                   </div>
                   <div>
-                    <InputLabel htmlFor="" label="Brand" />
+                    <LabelText>Brand</LabelText>
                     <p>{values.brand}</p>
                   </div>
                   <div>
-                    <InputLabel htmlFor="" label="Serial Number" />
+                    <LabelText>Serial Number</LabelText>
                     <p>{values.serialNumber}</p>
                   </div>
                 </div>
@@ -205,8 +214,7 @@ const CreateAssetPage = () => {
                   disabled={
                     isSubmitting ||
                     formStep !== 4 ||
-                    Object.keys(errors).length !== 0 ||
-                    true
+                    Object.keys(errors).length !== 0
                   }
                   className="disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-gray-200"
                 >

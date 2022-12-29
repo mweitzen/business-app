@@ -15,6 +15,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     where: {
       assetId: assetId as string,
     },
+    include: {
+      asset: true,
+      owner: true,
+    },
+    orderBy: {
+      assignedAt: "desc",
+    },
   });
 
   return res.status(200).json(data);

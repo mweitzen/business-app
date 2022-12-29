@@ -9,7 +9,7 @@ import prisma from "@/lib/prisma";
 const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     method,
-    body: { data: asset },
+    body: { data: _asset },
   } = req;
 
   /*
@@ -19,6 +19,7 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ error: "error" });
   }
 
+  const { purchasedFrom, purchasePrice, orderNumber, ...asset } = _asset;
   /*
    * CREATE ASSET
    */
@@ -28,9 +29,9 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
       purchase: {
         create: {
           purchaseDate: new Date(),
-          purchasedFrom: "amazon.com",
-          purchasePrice: 300,
-          orderNumber: "0123-ffsc-3fd",
+          purchasedFrom,
+          purchasePrice,
+          orderNumber,
         },
       },
     },
