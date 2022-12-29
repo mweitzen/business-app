@@ -8,6 +8,7 @@
       "@/context": ["context/index"],
       "@/context/*": ["context/*"],
       "@/layouts/*": ["layouts/*"],
+      "@/partials/*": ["partials/*"],
       "@/lib/*": ["lib/*"],
       "@/styles/*": ["styles/*"],
       "@/types": ["types/index"],

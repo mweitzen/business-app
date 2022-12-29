@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const UsersList = () => {
   const router = useRouter();
 
-  const { users, isFetching, setSearchText, searchText } = useUsersContext();
+  const { users, isFetching, searchText, setSearchText } = useUsersContext();
 
   return (
     <div>

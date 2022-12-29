@@ -7,6 +7,6 @@ export type WithClassName<T = {}> = T & {
 };
 
 export type OptionProps = {
-  id: string;
-  name: string;
+  value: string;
+  label: string;
 };

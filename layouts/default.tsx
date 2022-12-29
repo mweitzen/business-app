@@ -64,7 +64,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         <meta name="twitter:image" content={logo} />
       </Head>
 
-      <header className="relative z-10 flex h-12 w-full items-center justify-between bg-element px-8 font-medium shadow shadow-purple-300 sm:h-14">
+      <header className="relative z-10 flex h-12 w-full items-center justify-between bg-element px-5 font-medium shadow shadow-purple-300 sm:h-14 sm:px-8">
         <Link href="/" className="text-sm sm:text-base">
           Asset Assignment
         </Link>
@@ -73,7 +73,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         </button>
       </header>
 
-      <main className="relative overflow-x-hidden bg-default p-4 sm:p-8">
+      <main className="relative overflow-x-hidden bg-default px-4 sm:px-8">
         {children}
       </main>
     </div>

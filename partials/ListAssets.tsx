@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
-import { classNames } from "@/lib/helpers";
 import { useAssetsContext } from "@/context/assets";
-import { useEffect } from "react";
+//
+import { classNames } from "@/lib/helpers";
+//
+import { Listbox, Transition } from "@headlessui/react";
+import FilterSelect, { IFilterSelect } from "@/components/select-filter";
 
 const AssetsList = () => {
   const router = useRouter();
@@ -19,15 +22,41 @@ const AssetsList = () => {
     setSelectedFilterTypes,
   } = useAssetsContext();
 
-  useEffect(() => {
-    // setSelectedFilterTypes(["LAPTOP"]);
-    // setSelectedFilterStatus(["assigned"]);
-  }, []);
+  const assetFilters: IFilterSelect[] = [
+    {
+      label: "Type",
+      value: selectedFilterTypes,
+      setValue: setSelectedFilterTypes,
+      options: [
+        { label: "Desktop", value: "DESKTOP" },
+        { label: "Laptop", value: "LAPTOP" },
+        { label: "Tablet", value: "TABLET" },
+      ],
+    },
+    {
+      label: "Brand",
+      value: selectedFilterBrand,
+      setValue: setSelectedFilterBrand,
+      options: [
+        { label: "Apple", value: "Apple" },
+        { label: "Dell", value: "Dell" },
+      ],
+    },
+    {
+      label: "Status",
+      value: selectedFilterStatus,
+      setValue: setSelectedFilterStatus,
+      options: [
+        { label: "Assigned", value: "assigned" },
+        { label: "Available", value: "available" },
+      ],
+    },
+  ];
 
   return (
     <div>
       {/* assets querying */}
-      <div className="mb-6 space-y-2">
+      <div className="mb-6 space-y-3">
         {/* search bar */}
         <input
           type="search"
@@ -40,15 +69,8 @@ const AssetsList = () => {
 
         {/* filters */}
         <div className="flex gap-x-2">
-          {["Type", "Brand", "Status"].map((option) => (
-            <div
-              key={option}
-              className={classNames(
-                `rounded-full border px-8 py-2 text-xs shadow shadow-purple-300`
-              )}
-            >
-              {option}
-            </div>
+          {assetFilters.map((option, i) => (
+            <FilterSelect key={i} {...option} />
           ))}
         </div>
       </div>
