@@ -17,32 +17,33 @@ const FilterSelect: React.FC<IFilterSelect> = ({
   setValue,
 }) => {
   return (
-    <div className="relative w-full">
+    <div className="relative z-10 w-full">
       <Listbox value={value} onChange={setValue} multiple>
         <Listbox.Button
           className={classNames(
-            `w-full rounded-full border px-8 py-2 text-center text-xs shadow shadow-purple-300 sm:text-start`
+            `w-full truncate rounded-full border px-8 py-2 text-center text-xs capitalize shadow shadow-purple-300 sm:text-start`,
+            value.length !== 0 ? "font-medium" : ""
           )}
         >
-          {label}
+          {value.length === 0 ? label : value.join(" | ").toLowerCase()}
         </Listbox.Button>
         <Transition
           as={Fragment}
           enter="transition transform duration-400 ease-in"
-          enterFrom="opacity-0 bg-green-300 scale-[75%] -translate-y-12"
-          enterTo="opacity-100 bg-blue-300 scale-100 translate-y-0"
+          enterFrom="opacity-0 scale-[75%] -translate-y-12"
+          enterTo="opacity-100 scale-100 translate-y-0"
           leave="transition transform duration-300 ease-out"
-          leaveFrom="opacity-100 bg-blue-300 scale-100 translate-y-0"
-          leaveTo="opacity-0 bg-green-300 scale-[75%] -translate-y-12"
+          leaveFrom="opacity-100 scale-100 translate-y-0"
+          leaveTo="opacity-0 scale-[75%] -translate-y-12"
         >
-          <Listbox.Options className="absolute mt-1 w-full rounded-2xl bg-default p-4 text-sm shadow shadow-purple-300">
+          <Listbox.Options className="absolute mt-1 w-full rounded-2xl bg-default py-4 text-sm shadow shadow-purple-300">
             {options.map(({ value, label }) => (
               <Listbox.Option
                 key={value}
                 value={value}
                 className={({ active }) =>
                   classNames(
-                    "py-2 hover:cursor-pointer",
+                    "relative py-2 pl-8 pr-4 hover:cursor-pointer",
                     active ? "bg-purple-100 text-purple-900" : ""
                   )
                 }
@@ -58,7 +59,9 @@ const FilterSelect: React.FC<IFilterSelect> = ({
                       {label}
                     </span>
                     {selected ? (
-                      <span className="font-bold text-purple-900">X</span>
+                      <span className="absolute left-0 ml-4 font-bold text-purple-900">
+                        X
+                      </span>
                     ) : null}
                   </>
                 )}

@@ -1,9 +1,5 @@
 import { useRouter } from "next/router";
 import { useAssetsContext } from "@/context/assets";
-//
-import { classNames } from "@/lib/helpers";
-//
-import { Listbox, Transition } from "@headlessui/react";
 import FilterSelect, { IFilterSelect } from "@/components/select-filter";
 
 const AssetsList = () => {
@@ -85,6 +81,9 @@ const AssetsList = () => {
             <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
               Name
             </th>
+            <th className="hidden py-1.5 text-left text-xs uppercase tracking-widest text-muted sm:block">
+              Brand
+            </th>
             <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
               Type
             </th>
@@ -108,7 +107,8 @@ const AssetsList = () => {
                 className="odd:bg-slate-100 hover:cursor-pointer hover:bg-slate-200"
                 onClick={() => router.push(`/assets/${asset.id}`)}
               >
-                <td className="py-1.5">{asset.name}</td>
+                <td className="truncate py-1.5">{asset.name}</td>
+                <td className="hidden py-1.5 sm:block">{asset.brand}</td>
                 <td className="py-1.5 capitalize">
                   {asset.type.toLowerCase()}
                 </td>

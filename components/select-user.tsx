@@ -1,11 +1,8 @@
 import { Combobox, Transition } from "@headlessui/react";
-import useUsers from "hooks/useUsers";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Fragment, useState } from "react";
 
-// type SelectUserProps = {
-//   user: any;
-//   setUser: (val: any) => void;
-// };
 const defaultOption = { id: 0, name: "Select a user or begin typing" };
 const emptyOption = { id: -1, name: "" };
 
@@ -13,7 +10,13 @@ const SelectUser = () => {
   const [selected, setSelected] = useState<typeof defaultOption>(defaultOption);
   const [query, setQuery] = useState("");
 
-  const { data: users, isFetching } = useUsers();
+  const { data: users, isFetching } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const { data } = await axios.get("/api/users");
+      return data;
+    },
+  });
 
   if (isFetching) return <div>Loading...</div>;
 

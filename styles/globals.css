@@ -21,7 +21,6 @@
 
   .dark {
     --color-background: hsl(207, 26%, 17%);
-    /* --color-elements: hsl(207, 26%, 17%); */
     --color-elements: hsl(209, 23%, 22%);
     --color-text-default: hsl(0, 0%, 100%);
   }
@@ -33,5 +32,11 @@
   html {
     scrollbar-width: none;
     background-color: var(--color-background);
+  }
+
+  html,
+  body,
+  div#__next {
+    height: 100%;
   }
 }

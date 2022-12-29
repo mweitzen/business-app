@@ -36,7 +36,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
   }, [mode]);
 
   return (
-    <div className="font-light text-main">
+    <div className="flex min-h-full flex-col font-light text-main">
       <Head>
         <title>{title}</title>
         <link rel="icon" href={logo} />
@@ -73,7 +73,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         </button>
       </header>
 
-      <main className="relative overflow-x-hidden bg-default px-4 sm:px-8">
+      <main className="relative flex-grow overflow-x-hidden bg-default px-4 sm:px-8">
         {children}
       </main>
     </div>
