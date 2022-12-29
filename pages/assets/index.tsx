@@ -2,20 +2,19 @@ import Link from "next/link";
 //
 import AssetsProvider from "@/context/assets";
 import AssetsList from "partials/ListAssets";
+import PageHeader from "@/components/page-header";
 
 const AssetsListPage = () => {
   return (
     <AssetsProvider>
-      <header className="flex items-center justify-between py-4">
-        <h1 className="text-3xl font-thin sm:text-4xl">Your Company Assets</h1>
+      <PageHeader header="Your Company Assets">
         <Link
           href="/assets/create"
           className="grid h-8 w-8 place-content-center rounded-full text-xl shadow shadow-purple-300"
         >
           +
         </Link>
-      </header>
-
+      </PageHeader>
       <AssetsList />
     </AssetsProvider>
   );

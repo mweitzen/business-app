@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import PageHeader from "@/components/page-header";
 
 const AssignmentHistoryPage = () => {
   const {
@@ -23,7 +24,8 @@ const AssignmentHistoryPage = () => {
 
   return (
     <div>
-      <h1>Assignment History Page</h1>
+      <PageHeader header="Assignment History Page" />
+
       {currentAssignment ? (
         <>
           <p>Current owner</p>

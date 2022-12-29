@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import PageHeader from "@/components/page-header";
 
 const UserDetailPage = () => {
   const {
@@ -7,9 +8,7 @@ const UserDetailPage = () => {
 
   return (
     <div>
-      <header className="flex items-center justify-between py-4">
-        <h1 className="text-4xl font-thin">User Detail Page</h1>
-      </header>
+      <PageHeader header="User Detail Page" />
     </div>
   );
 };

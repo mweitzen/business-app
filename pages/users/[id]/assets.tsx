@@ -1,14 +1,36 @@
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+//
+import PageHeader from "@/components/page-header";
+
 const UserAssetsPage = () => {
+  const {
+    query: { id: userId },
+  } = useRouter();
+
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["user", userId, "assets"],
+    queryFn: async () => {
+      const { data } = await axios.get(`/api/users/${userId}/assets`);
+      return data;
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <div>
-      <header className="flex items-center justify-between py-4">
-        <h1 className="text-4xl font-thin">User Assets Page</h1>
-      </header>
+      <PageHeader header="User Assets Page" />
       <div>
         <div className="grid gap-y-4">
-          {[1, 2, 3].map((asset) => (
-            <AssetListItem key={asset} />
-          ))}
+          {user ? (
+            user.assets.map((asset) => (
+              <AssetListItem key={asset.id} asset={asset} />
+            ))
+          ) : (
+            <div>No assets i think</div>
+          )}
         </div>
       </div>
     </div>
@@ -17,10 +39,8 @@ const UserAssetsPage = () => {
 
 export default UserAssetsPage;
 
-const AssetListItem = () => {
+const AssetListItem = ({ asset }: any) => {
   return (
-    <div className="rounded-xl bg-element p-2 shadow sm:p-4">
-      asset list item
-    </div>
+    <div className="rounded-xl bg-element p-2 shadow sm:p-4">{asset.name}</div>
   );
 };

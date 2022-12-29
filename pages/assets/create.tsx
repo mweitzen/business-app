@@ -21,6 +21,7 @@ import SelectUser from "@/components/select-user";
 import ButtonBase from "@/components/button";
 import LabelText from "@/components/text-label";
 import PriceInput from "@/components/input-price";
+import PageHeader from "@/components/page-header";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -111,11 +112,7 @@ const CreateAssetPage = () => {
   return (
     <div>
       {/* header */}
-      <header className="flex items-center justify-between py-4">
-        <h1 className="text-2xl font-thin sm:text-4xl">
-          Create Asset | Stage {formStep}
-        </h1>
-      </header>
+      <PageHeader header={`Create Asset | Stage ${formStep}`} />
 
       {/* form */}
       <CardBase>

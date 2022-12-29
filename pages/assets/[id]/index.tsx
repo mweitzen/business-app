@@ -9,6 +9,7 @@ import AssetUnassignModal from "partials/ModalAssetUnAssign";
 import CardBase from "@/components/card";
 import Link from "next/link";
 import ButtonBase from "@/components/button";
+import PageHeader from "@/components/page-header";
 
 /*
  *
@@ -42,9 +43,7 @@ const AssetDetailPage = () => {
 
   return (
     <div>
-      <header className="flex items-center justify-between py-4">
-        <h1 className="text-4xl font-thin">Asset Detail Page</h1>
-      </header>
+      <PageHeader header="Asset Detail Page" />
 
       <CardBase>
         {status === "loading" ? (
