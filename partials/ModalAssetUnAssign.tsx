@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 //
 import ModalBase from "@/components/modal";
+import ButtonBase from "@/components/button";
 
 const AssetUnAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -22,12 +23,7 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
 
   return (
     <div>
-      <button
-        className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
-        onClick={handleClose}
-      >
-        Un-Assign
-      </button>
+      <ButtonBase onClick={handleClose}>Un-Assign</ButtonBase>
 
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
         {/* stage 1 | confirm asset */}
@@ -50,15 +46,15 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
-            <button
-              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={() => {
                 setAssetConfirmed(true);
                 setDisplayStep(2);
               }}
             >
               Confirm
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
 
@@ -83,13 +79,14 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
                 setConditionNotes(e.target.value);
               }}
             />
-            <button
+            <ButtonBase
+              className="w-full"
               onClick={() => {
                 setDisplayStep(3);
               }}
             >
               Confirm
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
 
@@ -98,8 +95,8 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
           <div>
             <h3>Step 3 | Confirm</h3>
             <p>Are you sure you want to unassign this asset?</p>
-            <button
-              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={async () => {
                 const { data } = await axios.post(
                   `/api/assets/${asset.id}/unassign`
@@ -107,7 +104,7 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
               }}
             >
               Un-Assign
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
       </ModalBase>

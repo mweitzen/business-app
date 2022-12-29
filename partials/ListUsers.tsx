@@ -57,7 +57,7 @@ const UsersList = () => {
               <tr
                 key={user.id}
                 className="odd:bg-slate-50 hover:cursor-pointer hover:bg-slate-100"
-                onClick={() => router.push(`/users/${user.id}`)}
+                onClick={() => router.push(`/users/${user.id}/assets`)}
               >
                 <td className="text-sm">{user.name}</td>
                 <td className="text-sm">{user.email}</td>

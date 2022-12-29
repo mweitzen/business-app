@@ -5,13 +5,22 @@ const UserAssetsPage = () => {
         <h1 className="text-4xl font-thin">User Assets Page</h1>
       </header>
       <div>
-        <h2>User Assets</h2>
-        {[1, 2, 3].map((asset) => (
-          <div key={asset}>Asset List Item</div>
-        ))}
+        <div className="grid gap-y-4">
+          {[1, 2, 3].map((asset) => (
+            <AssetListItem key={asset} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default UserAssetsPage;
+
+const AssetListItem = () => {
+  return (
+    <div className="rounded-xl bg-element p-2 shadow sm:p-4">
+      asset list item
+    </div>
+  );
+};

@@ -16,7 +16,7 @@ const AssetsList = () => {
           type="search"
           name="userSearch"
           placeholder="Search by name or assigned to..."
-          className="w-full rounded-full border bg-element py-2 pl-3 pr-10"
+          className="w-full rounded-full border border-neutral-200 bg-element py-2 pl-3 pr-10 focus:border-transparent focus:ring-purple-300"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />

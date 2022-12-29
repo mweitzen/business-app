@@ -1,10 +1,9 @@
+import LabelText from "./text-label";
+
 const InputLabel = ({ label, htmlFor }: { label: string; htmlFor: string }) => {
   return (
-    <label
-      htmlFor={htmlFor}
-      className="text-xs font-semibold uppercase tracking-widest text-muted"
-    >
-      {label}
+    <label htmlFor={htmlFor}>
+      <LabelText>{label}</LabelText>
     </label>
   );
 };

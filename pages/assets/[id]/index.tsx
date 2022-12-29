@@ -7,6 +7,8 @@ import AssetAssignModal from "partials/ModalAssetAssign";
 import AssetReAssignModal from "partials/ModalAssetReAssign";
 import AssetUnassignModal from "partials/ModalAssetUnAssign";
 import CardBase from "@/components/card";
+import Link from "next/link";
+import ButtonBase from "@/components/button";
 
 /*
  *
@@ -28,11 +30,12 @@ const AssetDetailPage = () => {
     retry: false,
   });
 
-  if (status === "error" || !asset) {
+  if (status === "error") {
     return (
       <div className="text-center">
         <h1>Error Boundary</h1>
-        <p>Asset does not exist</p>
+        <p>Something happened, or</p>
+        <p>Asset does not exist.</p>
       </div>
     );
   }
@@ -45,9 +48,9 @@ const AssetDetailPage = () => {
 
       <CardBase>
         {status === "loading" ? (
-          <div className="text-center">Loading...</div>
+          <div>Loading...</div>
         ) : (
-          <div className="grid gap-y-4 p-8">
+          <div className="grid gap-y-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-muted">
                 Name:{" "}
@@ -81,6 +84,9 @@ const AssetDetailPage = () => {
                 <AssetUnassignModal asset={asset} />
               </>
             ) : null}
+            <Link href={`/assets/${asset.id}/history`}>
+              <ButtonBase>Assignment History</ButtonBase>
+            </Link>
           </div>
         )}
       </CardBase>

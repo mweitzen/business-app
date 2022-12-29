@@ -9,9 +9,8 @@ import InputLabel from "./input-label";
  * INPUT BASE
  *
  */
-interface IInputBase extends WithChildren {
+export interface IInputBase extends React.HTMLProps<HTMLInputElement> {
   label: string;
-  name: string;
   meta: FieldMetaProps<any>;
 }
 
@@ -20,9 +19,14 @@ interface IInputBase extends WithChildren {
  * INPUT BASE
  *
  */
-const InputBase: React.FC<IInputBase> = ({ children, label, name, meta }) => {
+const InputBase: React.FC<IInputBase> = ({
+  children,
+  label,
+  name = "default",
+  meta,
+}) => {
   return (
-    <div className="grid gap-y-1">
+    <div className="grid gap-y-1 text-xs sm:text-sm">
       <div className="flex">
         <InputLabel htmlFor={name} label={label} />
         <InputErrorMessage meta={meta} />

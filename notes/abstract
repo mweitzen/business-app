@@ -1,0 +1,34 @@
+im an IT supervisor
+
+# view [read]
+i need to track:
+    - who has what equipment
+    - what condition that equipment is in
+    - if service tickets exist on those assets
+    - the status of those service tickets
+    - what assets are available and unassigned
+    //
+    - //active assets & [separate for] retired assets
+    - the total amount invested in assets
+    - the total amount invested in assets at each condition
+    - the total amount invested in assets by type of asset
+    - the total amount invested in assets by brand of asset
+    //
+    - the total amount of available assets
+    - the average amount of assets assigned to users for all users
+    //
+    - the history of ownership for each asset
+    - the condition the asset was in at each different change of ownership
+
+# do something [create, update, delete]
+i need to be able to:
+    - change ownership of the assets
+    - update the condition of the assets
+    - submit service tickets for the equipment
+    - unassign assets from users
+    - assign available assets to a user
+    - add a new asset to the inventory
+        - add purchase details for the asset
+        - add condition status and notes for the asset
+        - assign it to an employee or not
+    - retire an asset

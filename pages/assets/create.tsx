@@ -17,6 +17,7 @@ import TextAreaInput from "@/components/input-textarea";
 import SelectUser from "@/components/select-user";
 import { queryClient } from "pages/_app";
 import { useRouter } from "next/router";
+import ButtonBase from "@/components/button";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -117,11 +118,7 @@ const CreateAssetPage = () => {
           {({ isSubmitting, errors, values }) => (
             <Form>
               {/* step 1 */}
-              <FormSection
-                formStep={formStep}
-                thisStep={1}
-                header="Asset Details"
-              >
+              <FormSection formStep={formStep} thisStep={1}>
                 <TextInput
                   label="Asset Nickname"
                   name="name"
@@ -151,15 +148,21 @@ const CreateAssetPage = () => {
               </FormSection>
 
               {/* step 2 */}
-              <FormSection
-                formStep={formStep}
-                thisStep={2}
-                header="Additional Details"
-              >
-                <TextAreaInput
-                  label="Add Purchase Details"
-                  name="xxx"
-                  placeholder="replace later"
+              <FormSection formStep={formStep} thisStep={2}>
+                <TextInput
+                  label="Purchased From"
+                  name="purchasedFrom"
+                  placeholder="eg: Amazon, eBay"
+                />
+                <TextInput
+                  label="Purchase Price"
+                  name="purchasePrice"
+                  placeholder="eg: 300.56"
+                />
+                <TextInput
+                  label="Order Number"
+                  name="orderNumber"
+                  placeholder="Please enter the order number"
                 />
                 <TextAreaInput
                   label="Description (optional)"
@@ -169,11 +172,7 @@ const CreateAssetPage = () => {
               </FormSection>
 
               {/* step 3 */}
-              <FormSection
-                formStep={formStep}
-                thisStep={3}
-                header="Employee Assignment"
-              >
+              <FormSection formStep={formStep} thisStep={3}>
                 <InputLabel
                   htmlFor="user"
                   label="Assign to a User (optional)"
@@ -182,11 +181,7 @@ const CreateAssetPage = () => {
               </FormSection>
 
               {/* step 4 */}
-              <FormSection
-                formStep={formStep}
-                thisStep={4}
-                header="Review & Confirm"
-              >
+              <FormSection formStep={formStep} thisStep={4}>
                 <div className="space-y-4 rounded-lg border p-4">
                   <div>
                     <InputLabel htmlFor="" label="Asset Name" />
@@ -205,17 +200,18 @@ const CreateAssetPage = () => {
                     <p>{values.serialNumber}</p>
                   </div>
                 </div>
-                <button
+                <ButtonBase
                   type="submit"
                   disabled={
                     isSubmitting ||
                     formStep !== 4 ||
-                    Object.keys(errors).length !== 0
+                    Object.keys(errors).length !== 0 ||
+                    true
                   }
-                  className="rounded-full bg-element py-2 px-8 shadow shadow-purple-300 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-gray-200"
+                  className="disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-gray-200"
                 >
                   Confirm
-                </button>
+                </ButtonBase>
               </FormSection>
             </Form>
           )}
@@ -223,28 +219,20 @@ const CreateAssetPage = () => {
         {/* form stage actions */}
         <div className="mt-4 flex justify-between">
           <span>
-            <button
+            <ButtonBase
               onClick={decreaseFormStep}
-              className={classNames(
-                formStep === 1
-                  ? "hidden"
-                  : "rounded-full bg-element py-2 px-8 shadow shadow-purple-300"
-              )}
+              className={classNames(formStep === 1 ? "hidden" : "")}
             >
               Back
-            </button>
+            </ButtonBase>
           </span>
           <span>
-            <button
+            <ButtonBase
               onClick={increaseFormStep}
-              className={classNames(
-                formStep === 4
-                  ? "hidden"
-                  : "rounded-full bg-element py-2 px-8 shadow shadow-purple-300"
-              )}
+              className={classNames(formStep === 4 ? "hidden" : "")}
             >
               Next
-            </button>
+            </ButtonBase>
           </span>
         </div>
       </CardBase>
@@ -255,11 +243,10 @@ const CreateAssetPage = () => {
 export default CreateAssetPage;
 
 const FormSection: React.FC<
-  WithChildren & { formStep: number; thisStep: number; header: string }
-> = ({ children, formStep, thisStep, header }) => {
+  WithChildren & { formStep: number; thisStep: number }
+> = ({ children, formStep, thisStep }) => {
   return (
     <section className={classNames(formStep !== thisStep ? "hidden" : "")}>
-      <h2 className="mb-4 text-lg font-thin">{header}</h2>
       <div className="grid gap-y-6">{children}</div>
     </section>
   );

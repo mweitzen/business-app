@@ -5,6 +5,8 @@ import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "pages/_app";
+import ButtonBase from "@/components/button";
+import LabelText from "@/components/text-label";
 
 const AssetAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -19,7 +21,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
   const mutation = useMutation({
     mutationFn: (data) =>
       axios.post(`/api/assets/${asset.id}/assign`, {
-        userId: "clc8b4re100009k0mrqatd6cp",
+        userId: "clc8d2h1g00009khehb7m79ts",
       }),
     onSuccess: (data) => {
       console.log("Successful mutation");
@@ -38,12 +40,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
 
   return (
     <div>
-      <button
-        className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
-        onClick={handleClose}
-      >
-        Assign
-      </button>
+      <ButtonBase onClick={handleClose}>Assign</ButtonBase>
 
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
         {/* stage 1 | confirm asset */}
@@ -60,15 +57,15 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
-            <button
-              className="w-full rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={() => {
                 setAssetConfirmed(true);
                 setDisplayStep(2);
               }}
             >
               Confirm
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
 
@@ -82,7 +79,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
               <p className="text-xs uppercase tracking-widest text-muted">
                 Condition
               </p>
-              <p>{condition}</p>
+              <p>{asset.condition}</p>
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-muted">
@@ -100,14 +97,14 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
               </div>
             </div>
 
-            <button
-              className="w-full rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={() => {
                 setDisplayStep(3);
               }}
             >
               Confirm
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
 
@@ -116,25 +113,21 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
           <div className="space-y-4 text-center">
             <h3 className="text-xl font-extralight">Step 3 | Pick User</h3>
             <div>
-              <p className="text-xs uppercase tracking-widest text-muted">
-                user dropdown
-              </p>
+              <LabelText>Select an employee</LabelText>
               <SelectUser />
             </div>
             <div className="rounded-lg border py-2 px-4">
-              <p className="text-xs uppercase tracking-widest text-muted">
-                user quick details
-              </p>
+              <LabelText>User quick details</LabelText>
             </div>
-            <button
-              className="w-full rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={async () => {
                 mutation.mutate();
                 handleClose();
               }}
             >
               Assign
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
       </ModalBase>

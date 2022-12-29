@@ -3,6 +3,7 @@ import axios from "axios";
 //
 import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
+import ButtonBase from "@/components/button";
 
 const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -25,12 +26,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
 
   return (
     <div>
-      <button
-        className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
-        onClick={handleClose}
-      >
-        Re-Assign
-      </button>
+      <ButtonBase onClick={handleClose}>Re-Assign</ButtonBase>
 
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
         {/* stage 1 | confirm asset */}
@@ -53,15 +49,15 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
-            <button
-              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={() => {
                 setAssetConfirmed(true);
                 setDisplayStep(2);
               }}
             >
               Confirm
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
 
@@ -73,7 +69,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
               <p className="text-xs uppercase tracking-widest text-muted">
                 Last Known Condition
               </p>
-              <p>{condition}</p>
+              <p>{asset.condition}</p>
             </div>
             <p>Has the condition changed?</p>
             <p>Change condition</p>
@@ -88,14 +84,14 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
                 }}
               />
             </div>
-            <button
-              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={() => {
                 setDisplayStep(3);
               }}
             >
               Confirm
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
 
@@ -115,19 +111,19 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
                 user quick details
               </p>
             </div>
-            <button
-              className="mx-auto rounded-full bg-element p-1.5 px-4 text-sm shadow shadow-purple-300"
+            <ButtonBase
+              className="w-full"
               onClick={async () => {
                 const { data } = await axios.post(
                   `/api/assets/${asset.id}/reassign`,
                   {
-                    userId: "clc8b4re100009k0mrqatd6cp",
+                    userId: "clc8d2h1g00009khehb7m79ts",
                   }
                 );
               }}
             >
               Re-Assign
-            </button>
+            </ButtonBase>
           </div>
         ) : null}
       </ModalBase>
