@@ -9,31 +9,32 @@ const UsersList = () => {
 
   return (
     <div>
-      <header className="flex justify-between">
-        <h1>All Users</h1>
-      </header>
+      <div className="mb-6 space-y-2">
+        {/* search bar */}
+        <div>
+          <input
+            type="search"
+            name="userSearch"
+            placeholder="Search by employee name or email"
+            className="w-full rounded-full border border-neutral-200 bg-element py-2 pl-3 pr-10 focus:border-transparent focus:ring-purple-300"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
 
-      {/* search bar */}
-      <div>
-        <input
-          type="search"
-          name="userSearch"
-          placeholder="Start typing employee name"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-      </div>
-
-      {/* filters */}
-      <div className="flex">
-        {["1", "2", "3"].map((option) => (
-          <div
-            key={option}
-            className={classNames(`rounded-full border px-8 py-2`)}
-          >
-            {option}
-          </div>
-        ))}
+        {/* filters */}
+        <div className="flex gap-x-2">
+          {["Department", "Region", "Office Location"].map((option) => (
+            <div
+              key={option}
+              className={classNames(
+                `rounded-full border px-8 py-2 text-xs shadow shadow-purple-300`
+              )}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* List */}
@@ -43,8 +44,12 @@ const UsersList = () => {
         </colgroup>
         <thead>
           <tr>
-            <th className="text-left">Name</th>
-            <th className="text-left">Email</th>
+            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+              Name
+            </th>
+            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+              Email
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -56,11 +61,11 @@ const UsersList = () => {
             users?.map((user: any) => (
               <tr
                 key={user.id}
-                className="odd:bg-slate-50 hover:cursor-pointer hover:bg-slate-100"
+                className="odd:bg-slate-100 hover:cursor-pointer hover:bg-slate-200"
                 onClick={() => router.push(`/users/${user.id}/assets`)}
               >
-                <td className="text-sm">{user.name}</td>
-                <td className="text-sm">{user.email}</td>
+                <td className="py-1.5 text-sm">{user.name}</td>
+                <td className="py-1.5 text-sm">{user.email}</td>
               </tr>
             ))
           ) : null}

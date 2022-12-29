@@ -1,11 +1,28 @@
 import { useRouter } from "next/router";
 import { classNames } from "@/lib/helpers";
 import { useAssetsContext } from "@/context/assets";
+import { useEffect } from "react";
 
 const AssetsList = () => {
   const router = useRouter();
 
-  const { assets, isFetching, searchText, setSearchText } = useAssetsContext();
+  const {
+    assets,
+    isFetching,
+    searchText,
+    setSearchText,
+    selectedFilterBrand,
+    selectedFilterStatus,
+    selectedFilterTypes,
+    setSelectedFilterBrand,
+    setSelectedFilterStatus,
+    setSelectedFilterTypes,
+  } = useAssetsContext();
+
+  useEffect(() => {
+    // setSelectedFilterTypes(["LAPTOP"]);
+    // setSelectedFilterStatus(["assigned"]);
+  }, []);
 
   return (
     <div>
@@ -49,7 +66,7 @@ const AssetsList = () => {
             <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
               Type
             </th>
-            <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
+            <th className="hidden py-1.5 text-left text-xs uppercase tracking-widest text-muted sm:block">
               Assigned To
             </th>
             <th className="py-1.5 text-left text-xs uppercase tracking-widest text-muted">
@@ -70,11 +87,13 @@ const AssetsList = () => {
                 onClick={() => router.push(`/assets/${asset.id}`)}
               >
                 <td className="py-1.5">{asset.name}</td>
-                <td className="py-1.5">{asset.type}</td>
-                <td className="py-1.5">
+                <td className="py-1.5 capitalize">
+                  {asset.type.toLowerCase()}
+                </td>
+                <td className="hidden truncate py-1.5 sm:block">
                   {asset.assignedTo ? asset.assignedTo.name : "-"}
                 </td>
-                <td className="py-1.5">{asset.status}</td>
+                <td className="py-1.5 capitalize">{asset.status}</td>
               </tr>
             ))
           ) : null}

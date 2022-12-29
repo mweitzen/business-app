@@ -76,6 +76,7 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
       });
       return res.status(200).json(data);
     }
+
     const data = await prisma.asset.findMany({
       include: {
         assignedTo: true,

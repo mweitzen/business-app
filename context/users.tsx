@@ -37,37 +37,43 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFilterBrand, setSelectedFilterBrand] = useState([]);
   const [selectedFilterStatus, setSelectedFilterStatus] = useState([]);
 
-  const searchQuery = searchText ? `search=${searchText}` : "";
-  const filterArray = [
-    ...selectedFilterBrand,
-    ...selectedFilterTypes,
-    ...selectedFilterStatus,
-  ];
-  const filterQuery =
-    filterArray.length !== 0 ? `filter=${filterArray.join(", ")}` : "";
-
-  const queryString =
-    !!searchQuery || !!filterQuery ? `?${searchQuery}&${filterQuery}` : "";
-
-  const { data: users, isFetching } = useQuery({
-    queryKey: [
-      "users",
-      searchText,
-      ...selectedFilterTypes,
-      ...selectedFilterBrand,
-      ...selectedFilterStatus,
-    ],
+  const { data: _users, isFetching } = useQuery({
+    queryKey: ["users"],
     queryFn: async () => {
-      if (!!searchText) {
-        const { data } = await axios.get(`/api/users${queryString}`);
-        return data;
-      }
       const { data } = await axios.get("/api/users");
       return data;
     },
     refetchOnWindowFocus: false,
   });
 
+  let users = _users;
+  if (!!users) {
+    if (!!searchText) {
+      users = _users.filter(
+        (user) =>
+          user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+
+    // if (selectedFilterTypes.length !== 0) {
+    //   users = users.filter((user) =>
+    //     selectedFilterTypes.includes(user.type)
+    //   );
+    // }
+
+    // if (selectedFilterBrand.length !== 0) {
+    //   users = users.filter((user) =>
+    //     selectedFilterBrand.includes(user.brand)
+    //   );
+    // }
+
+    // if (selectedFilterStatus.length !== 0) {
+    //   users = users.filter((user) =>
+    //     selectedFilterStatus.includes(user.status)
+    //   );
+    // }
+  }
   return (
     <UsersContext.Provider
       value={{

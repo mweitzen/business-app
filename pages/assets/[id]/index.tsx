@@ -83,9 +83,12 @@ const AssetDetailPage = () => {
                 <AssetUnassignModal asset={asset} />
               </>
             ) : null}
-            <Link href={`/assets/${asset.id}/history`}>
-              <ButtonBase>Assignment History</ButtonBase>
+            <Link href={`/assets/${asset.id}/history`} className="rounded-full">
+              <ButtonBase className="w-full">Assignment History</ButtonBase>
             </Link>
+            <ButtonBase>Mark a Condition Change</ButtonBase>
+            <ButtonBase>Submit a Service Ticket</ButtonBase>
+            <ButtonBase>Retire Asset</ButtonBase>
           </div>
         )}
       </CardBase>

@@ -64,11 +64,11 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
         <meta name="twitter:image" content={logo} />
       </Head>
 
-      <header className="relative z-10 flex w-full justify-between bg-element py-4 px-8 font-medium shadow shadow-purple-300">
-        <Link href="/" className="text-sm">
-          App Home
+      <header className="relative z-10 flex h-12 w-full items-center justify-between bg-element px-8 font-medium shadow shadow-purple-300 sm:h-14">
+        <Link href="/" className="text-sm sm:text-base">
+          Asset Assignment
         </Link>
-        <button onClick={toggleMode} className="text-sm">
+        <button onClick={toggleMode} className="text-sm sm:text-base">
           switch
         </button>
       </header>

@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 //
 import PageHeader from "@/components/page-header";
+import LabelText from "@/components/text-label";
+import Link from "next/link";
 
 const UserAssetsPage = () => {
   const {
@@ -21,7 +23,7 @@ const UserAssetsPage = () => {
 
   return (
     <div>
-      <PageHeader header="User Assets Page" />
+      <PageHeader header={`${user.name}'s Assets`} />
       <div>
         <div className="grid gap-y-4">
           {user ? (
@@ -41,6 +43,16 @@ export default UserAssetsPage;
 
 const AssetListItem = ({ asset }: any) => {
   return (
-    <div className="rounded-xl bg-element p-2 shadow sm:p-4">{asset.name}</div>
+    <Link href={`/assets/${asset.id}`}>
+      <div className="rounded-xl bg-element py-2 px-3 shadow sm:p-4">
+        <LabelText>{asset.name}</LabelText>
+        <div>
+          <p>
+            <span>{asset.brand}</span> · <span>{asset.type}</span>
+          </p>
+          <p className="text-sm">{asset.serialNumber}</p>
+        </div>
+      </div>
+    </Link>
   );
 };

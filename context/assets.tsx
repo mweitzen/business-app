@@ -10,9 +10,9 @@ interface IAssetsContext {
   selectedFilterBrand: OptionProps[];
   selectedFilterStatus: OptionProps[];
   setSearchText: (val: string) => void;
-  setSelectedFilterTypes: unknown;
-  setSelectedFilterBrand: unknown;
-  setSelectedFilterStatus: unknown;
+  setSelectedFilterTypes: (any: any) => void;
+  setSelectedFilterBrand: (any: any) => void;
+  setSelectedFilterStatus: (any: any) => void;
   assets: any[];
   isFetching: boolean;
 }
@@ -38,34 +38,47 @@ const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFilterBrand, setSelectedFilterBrand] = useState([]);
   const [selectedFilterStatus, setSelectedFilterStatus] = useState([]);
 
-  const searchQuery = searchText ? `search=${searchText}` : "";
-  const filterArray = [
-    ...selectedFilterBrand,
-    ...selectedFilterTypes,
-    ...selectedFilterStatus,
-  ];
-  const filterQuery =
-    filterArray.length !== 0 ? `filter=${filterArray.join(", ")}` : "";
-
-  const queryString =
-    !!searchQuery || !!filterQuery ? `?${searchQuery}&${filterQuery}` : "";
-
-  const { data: assets, isFetching } = useQuery({
-    queryKey: [
-      "assets",
-      searchText,
-      ...selectedFilterTypes,
-      ...selectedFilterBrand,
-      ...selectedFilterStatus,
-    ],
+  const { data: _assets, isFetching } = useQuery({
+    queryKey: ["assets"],
     queryFn: async () => {
-      const { data } = await axios.get(`/api/assets${queryString}`);
-      console.log(data);
-
+      const { data } = await axios.get(`/api/assets`);
       return data;
     },
+
     refetchOnWindowFocus: false,
   });
+
+  let assets = _assets;
+  if (!!assets) {
+    if (!!searchText) {
+      assets = _assets.filter(
+        (asset) =>
+          asset.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          (asset.assignedTo &&
+            asset.assignedTo.name
+              .toLowerCase()
+              .includes(searchText.toLowerCase()))
+      );
+    }
+
+    if (selectedFilterTypes.length !== 0) {
+      assets = assets.filter((asset) =>
+        selectedFilterTypes.includes(asset.type)
+      );
+    }
+
+    if (selectedFilterBrand.length !== 0) {
+      assets = assets.filter((asset) =>
+        selectedFilterBrand.includes(asset.brand)
+      );
+    }
+
+    if (selectedFilterStatus.length !== 0) {
+      assets = assets.filter((asset) =>
+        selectedFilterStatus.includes(asset.status)
+      );
+    }
+  }
 
   return (
     <AssetsContext.Provider

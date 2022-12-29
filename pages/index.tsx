@@ -18,16 +18,8 @@ const HomePage: NextPageWithLayout = () => {
             text: "Assets List",
           },
           {
-            href: "/assets/history",
-            text: "Assignment History",
-          },
-          {
             href: "/users",
             text: "User List",
-          },
-          {
-            href: "/users/test",
-            text: "User Detail",
           },
         ].map((link) => (
           <Link

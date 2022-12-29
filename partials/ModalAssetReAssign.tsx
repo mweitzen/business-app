@@ -40,7 +40,9 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
 
   return (
     <div>
-      <ButtonBase onClick={handleClose}>Re-Assign</ButtonBase>
+      <ButtonBase className="w-full" onClick={handleClose}>
+        Re-Assign
+      </ButtonBase>
 
       <ModalBase show={display} handleClose={() => setDisplay(false)}>
         {/* stage 1 | confirm asset */}

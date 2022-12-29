@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import PageHeader from "@/components/page-header";
+import LabelText from "@/components/text-label";
 
 const AssignmentHistoryPage = () => {
   const {
@@ -12,7 +13,7 @@ const AssignmentHistoryPage = () => {
     queryKey: ["asset", assetId, "history"],
     queryFn: async () => {
       const { data } = await axios.get(`/api/assets/${assetId}/history`);
-      console.log(data);
+
       return data;
     },
   });
@@ -26,22 +27,25 @@ const AssignmentHistoryPage = () => {
     <div>
       <PageHeader header="Assignment History Page" />
 
-      {currentAssignment ? (
-        <>
-          <p>Current owner</p>
-          <p>
-            Since{" "}
-            {Intl.DateTimeFormat("en-US").format(
-              new Date(currentAssignment.assignedAt)
-            )}
-          </p>
-          <p>{currentAssignment.owner.name}</p>
-        </>
-      ) : (
-        <div>Unassigned</div>
-      )}
-
-      <p>Past Owners</p>
+      <div className="mb-4">
+        <LabelText>Current owner</LabelText>
+        <div>
+          {currentAssignment ? (
+            <div>
+              <p>{currentAssignment.owner.name}</p>
+              <p className="text-sm">
+                Since{" "}
+                {Intl.DateTimeFormat("en-US").format(
+                  new Date(currentAssignment.assignedAt)
+                )}
+              </p>
+            </div>
+          ) : (
+            "Unassigned"
+          )}
+        </div>
+      </div>
+      <LabelText>Past Owners</LabelText>
       {pastAssignments.length === 0 ? (
         <div>There have not been any previous owners</div>
       ) : null}
