@@ -7,6 +7,7 @@ const AssetsList = () => {
 
   const {
     assets,
+    choices,
     isFetching,
     searchText,
     setSearchText,
@@ -23,29 +24,28 @@ const AssetsList = () => {
       label: "Type",
       value: selectedFilterTypes,
       setValue: setSelectedFilterTypes,
-      options: [
-        { label: "Desktop", value: "DESKTOP" },
-        { label: "Laptop", value: "LAPTOP" },
-        { label: "Tablet", value: "TABLET" },
-      ],
+      options: choices.types.map((choice) => ({
+        label: choice.toLowerCase().replace("_", " "),
+        value: choice,
+      })),
     },
     {
       label: "Brand",
       value: selectedFilterBrand,
       setValue: setSelectedFilterBrand,
-      options: [
-        { label: "Apple", value: "Apple" },
-        { label: "Dell", value: "Dell" },
-      ],
+      options: choices.brands.map((choice) => ({
+        label: choice.toLowerCase().replace("_", " "),
+        value: choice,
+      })),
     },
     {
       label: "Status",
       value: selectedFilterStatus,
       setValue: setSelectedFilterStatus,
-      options: [
-        { label: "Assigned", value: "assigned" },
-        { label: "Available", value: "available" },
-      ],
+      options: choices.status.map((choice) => ({
+        label: choice.toLowerCase().replace("_", " "),
+        value: choice,
+      })),
     },
   ];
 
@@ -110,7 +110,7 @@ const AssetsList = () => {
                 <td className="truncate py-1.5">{asset.name}</td>
                 <td className="hidden py-1.5 sm:block">{asset.brand}</td>
                 <td className="py-1.5 capitalize">
-                  {asset.type.toLowerCase()}
+                  {asset.type.toLowerCase().replace("_", " ")}
                 </td>
                 <td className="hidden truncate py-1.5 sm:block">
                   {asset.assignedTo ? asset.assignedTo.name : "-"}

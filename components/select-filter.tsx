@@ -18,14 +18,21 @@ const FilterSelect: React.FC<IFilterSelect> = ({
 }) => {
   return (
     <div className="relative z-10 w-full">
-      <Listbox value={value} onChange={setValue} multiple>
+      <Listbox
+        value={value}
+        onChange={setValue}
+        disabled={options.length === 0}
+        multiple
+      >
         <Listbox.Button
           className={classNames(
-            `w-full truncate rounded-full border px-8 py-2 text-center text-xs capitalize shadow shadow-purple-300 sm:text-start`,
+            `w-full truncate rounded-full border px-8 py-2 text-center text-xs capitalize shadow shadow-purple-300 disabled:bg-gray-50 disabled:shadow-gray-200 sm:text-start`,
             value.length !== 0 ? "font-medium" : ""
           )}
         >
-          {value.length === 0 ? label : value.join(" | ").toLowerCase()}
+          {value.length === 0
+            ? label
+            : value.join(" | ").toLowerCase().replace("_", " ")}
         </Listbox.Button>
         <Transition
           as={Fragment}
@@ -49,21 +56,34 @@ const FilterSelect: React.FC<IFilterSelect> = ({
                 }
               >
                 {({ selected }) => (
-                  <>
+                  <div className="flex items-center gap-2">
+                    <span className="grid h-4 w-4 place-content-center font-bold text-purple-900">
+                      {selected ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="h-full w-full"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      ) : null}
+                    </span>
                     <span
                       className={classNames(
-                        "truncate",
+                        "truncate capitalize",
                         selected ? "font-medium" : ""
                       )}
                     >
                       {label}
                     </span>
-                    {selected ? (
-                      <span className="absolute left-0 ml-4 font-bold text-purple-900">
-                        X
-                      </span>
-                    ) : null}
-                  </>
+                  </div>
                 )}
               </Listbox.Option>
             ))}

@@ -1,16 +1,15 @@
-import { Combobox, Transition } from "@headlessui/react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Fragment, useState } from "react";
-
-const defaultOption = { id: 0, name: "Select a user or begin typing" };
-const emptyOption = { id: -1, name: "" };
+//
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+//
+import { Combobox, Transition } from "@headlessui/react";
 
 const SelectUser = () => {
-  const [selected, setSelected] = useState<typeof defaultOption>(defaultOption);
+  const [selected, setSelected] = useState();
   const [query, setQuery] = useState("");
 
-  const { data: users, isFetching } = useQuery({
+  const { data: users, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const { data } = await axios.get("/api/users");
@@ -18,7 +17,7 @@ const SelectUser = () => {
     },
   });
 
-  if (isFetching) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   const filteredOptions =
     query === ""
@@ -32,29 +31,28 @@ const SelectUser = () => {
 
   return (
     <div className="w-full text-left">
-      <Combobox
-        value={selected}
-        onChange={setSelected}
-        onFocus={() => {
-          if (defaultOption) {
-            setSelected(emptyOption);
-          }
-        }}
-        onBlur={() => {
-          if (selected === emptyOption) {
-            setSelected(defaultOption);
-          }
-        }}
-      >
+      <Combobox value={selected} onChange={setSelected}>
         <div className="relative">
           <div className="relative w-full cursor-pointer overflow-hidden rounded-full bg-element text-left shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-purple-300 sm:text-sm">
             <Combobox.Input
               className="w-full rounded-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               displayValue={(option) => selected.name}
               onChange={(event) => setQuery(event.target.value)}
+              placeholder="Select a user or begin typing..."
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-              ---
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-6 w-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M11.47 4.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 01-1.06 1.06L12 6.31 8.78 9.53a.75.75 0 01-1.06-1.06l3.75-3.75zm-3.75 9.75a.75.75 0 011.06 0L12 17.69l3.22-3.22a.75.75 0 111.06 1.06l-3.75 3.75a.75.75 0 01-1.06 0l-3.75-3.75a.75.75 0 010-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </Combobox.Button>
           </div>
 

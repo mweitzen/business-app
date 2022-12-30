@@ -19,11 +19,11 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
   const [user, setUser] = useState<{ id: string; name: string } | null>(null);
 
   const mutation = useMutation({
-    mutationFn: (data) =>
+    mutationFn: (userId: string) =>
       axios.post(`/api/assets/${asset.id}/assign`, {
-        userId: "clc8d2h1g00009khehb7m79ts",
+        userId,
       }),
-    onSuccess: (data) => {
+    onSuccess: () => {
       console.log("Successful mutation");
       queryClient.invalidateQueries({ queryKey: ["asset", asset.id] });
     },
@@ -50,12 +50,10 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
           <div className="space-y-4 text-center">
             <h3 className="text-xl font-extralight">Step 1 | Confirm Asset</h3>
             <div className="rounded-lg border py-2 px-4">
-              <p className="text-xs uppercase tracking-widest text-muted">
-                Serial Number
-              </p>
+              <LabelText>Serial Number</LabelText>
               <p>{asset.serialNumber}</p>
             </div>
-            <p className="text-sm">
+            <p className="text-sm font-light">
               Before you assign this asset, confirm this is the correct serial
               number.
             </p>
@@ -78,19 +76,17 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
               Step 2 | Confirm Condition
             </h3>
             <div className="rounded-lg border py-2 px-4">
-              <p className="text-xs uppercase tracking-widest text-muted">
-                Condition
+              <LabelText>Condition</LabelText>
+              <p className="capitalize">
+                {asset.condition.toLowerCase().replace("_", " ")}
               </p>
-              <p>{asset.condition}</p>
             </div>
-            <div>
-              <p className="text-xs uppercase tracking-widest text-muted">
-                Condition Notes
-              </p>
+            <div className="rounded-lg border py-2 px-4">
+              <LabelText>Condition Notes</LabelText>
               <div>
                 <textarea
                   rows={3}
-                  className="resize-y rounded-lg border"
+                  className="w-full resize-y rounded-lg border-gray-100"
                   value={conditionNotes}
                   onChange={(e) => {
                     setConditionNotes(e.target.value);
@@ -113,18 +109,20 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
         {/* stage 3 | pick user */}
         {displayStep === 3 ? (
           <div className="space-y-4 text-center">
-            <h3 className="text-xl font-extralight">Step 3 | Pick User</h3>
+            <h3 className="text-xl font-extralight">Step 3 | Assign to User</h3>
             <div>
-              <LabelText>Select an employee</LabelText>
+              <LabelText>Select an employee (optional)</LabelText>
               <SelectUser />
             </div>
-            <div className="rounded-lg border py-2 px-4">
+
+            {/* <div className="rounded-lg border py-2 px-4">
               <LabelText>User quick details</LabelText>
-            </div>
+            </div> */}
+
             <ButtonBase
               className="w-full"
               onClick={async () => {
-                mutation.mutate();
+                mutation.mutate("clc9w976t00009ke4tedezn50");
                 handleClose();
               }}
             >

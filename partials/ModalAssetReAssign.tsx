@@ -21,7 +21,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const mutation = useMutation({
     mutationFn: (data) =>
       axios.post(`/api/assets/${asset.id}/reassign`, {
-        userId: "clc8d2h1g00009khehb7m79ts",
+        userId: "clc9w976t00009ke4tedezn50",
       }),
     onSuccess: (data) => {
       console.log("Successful mutation");

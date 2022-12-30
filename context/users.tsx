@@ -43,7 +43,7 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       const { data } = await axios.get("/api/users");
       return data;
     },
-    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   let users = _users;

@@ -8,10 +8,8 @@ import InputBase from "./input-base";
  *
  *
  */
-export interface ISelectInput extends WithChildren {
+export interface ISelectInput extends React.HTMLProps<HTMLSelectElement> {
   label: string;
-  name: string;
-  defaultOption?: string;
 }
 
 /*
@@ -20,11 +18,13 @@ export interface ISelectInput extends WithChildren {
  *
  */
 const SelectInput: React.FC<ISelectInput> = ({
-  defaultOption = "Select from dropdown",
+  placeholder = "Select from dropdown",
   label,
   name,
   children,
 }) => {
+  if (!name) throw new Error("Must provide a name for the input");
+
   const [field, meta] = useField({
     name,
   });
@@ -33,9 +33,11 @@ const SelectInput: React.FC<ISelectInput> = ({
     <InputBase label={label} name={name} meta={meta}>
       <select
         {...field}
-        className="rounded-md border border-neutral-100 bg-default p-2"
+        className="rounded-md border border-neutral-100 bg-default p-2 disabled:text-muted"
       >
-        <option value="">{defaultOption}</option>
+        <option value="" disabled>
+          {placeholder}
+        </option>
         {children}
       </select>
     </InputBase>

@@ -28,7 +28,7 @@ const UsersList = () => {
             <div
               key={option}
               className={classNames(
-                `rounded-full border px-8 py-2 text-xs shadow shadow-purple-300`
+                `rounded-full border bg-gray-50 px-8 py-2 text-xs shadow shadow-gray-200 hover:cursor-not-allowed`
               )}
             >
               {option}

@@ -2,7 +2,10 @@ import { createContext, useContext, useState } from "react";
 //
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+//
+import getChoices from "@/lib/common/getChoices";
 import { OptionProps } from "@/types";
+import { stat } from "fs";
 
 interface IAssetsContext {
   searchText: string;
@@ -14,6 +17,11 @@ interface IAssetsContext {
   setSelectedFilterBrand: (any: any) => void;
   setSelectedFilterStatus: (any: any) => void;
   assets: any[];
+  choices: {
+    types: string[];
+    brands: string[];
+    status: string[];
+  };
   isFetching: boolean;
 }
 
@@ -27,6 +35,11 @@ const initialState: IAssetsContext = {
   setSelectedFilterBrand: () => {},
   setSelectedFilterStatus: () => {},
   assets: [],
+  choices: {
+    types: [],
+    brands: [],
+    status: [],
+  },
   isFetching: false,
 };
 
@@ -44,9 +57,12 @@ const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
       const { data } = await axios.get(`/api/assets`);
       return data;
     },
-
-    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
+
+  const typeChoices = getChoices(_assets, "type");
+  const brandChoices = getChoices(_assets, "brand");
+  const statusChoices = getChoices(_assets, "status");
 
   let assets = _assets;
   if (!!assets) {
@@ -92,6 +108,11 @@ const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
         setSelectedFilterBrand,
         setSelectedFilterStatus,
         assets,
+        choices: {
+          types: typeChoices,
+          brands: brandChoices,
+          status: statusChoices,
+        },
         isFetching,
       }}
     >

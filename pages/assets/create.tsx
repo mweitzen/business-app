@@ -128,15 +128,15 @@ const CreateAssetPage = () => {
                 <TextInput
                   label="Asset Nickname"
                   name="name"
-                  placeholder="Use something that easily identifies the asset"
+                  placeholder="eg: Office Desktop, Employee Laptop 1"
                 />
                 <SelectInput
                   label="Asset Type"
                   name="type"
-                  defaultOption="Select an asset type"
+                  placeholder="Select an asset type"
                 >
                   {ASSET_TYPES.map((type) => (
-                    <option key={type} value={type}>
+                    <option key={type} value={type} className="capitalize">
                       {type.toLowerCase().replace("_", " ")}
                     </option>
                   ))}
