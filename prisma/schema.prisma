@@ -29,7 +29,11 @@ model User {
   lastName          String?
   middleName        String?
   preferredPronouns String?
-  jobTitle          String?
+  manager           User              @relation(name: "ManagerDirectReports", fields: [managerId], references: [id])
+  managerId         String
+  directReports     User[]            @relation(name: "ManagerDirectReports")
+  position          Position          @relation(fields: [positionId], references: [id])
+  positionId        String            @unique
   organization      Organization?     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   organizationId    String?
   department        Department?       @relation(fields: [departmentId], references: [id], onDelete: Restrict)
@@ -41,6 +45,22 @@ model User {
   sessions          Session[]
   assets            Asset[]
   assetHistory      AssetAssignment[]
+  positionHistory   PositionHistory[]
+  // --onboarding info
+  // --contact info
+  //    internal email
+  //    personal email
+  //    main phone
+  //    alt phone
+  //    preferred contact method
+  //    personal website
+  //    bio
+  //    address
+  //
+  // --company access
+  // --labor profile
+  // --external services
+  // --certifications
 }
 
 model Account {
@@ -90,11 +110,18 @@ model Organization {
   users User[]
 }
 
+model Building {
+  id   String @id @default(cuid())
+  name String
+  // BUILDING INFORMATION
+}
+
 model Department {
   id        String     @id @default(cuid())
   name      String
   code      String
   divisions Division[]
+  positions Position[]
   employees User[]
 }
 
@@ -111,6 +138,71 @@ model Program {
   name String
   code String
 }
+
+// *
+// *
+// * Employee Lifecycle Related Schema
+// *
+// *
+
+model Applicant {
+  id            String      @id @default(cuid())
+  email         String      @unique
+  name          String
+  appliedOn     DateTime    @default(now())
+  status        String
+  resume        String?
+  coverLetter   String?
+  internalNotes String?
+  rating        Int?
+  interviews    Interview[]
+}
+
+model Interview {
+  id          String    @id @default(cuid())
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  applicantId String
+  datetime    DateTime
+  duration    Int
+  accepted    Boolean   @default(false)
+  completed   Boolean   @default(false)
+  notes       String
+  position    Position  @relation(fields: [positionId], references: [id])
+  positionId  String
+  // interviewers User[]
+}
+
+model Position {
+  id               String            @id @default(cuid())
+  name             String
+  department       Department        @relation(fields: [departmentId], references: [id])
+  departmentId     String
+  active           Boolean           @default(true)
+  open             Boolean           @default(true)
+  employee         User?
+  employeeHistory  PositionHistory[]
+  interviewHistory Interview[]
+}
+
+model PositionHistory {
+  id         String   @id @default(cuid())
+  active     Boolean  @default(true)
+  position   Position @relation(fields: [positionId], references: [id])
+  positionId String
+  employee   User     @relation(fields: [employeeId], references: [id])
+  employeeId String
+}
+
+// * Enumerations (For when SQLite is replaced)
+
+// enum ApplicantStatus {
+//   UNSEEN
+//   CONTACTED
+//   INTERVIEWING
+//   OFFER_PENDING
+//   HIRED
+//   NON_HIRE
+// }
 
 // *
 // *
@@ -157,11 +249,7 @@ model AssetPurchase {
   purchasedFrom String
 }
 
-// *
-// *
 // * Enumerations (For when SQLite is replaced)
-// *
-// *
 
 // enum ConditionStatus {
 //   DAMAGED
