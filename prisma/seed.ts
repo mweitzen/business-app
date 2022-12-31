@@ -1,5 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import { assets, users, assetAssignments } from "./seed-data";
+//
+import users from "./seed-data/users";
+import applicants from "./seed-data/applicants";
+import assets from "./seed-data/assets";
+import departments from "./seed-data/departments";
+//
+import { assetAssignments, departmentTopReports } from "./seed-data/";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +21,36 @@ async function main() {
       return data;
     })
   );
+
+  const newApplicants = await Promise.all(
+    applicants.map(async ({ name, email }) => {
+      const data = await prisma.applicant.create({
+        data: {
+          name,
+          email,
+        },
+      });
+    })
+  );
+
+  /*
+   * CREATE DEPARTMENTS AND DIVISIONS
+   */
+
+  newUsers &&
+    departments.forEach(async (department) => {
+      const topReport = departmentTopReports[department.name] ?? null;
+      const topReportId: any = newUsers.find(
+        (user) => user.email === topReport
+      )?.id;
+
+      await prisma.department.create({
+        data: {
+          ...department,
+          topReportId,
+        },
+      });
+    });
 
   /*
    * CREATE ASSETS AND ASSIGN USERS

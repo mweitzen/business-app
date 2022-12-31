@@ -1,0 +1,37 @@
+im an applicant applying to a job
+
+# view [read]
+i need to track:
+    - what positions are available
+    - what status my application is in
+    - what my interview process has looked like
+    - my job offer if one is available
+
+# do something [create, update, delete]
+i need to be able to:
+    - apply to a position
+    - contact the company at any point
+    - accept/decline interview offers
+    - accept/decline job offers
+
+
+im the hiring company
+
+# view [read]
+i need to track:
+    - what positions are open and unfilled
+    - what positions have public postings
+    - what applicants are available
+    - what previous applicants might be contacted 
+    - who is interviewing for what positions
+    - all job offers made/accepted
+    - 
+
+# do something [create, update, delete]
+i need to be able to:
+    - add a new position
+    - decide if open and unfilled positions have a public facing job post
+    - invite an applicant for an interview
+    - send a job offer to an applicant
+    - 
+

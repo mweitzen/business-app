@@ -21,7 +21,7 @@ datasource db {
 model User {
   id                String            @id @default(cuid())
   email             String            @unique
-  emailVerified     DateTime?
+  personalEmail     String?
   image             String?
   name              String?
   firstName         String?
@@ -29,11 +29,11 @@ model User {
   lastName          String?
   middleName        String?
   preferredPronouns String?
-  manager           User              @relation(name: "ManagerDirectReports", fields: [managerId], references: [id])
-  managerId         String
+  manager           User?             @relation(name: "ManagerDirectReports", fields: [managerId], references: [id])
+  managerId         String?
   directReports     User[]            @relation(name: "ManagerDirectReports")
-  position          Position          @relation(fields: [positionId], references: [id])
-  positionId        String            @unique
+  position          Position?         @relation(fields: [positionId], references: [id])
+  positionId        String?           @unique
   organization      Organization?     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
   organizationId    String?
   department        Department?       @relation(fields: [departmentId], references: [id], onDelete: Restrict)
@@ -41,6 +41,7 @@ model User {
   createdAt         DateTime          @default(now())
   phone             String?
   phoneAlt          String?
+  topReportOf       Department?       @relation(name: "DepartmentTopReport")
   accounts          Account[]
   sessions          Session[]
   assets            Asset[]
@@ -117,12 +118,14 @@ model Building {
 }
 
 model Department {
-  id        String     @id @default(cuid())
-  name      String
-  code      String
-  divisions Division[]
-  positions Position[]
-  employees User[]
+  id          String     @id @default(cuid())
+  name        String
+  code        String
+  topReport   User       @relation(name: "DepartmentTopReport", fields: [topReportId], references: [id])
+  topReportId String     @unique
+  divisions   Division[]
+  positions   Position[]
+  employees   User[]
 }
 
 model Division {
@@ -146,16 +149,18 @@ model Program {
 // *
 
 model Applicant {
-  id            String      @id @default(cuid())
-  email         String      @unique
-  name          String
-  appliedOn     DateTime    @default(now())
-  status        String
-  resume        String?
-  coverLetter   String?
-  internalNotes String?
-  rating        Int?
-  interviews    Interview[]
+  id              String      @id @default(cuid())
+  email           String      @unique
+  name            String
+  appliedOn       DateTime    @default(now())
+  status          String      @default("UNSEEN")
+  resume          String?
+  coverLetter     String?
+  internalNotes   String?
+  rating          Int?
+  currentEmployee Boolean     @default(false)
+  interviews      Interview[]
+  interestedIn    Position[]
 }
 
 model Interview {
@@ -173,15 +178,16 @@ model Interview {
 }
 
 model Position {
-  id               String            @id @default(cuid())
-  name             String
-  department       Department        @relation(fields: [departmentId], references: [id])
-  departmentId     String
-  active           Boolean           @default(true)
-  open             Boolean           @default(true)
-  employee         User?
-  employeeHistory  PositionHistory[]
-  interviewHistory Interview[]
+  id                   String            @id @default(cuid())
+  name                 String
+  department           Department        @relation(fields: [departmentId], references: [id])
+  departmentId         String
+  active               Boolean           @default(true)
+  posted               Boolean           @default(false)
+  employee             User?
+  employeeHistory      PositionHistory[]
+  interviewHistory     Interview[]
+  interestedApplicants Applicant[]
 }
 
 model PositionHistory {
