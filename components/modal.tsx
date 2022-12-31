@@ -16,7 +16,7 @@ const ModalBase = ({ show, handleClose, children }: ModalProps) => {
         </Transition.Child>
         <div className="fixed inset-0 flex items-center justify-center">
           <Transition.Child as={Fragment}>
-            <Dialog.Panel className="mx-4 w-full max-w-md rounded-2xl bg-element p-8 shadow-sm shadow-purple-800">
+            <Dialog.Panel className="mx-4 w-full max-w-md rounded-2xl bg-element p-8 shadow-sm shadow-purple-800 dark:shadow-gray-800">
               {children}
             </Dialog.Panel>
           </Transition.Child>

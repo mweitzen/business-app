@@ -10,7 +10,7 @@ const AssetsListPage = () => {
       <PageHeader header="Your Company Assets">
         <Link
           href="/assets/create"
-          className="grid h-8 w-8 place-content-center rounded-full text-xl shadow shadow-purple-300"
+          className="grid h-8 w-8 place-content-center rounded-full text-xl shadow shadow-purple-300 dark:shadow-gray-800"
         >
           +
         </Link>

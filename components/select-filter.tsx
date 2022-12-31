@@ -26,7 +26,7 @@ const FilterSelect: React.FC<IFilterSelect> = ({
       >
         <Listbox.Button
           className={classNames(
-            `w-full truncate rounded-full border px-8 py-2 text-center text-xs capitalize shadow shadow-purple-300 disabled:bg-gray-50 disabled:shadow-gray-200 sm:text-start`,
+            `w-full truncate rounded-full border px-8 py-2 text-center text-xs capitalize shadow shadow-purple-300 disabled:bg-gray-50 disabled:shadow-gray-200 dark:shadow-gray-800 sm:text-start`,
             value.length !== 0 ? "font-medium" : ""
           )}
         >
@@ -43,7 +43,7 @@ const FilterSelect: React.FC<IFilterSelect> = ({
           leaveFrom="opacity-100 scale-100 translate-y-0"
           leaveTo="opacity-0 scale-[75%] -translate-y-12"
         >
-          <Listbox.Options className="absolute mt-1 w-full rounded-2xl bg-default py-4 text-sm shadow shadow-purple-300">
+          <Listbox.Options className="absolute mt-1 w-full rounded-2xl bg-default py-4 text-sm shadow shadow-purple-300 dark:shadow-gray-800">
             {options.map(({ value, label }) => (
               <Listbox.Option
                 key={value}
