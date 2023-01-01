@@ -1,6 +1,9 @@
-import axios from "axios";
 import { createContext, useContext, useState } from "react";
+//
+import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+//
+import getChoices from "@/lib/common/getChoices";
 import { OptionProps } from "@/types";
 
 interface IUsersContext {
@@ -13,7 +16,7 @@ interface IUsersContext {
   setSelectedFilterBrand: unknown;
   setSelectedFilterStatus: unknown;
   users: any[];
-  isFetching: boolean;
+  isLoading: boolean;
 }
 
 const initialState: IUsersContext = {
@@ -26,7 +29,7 @@ const initialState: IUsersContext = {
   setSelectedFilterBrand: () => {},
   setSelectedFilterStatus: () => {},
   users: [],
-  isFetching: false,
+  isLoading: false,
 };
 
 const UsersContext = createContext<IUsersContext>(initialState);
@@ -37,7 +40,7 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFilterBrand, setSelectedFilterBrand] = useState([]);
   const [selectedFilterStatus, setSelectedFilterStatus] = useState([]);
 
-  const { data: _users, isFetching } = useQuery({
+  const { data: _users, isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const { data } = await axios.get("/api/users");
@@ -86,7 +89,7 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
         setSelectedFilterBrand,
         setSelectedFilterStatus,
         users,
-        isFetching,
+        isLoading,
       }}
     >
       {children}

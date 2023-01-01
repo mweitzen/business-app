@@ -5,7 +5,7 @@ export default [
   },
   {
     email: "darnaldoe@company.com",
-    name: "Dannie Arnaldo",
+    name: "Dannie Arnaldoe",
     currentEmployee: true,
   },
   {

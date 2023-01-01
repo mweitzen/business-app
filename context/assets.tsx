@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 //
 import getChoices from "@/lib/common/getChoices";
 import { OptionProps } from "@/types";
-import { stat } from "fs";
 
 interface IAssetsContext {
   searchText: string;

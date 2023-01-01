@@ -1,43 +1,38 @@
-import { useUsersContext } from "@/context/users";
-import { classNames } from "@/lib/helpers";
+import React from "react";
 import { useRouter } from "next/router";
+import { useUsersContext } from "@/context/users";
+import { IFilterSelect } from "@/components/select-filter";
+import ListBase from "@/components/list";
 
 const UsersList = () => {
   const router = useRouter();
 
-  const { users, isFetching, searchText, setSearchText } = useUsersContext();
+  const { users, isLoading, searchText, setSearchText } = useUsersContext();
 
+  const userFilters: IFilterSelect[] = [
+    {
+      label: "Departments",
+      value: [],
+      setValue: null,
+      options: [
+        { label: "Artistic", value: "artistic" },
+        { label: "Administration", value: "administration" },
+        { label: "Advancement", value: "advancement" },
+        { label: "Office of the Executive Director", value: "" },
+      ],
+    },
+  ];
   return (
-    <div>
-      <div className="mb-6 space-y-2">
-        {/* search bar */}
-        <div>
-          <input
-            type="search"
-            name="userSearch"
-            placeholder="Search by employee name or email"
-            className="w-full rounded-full border border-neutral-200 bg-element py-2 pl-3 pr-10 focus:border-transparent focus:ring-purple-300"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </div>
-
-        {/* filters */}
-        <div className="flex gap-x-2">
-          {["Department", "Region", "Office Location"].map((option) => (
-            <div
-              key={option}
-              className={classNames(
-                `rounded-full border bg-gray-50 px-8 py-2 text-xs shadow shadow-gray-200 hover:cursor-not-allowed`
-              )}
-            >
-              {option}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* List */}
+    <ListBase
+      search={{
+        name: "userSearch",
+        placeholder: "Search by employee name or email",
+        value: searchText,
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchText(e.target.value),
+      }}
+      filters={userFilters}
+    >
       <table className="w-full table-auto">
         <colgroup>
           <col />
@@ -53,7 +48,7 @@ const UsersList = () => {
           </tr>
         </thead>
         <tbody>
-          {isFetching ? (
+          {isLoading ? (
             <tr>
               <td colSpan={2}>Loading</td>
             </tr>
@@ -71,7 +66,7 @@ const UsersList = () => {
           ) : null}
         </tbody>
       </table>
-    </div>
+    </ListBase>
   );
 };
 

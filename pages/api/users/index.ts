@@ -20,9 +20,9 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
     // get users
     const { filter, search, orderBy } = query;
 
-    if (typeof search !== "string") return;
-
     if (!!search) {
+      if (typeof search !== "string") return;
+
       const data = await prisma.user.findMany({
         where: {
           OR: [
@@ -43,10 +43,7 @@ const users = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(data);
   }
 
-  res.status(200).json({
-    query,
-    method,
-  });
+  return res.status(404).json("This one slipped through the cracks");
 };
 
 export default users;

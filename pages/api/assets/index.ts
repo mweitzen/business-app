@@ -49,11 +49,11 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
     // get assets
     const { filter, search, orderBy } = query;
 
-    if (typeof search !== "string") {
-      return;
-    }
-
     if (!!search) {
+      if (typeof search !== "string") {
+        return;
+      }
+
       const data = await prisma.asset.findMany({
         where: {
           OR: [

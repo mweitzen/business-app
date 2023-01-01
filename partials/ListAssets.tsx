@@ -1,6 +1,8 @@
+import React from "react";
 import { useRouter } from "next/router";
 import { useAssetsContext } from "@/context/assets";
-import FilterSelect, { IFilterSelect } from "@/components/select-filter";
+import { IFilterSelect } from "@/components/select-filter";
+import ListBase from "@/components/list";
 
 const AssetsList = () => {
   const router = useRouter();
@@ -50,28 +52,16 @@ const AssetsList = () => {
   ];
 
   return (
-    <div>
-      {/* assets querying */}
-      <div className="mb-6 space-y-3">
-        {/* search bar */}
-        <input
-          type="search"
-          name="userSearch"
-          placeholder="Search by name or assigned to..."
-          className="w-full rounded-full border border-neutral-200 bg-element py-2 pl-3 pr-10 focus:border-transparent focus:ring-purple-300"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-
-        {/* filters */}
-        <div className="flex gap-x-2">
-          {assetFilters.map((option, i) => (
-            <FilterSelect key={i} {...option} />
-          ))}
-        </div>
-      </div>
-
-      {/* List */}
+    <ListBase
+      search={{
+        name: "assetSearch",
+        placeholder: "Search by name or assigned to...",
+        value: searchText,
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchText(e.target.value),
+      }}
+      filters={assetFilters}
+    >
       <table className="w-full table-auto">
         <colgroup>
           <col />
@@ -121,7 +111,7 @@ const AssetsList = () => {
           ) : null}
         </tbody>
       </table>
-    </div>
+    </ListBase>
   );
 };
 

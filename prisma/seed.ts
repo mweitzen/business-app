@@ -23,12 +23,9 @@ async function main() {
   );
 
   const newApplicants = await Promise.all(
-    applicants.map(async ({ name, email }) => {
+    applicants.map(async (applicant) => {
       const data = await prisma.applicant.create({
-        data: {
-          name,
-          email,
-        },
+        data: applicant,
       });
     })
   );
