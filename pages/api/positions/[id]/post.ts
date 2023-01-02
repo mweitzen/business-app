@@ -10,7 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     method,
     query: { id: positionId },
-    // body: { positionId },
   } = req;
 
   /*
@@ -19,6 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (method !== "POST") {
     return res.status(405).json("Only post accepted");
   }
+
   if (typeof positionId !== "string") return;
 
   /*

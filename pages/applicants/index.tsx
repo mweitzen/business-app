@@ -1,11 +1,11 @@
 import ListBase from "@/components/list";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 
 const ApplicantsListPage = () => {
   return (
     <div>
       <PageHeader header="Current Applicants" />
-      <ListBase search={{}} filters={[]}></ListBase>
+      {/* <ListBase search={{}} filters={[]}></ListBase> */}
     </div>
   );
 };

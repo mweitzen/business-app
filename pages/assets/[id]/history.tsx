@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
 
 const AssignmentHistoryPage = () => {

@@ -8,77 +8,92 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 // *
 // *
-// * User and Auth Models
+// * USER
 // *
 // *
-
 model User {
-  id                String            @id @default(cuid())
-  email             String            @unique
-  personalEmail     String?
-  image             String?
-  name              String?
-  firstName         String?
-  preferredName     String?
-  lastName          String?
-  middleName        String?
-  preferredPronouns String?
-  manager           User?             @relation(name: "ManagerDirectReports", fields: [managerId], references: [id])
-  managerId         String?
-  directReports     User[]            @relation(name: "ManagerDirectReports")
-  position          Position?         @relation(fields: [positionId], references: [id])
-  positionId        String?           @unique
-  organization      Organization?     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
-  organizationId    String?
-  department        Department?       @relation(fields: [departmentId], references: [id], onDelete: Restrict)
-  departmentId      String?
-  createdAt         DateTime          @default(now())
-  phone             String?
-  phoneAlt          String?
-  topReportOf       Department?       @relation(name: "DepartmentTopReport")
-  accounts          Account[]
-  sessions          Session[]
-  assets            Asset[]
-  assetHistory      AssetAssignment[]
-  positionHistory   PositionHistory[]
-  // --onboarding info
-  // --contact info
-  //    internal email
-  //    personal email
-  //    main phone
-  //    alt phone
-  //    preferred contact method
-  //    personal website
-  //    bio
-  //    address
-  //
-  // --company access
-  // --labor profile
-  // --external services
-  // --certifications
+  id                      String                    @id @default(cuid())
+  email                   String                    @unique
+  personalEmail           String?
+  image                   String?
+  name                    String?
+  firstName               String?
+  preferredName           String?
+  lastName                String?
+  middleName              String?
+  preferredPronouns       String?
+  createdAt               DateTime                  @default(now())
+  // * auth
+  accounts                Account[]
+  sessions                Session[]
+  // * employee
+  manager                 User?                     @relation(name: "ManagerDirectReports", fields: [managerId], references: [id])
+  managerId               String?
+  directReports           User[]                    @relation(name: "ManagerDirectReports")
+  position                Position?                 @relation(fields: [positionId], references: [id])
+  positionId              String?                   @unique
+  positionHistory         PositionHistory[]
+  organization            Organization?             @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  organizationId          String?
+  department              Department?               @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+  departmentId            String?
+  topReportOf             Department?               @relation(name: "DepartmentTopReport")
+  // * contact info
+  phone                   String?
+  phoneAlt                String?
+  preferredContactMethods PreferredContactMethods[]
+  personalWebsite         String?
+  bio                     String?
+  address                 String? // ! change
+  // * certifications
+  // * asset assignment
+  assets                  Asset[]
+  assetHistory            AssetAssignment[]
+  // * onboarding info
+  isNewHire               Boolean                   @default(true) // ! cron job to check everday against end of onboarding, switch to false
+  onboardingProcess       OnboardingProcess         @relation(fields: [onboardingProcessId], references: [id])
+  onboardingProcessId     String                    @unique
+  startDate               DateTime?
+  onboardingTasks         OnboardingTask[]
+  // * company access
+  // * labor profile
+  hireDate                DateTime                  @default(now())
+  laborStatus             LaborStatus?
+  // * external services
 }
 
+enum PreferredContactMethods {
+  EMAIL
+  PHONE
+  TEXT
+}
+
+// *
+// *
+// * AUTH
+// *
+// *
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? //@db.Text
-  access_token      String? //@db.Text
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? //@db.Text
+  id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -101,20 +116,18 @@ model VerificationToken {
 
 // *
 // *
-// * Company / Organization related schema
+// * COMPANY / ORGANIZATION
 // *
 // *
-
 model Organization {
-  id    String @id @default(cuid())
-  name  String
-  users User[]
+  id        String @id @default(cuid())
+  name      String
+  employees User[]
 }
 
 model Building {
   id   String @id @default(cuid())
   name String
-  // BUILDING INFORMATION
 }
 
 model Department {
@@ -144,23 +157,55 @@ model Program {
 
 // *
 // *
-// * Employee Lifecycle Related Schema
+// * LABOR PROFILE
 // *
 // *
+enum LaborStatus {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  SEASONAL
+  TEMPORARY
+}
 
+// staffing groups (matched to paycom labor allocation profiles)
+// tax info and filing status etc
+// schedules
+// availability
+// requests off
+// shifts missed
+// issues or concerns
+// employee coding
+// current labor allocations profiles
+
+// *
+// *
+// * EMPLOYEE LIFECYCLE [APPLICANT]
+// *
+// *
 model Applicant {
-  id              String      @id @default(cuid())
-  email           String      @unique
-  name            String
-  appliedOn       DateTime    @default(now())
-  status          String      @default("UNSEEN")
-  resume          String?
-  coverLetter     String?
-  internalNotes   String?
-  rating          Int?
-  currentEmployee Boolean     @default(false)
-  interviews      Interview[]
-  interestedIn    Position[]
+  id                String              @id @default(cuid())
+  email             String              @unique
+  name              String
+  appliedOn         DateTime            @default(now())
+  status            ApplicantStatus     @default(UNSEEN)
+  resume            String?
+  coverLetter       String?
+  internalNotes     String?
+  rating            Int?
+  currentEmployee   Boolean             @default(false)
+  interviews        Interview[]
+  interestedIn      Position[]
+  OnboardingProcess OnboardingProcess[]
+}
+
+enum ApplicantStatus {
+  UNSEEN
+  CONTACTED
+  INTERVIEWING
+  OFFER_PENDING
+  HIRED
+  NON_HIRE
 }
 
 model Interview {
@@ -178,16 +223,29 @@ model Interview {
 }
 
 model Position {
-  id                   String            @id @default(cuid())
-  name                 String
-  department           Department        @relation(fields: [departmentId], references: [id])
-  departmentId         String
-  active               Boolean           @default(true)
-  posted               Boolean           @default(false)
-  employee             User?
-  employeeHistory      PositionHistory[]
-  interviewHistory     Interview[]
-  interestedApplicants Applicant[]
+  id                    String               @id @default(cuid())
+  name                  String
+  overview              String
+  // internal
+  department            Department           @relation(fields: [departmentId], references: [id])
+  departmentId          String
+  active                Boolean              @default(true)
+  employee              User?
+  employeeHistory       PositionHistory[]
+  supervisingPosition   Position             @relation(name: "SupervisorSubordinatePositions", fields: [supervisingPositionId], references: [id])
+  supervisingPositionId String
+  subordinatePositions  Position[]           @relation(name: "SupervisorSubordinatePositions")
+  // applicant process
+  posted                Boolean              @default(false)
+  interviewHistory      Interview[]
+  interestedApplicants  Applicant[]
+  // onboarding
+  onboardingTeams       OnboardingTemplate[]
+  onboardingTasks       OnboardingTask[]
+  // labor profile
+  laborStatus           LaborStatus?
+  salaryRangeLow        Int?
+  salaryRangeHigh       Int?
 }
 
 model PositionHistory {
@@ -199,16 +257,86 @@ model PositionHistory {
   employeeId String
 }
 
-// * Enumerations (For when SQLite is replaced)
+// *
+// *
+// * EMPLOYEE LIFECYCLE [ONBOARDING]
+// *
+// *
+model OnboardingTemplate {
+  id              String                   @id @default(cuid())
+  name            String // full-time, part-time instructor, part-time admin, etc
+  description     String?
+  onboardingTeam  Position[]
+  onboardingTasks OnboardingTaskTemplate[]
+}
 
-// enum ApplicantStatus {
-//   UNSEEN
-//   CONTACTED
-//   INTERVIEWING
-//   OFFER_PENDING
-//   HIRED
-//   NON_HIRE
-// }
+model OnboardingProcess {
+  id                    String           @id @default(cuid())
+  employee              User?
+  applicant             Applicant        @relation(fields: [applicantId], references: [id])
+  applicantId           String
+  employeeStartDate     DateTime
+  onboardingBeginDate   DateTime
+  status                OnboardingStatus
+  statusNotes           String?
+  paperworkSent         Boolean
+  paperworkSentDate     DateTime?
+  paperworkReceived     Boolean
+  paperworkReceivedDate DateTime?
+  userSetup             Boolean
+  tasks                 OnboardingTask[]
+  // etc...
+}
+
+enum OnboardingStatus {
+  UNSCHEDULED
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  PAUSED
+  WARNING
+  OVERDUE
+  TERMINATED
+}
+
+model OnboardingTaskTemplate {
+  id                  String               @id @default(cuid())
+  onboardingTemplates OnboardingTemplate[]
+}
+
+model OnboardingTask {
+  id                  String            @id @default(cuid())
+  onboardingProcess   OnboardingProcess @relation(fields: [onboardingProcessId], references: [id])
+  onboardingProcessId String
+  name                String
+  assignedTo          User              @relation(fields: [userId], references: [id])
+  assignedToPosition  Position          @relation(fields: [positionId], references: [id])
+  status              TaskStatus
+  startDate           DateTime?
+  dueDate             DateTime?
+  completedDate       DateTime?
+  active              Boolean           @default(true)
+
+  userId     String
+  positionId String
+}
+
+enum TaskStatus {
+  UNSCHEDULED
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  PAUSED
+  WARNING
+  OVERDUE
+  TERMINATED
+}
+
+// existing skills
+// internal qualifications
+// trainings required
+// trainings in progress
+// certifications/background clearances
 
 // *
 // *
@@ -221,7 +349,7 @@ model Asset {
   name           String            @unique
   description    String?
   imageUrl       String?
-  type           String
+  type           AssetType
   brand          String
   serialNumber   String
   purchase       AssetPurchase     @relation(fields: [purchaseId], references: [id])
@@ -229,9 +357,39 @@ model Asset {
   assignedTo     User?             @relation(fields: [assignedToId], references: [id])
   assignedToId   String?
   ownerHistory   AssetAssignment[]
-  condition      String            @default("NEW")
+  condition      ConditionStatus   @default(NEW)
   conditionNotes String?
-  status         String            @default("available")
+  status         AssetStatus       @default(AVAILABLE)
+}
+
+enum AssetStatus {
+  RECYCLED
+  DONATED
+  ASSIGNED
+  AVAILABLE
+  REPAIR
+  LOST
+  ORDERED
+}
+
+enum AssetType {
+  LAPTOP
+  DESKTOP
+  TABLET
+  CELL_PHONE
+  OFFICE_PHONE
+  SOFTWARE
+  LICENSE
+}
+
+enum ConditionStatus {
+  DAMAGED
+  VERY_POOR
+  WORN
+  AVERAGE
+  GOOD
+  EXCELLENT
+  NEW
 }
 
 model AssetAssignment {
@@ -254,35 +412,3 @@ model AssetPurchase {
   purchasePrice Int
   purchasedFrom String
 }
-
-// * Enumerations (For when SQLite is replaced)
-
-// enum ConditionStatus {
-//   DAMAGED
-//   VERY_POOR
-//   WORN
-//   AVERAGE
-//   GOOD
-//   EXCELLENT
-//   NEW
-// }
-
-// enum AssetStatus {
-//   RECYCLED
-//   DONATED
-//   ASSIGNED
-//   AVAILABLE
-//   REPAIR
-//   LOST
-//   ORDERED
-// }
-
-// enum AssetType {
-//   LAPTOP
-//   DESKTOP
-//   TABLET
-//   CELL_PHONE
-//   OFFICE_PHONE
-//   SOFTWARE
-//   LICENSE
-// }

@@ -36,13 +36,26 @@ const positions = async (req: NextApiRequest, res: NextApiResponse) => {
    * GET | RETRIEVE POSITIONS
    */
   if (method === "GET") {
-    const { filter, search, orderBy } = query;
+    const { posted, search, orderBy } = query;
 
-    if (typeof search !== "string") {
-      return;
+    if (posted === "true") {
+      const data = await prisma.position.findMany({
+        where: {
+          posted: true,
+        },
+        include: {
+          department: true,
+        },
+      });
+
+      return res.status(200).json(data);
     }
 
     if (!!search) {
+      if (typeof search !== "string") {
+        return;
+      }
+
       const data = await prisma.position.findMany({
         where: {
           OR: [

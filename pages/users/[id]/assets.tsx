@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 //
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
 import Link from "next/link";
 

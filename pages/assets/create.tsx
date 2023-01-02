@@ -6,6 +6,7 @@ import { queryClient } from "pages/_app";
 //
 import { classNames } from "@/lib/helpers";
 import { WithChildren } from "@/types";
+import { Asset, AssetType } from "@prisma/client";
 //
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -21,7 +22,7 @@ import SelectUser from "@/components/select-user";
 import ButtonBase from "@/components/button";
 import LabelText from "@/components/text-label";
 import PriceInput from "@/components/input-price";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 
 const ASSET_TYPES = [
   "LAPTOP",
@@ -74,11 +75,11 @@ const CreateAssetPage = () => {
 
   const mutation = useMutation({
     mutationFn: (data: any) => axios.post("/api/assets/create", { data }),
-    onMutate: async (data: any) => {},
-    onSuccess: (result, data, context) => {
+    onMutate: async () => {},
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["assets"] });
     },
-    onError: (error, data, context) => {},
+    onError: () => {},
   });
 
   /*

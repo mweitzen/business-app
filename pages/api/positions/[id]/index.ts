@@ -3,12 +3,12 @@ import prisma from "@/lib/prisma";
 
 /*
  *
- * ASSET [CRUD] HANDLER
+ * POSITION [CRUD] HANDLER
  *
  */
-const assets = async (req: NextApiRequest, res: NextApiResponse) => {
+const positions = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
-    query: { id: assetId },
+    query: { id: positionId },
     method,
     body,
   } = req;
@@ -19,16 +19,16 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
   const allowedMethods = ["PATCH", "GET", "DELETE"];
 
   if (!allowedMethods.includes(method!)) {
-    return res.status(405).json({ error: "Error" });
+    return res.status(405).json("Method not accepted");
   }
 
   /*
    * GET REQUEST
    */
   if (method === "GET") {
-    const asset = await prisma.position.findUnique({
+    const position = await prisma.position.findUnique({
       where: {
-        id: assetId as string,
+        id: positionId as string,
       },
       include: {
         department: true,
@@ -38,12 +38,12 @@ const assets = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    if (!asset) {
+    if (!position) {
       return res.status(404).json("Position does not exist");
     }
 
-    return res.status(200).json(asset);
+    return res.status(200).json(position);
   }
 };
 
-export default assets;
+export default positions;

@@ -60,7 +60,7 @@ async function main() {
         await prisma.asset.create({
           data: {
             ...asset,
-            status: "assigned",
+            status: "ASSIGNED",
             assignedTo: {
               connect: {
                 email: assignedTo,

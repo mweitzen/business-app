@@ -1,15 +1,18 @@
+import Link from "next/link";
 import axios from "axios";
 //
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 //
+import { AssetStatus } from "@prisma/client";
+//
 import AssetAssignModal from "partials/ModalAssetAssign";
 import AssetReAssignModal from "partials/ModalAssetReAssign";
 import AssetUnassignModal from "partials/ModalAssetUnAssign";
+//
 import CardBase from "@/components/card";
-import Link from "next/link";
 import ButtonBase from "@/components/button";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 
 /*
  *
@@ -27,7 +30,6 @@ const AssetDetailPage = () => {
       const { data } = await axios.get(`/api/assets/${assetId}`);
       return data;
     },
-    refetchOnWindowFocus: false,
     retry: false,
   });
 
@@ -74,10 +76,10 @@ const AssetDetailPage = () => {
               </p>
               <p>{asset.assignedTo ? asset.assignedTo.name : "unassigned"}</p>
             </div>
-            {asset.status === "available" ? (
+            {asset.status === AssetStatus.AVAILABLE ? (
               <AssetAssignModal asset={asset} />
             ) : null}
-            {asset.status === "assigned" ? (
+            {asset.status === AssetStatus.ASSIGNED ? (
               <>
                 <AssetReAssignModal asset={asset} />
                 <AssetUnassignModal asset={asset} />

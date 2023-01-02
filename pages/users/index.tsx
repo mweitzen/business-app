@@ -1,6 +1,6 @@
 import UsersProvider from "@/context/users";
 import UsersList from "@/partials/ListUsers";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 
 const UsersListPage = () => {
   return (

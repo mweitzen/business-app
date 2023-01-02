@@ -2,7 +2,7 @@ import Link from "next/link";
 //
 import AssetsProvider from "@/context/assets";
 import AssetsList from "partials/ListAssets";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 
 const AssetsListPage = () => {
   return (

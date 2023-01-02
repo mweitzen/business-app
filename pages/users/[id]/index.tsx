@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import PageHeader from "@/components/page-header";
+import PageHeader from "@/components/header-page";
 
 const UserDetailPage = () => {
   const {
