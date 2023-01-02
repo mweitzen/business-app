@@ -9,6 +9,7 @@ import ThemeProvider from "@/context/theme";
 //
 import { NextPageWithLayout } from "@/types";
 import DefaultLayout from "@/layouts/default";
+import DisplayProvider from "@/context/display";
 
 /*
  *
@@ -50,9 +51,11 @@ const App = ({
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <DefaultLayout>
-            <Component {...pageProps} />
-          </DefaultLayout>
+          <DisplayProvider>
+            <DefaultLayout>
+              <Component {...pageProps} />
+            </DefaultLayout>
+          </DisplayProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </SessionProvider>
