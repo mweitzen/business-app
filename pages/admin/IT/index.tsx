@@ -10,27 +10,16 @@ const InformationTechnologyHomePage = () => {
   return (
     <div>
       <PageHeader header="IT Dashboard" />
-      <LabelText>Asset Assignment</LabelText>
-      <div className="mb-2 grid gap-4">
-        {[
-          {
-            href: `${pathname}/assets/create`,
-            text: "Create Asset",
-          },
-          {
-            href: `${pathname}/assets`,
-            text: "Assets List",
-          },
-          {
-            href: `/admin/employees`,
-            text: "User List",
-          },
-        ].map((link) => (
-          <LinkButton key={link.href} href={link.href}>
-            {link.text}
-          </LinkButton>
-        ))}
+      <LabelText>Asset Management Section</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4">
+        <LinkButton href={`${pathname}/assets/create`}>Create Asset</LinkButton>
+        <LinkButton href={`${pathname}/assets`}>Assets List</LinkButton>
+        <LinkButton href={`#`}>Service Tickets</LinkButton>
       </div>
+      <LabelText>Internet Information</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4">Xfinity</div>
+      <LabelText>Telephone Information</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
     </div>
   );
 };

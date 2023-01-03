@@ -4,7 +4,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Position } from "@prisma/client";
 //
-import usePathname from "@/lib/hooks/usePathname";
+import { usePathname } from "@/lib/hooks";
 //
 import PageHeader from "@/components/header-page";
 import CardBase from "@/components/card";

@@ -38,6 +38,8 @@ const HumanResourcesHomePage = () => {
           </LinkButton>
         ))}
       </div>
+
+      <LabelText>Hire employee (demo)</LabelText>
       <div className="flex gap-x-2 py-2">
         <ButtonBase
           className="w-full"
@@ -100,6 +102,18 @@ const HumanResourcesHomePage = () => {
           Hire external
         </ButtonBase>
       </div>
+      <LabelText>Employee Lifecycle (Onboarding)</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
+      <LabelText>Employee Lifecycle (Change of Position)</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
+      <LabelText>Employee Lifecycle (Offboarding)</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
+      <LabelText>Distributed Materials</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
+      <LabelText>Employee Files</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
+      <LabelText>Tax Documents</LabelText>
+      <div className="mb-2 grid grid-cols-2 gap-4"></div>
     </div>
   );
 };

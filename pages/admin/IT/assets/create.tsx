@@ -104,7 +104,7 @@ const CreateAssetPage = () => {
 
     mutation.mutate(values);
 
-    router.push("/assets");
+    router.push("/admin/IT/assets");
   }
 
   /*

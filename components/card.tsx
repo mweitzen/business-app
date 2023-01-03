@@ -1,8 +1,17 @@
 import { WithChildren } from "@/types";
+import { classNames } from "@/lib/common/classNames";
 
-const CardBase: React.FC<WithChildren> = ({ children }) => {
+const CardBase: React.FC<WithChildren & { className?: string }> = ({
+  children,
+  className = "",
+}) => {
   return (
-    <div className="my-4 rounded-2xl bg-element px-4 py-6 shadow sm:p-8">
+    <div
+      className={classNames(
+        "rounded-2xl bg-element px-4 py-6 shadow sm:p-8",
+        className
+      )}
+    >
       {children}
     </div>
   );

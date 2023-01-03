@@ -23,34 +23,32 @@ const JobPostingDetailPage = () => {
   });
   return (
     <div>
+      <PageHeader header="Apply to job" />
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <PageHeader header="Apply to job" />
-          <div className="space-y-4">
-            <div>
-              <LabelText>Position Name</LabelText>
-              <h2>{jobPosting.name}</h2>
-            </div>
-            <div>
-              <LabelText>Department</LabelText>
-              <p>{jobPosting.department.name}</p>
-            </div>
-            <div>
-              <LabelText>Salary Range ?</LabelText>
-              <p>$35,000 - $150,000</p>
-            </div>
-            <div>
-              <LabelText>Position Type ?</LabelText>
-              <p>{jobPosting.laborStatus}</p>
-            </div>
-            <div>
-              <p>{jobPosting.description}</p>
-            </div>
-            <LinkButton href={`${asPath}/apply`}>Apply to Posting</LinkButton>
+        <div className="space-y-4">
+          <div>
+            <LabelText>Position Name</LabelText>
+            <h2>{jobPosting.name}</h2>
           </div>
-        </>
+          <div>
+            <LabelText>Department</LabelText>
+            <p>{jobPosting.department.name}</p>
+          </div>
+          <div>
+            <LabelText>Salary Range ?</LabelText>
+            <p>$35,000 - $150,000</p>
+          </div>
+          <div>
+            <LabelText>Position Type ?</LabelText>
+            <p>{jobPosting.laborStatus}</p>
+          </div>
+          <div>
+            <p>{jobPosting.description}</p>
+          </div>
+          <LinkButton href={`${pathname}/apply`}>Apply to Posting</LinkButton>
+        </div>
       )}
     </div>
   );
