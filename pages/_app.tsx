@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 //
 import type { AppProps } from "next/app";
 //
-// import { trpc } from "@/lib/trpc";
+import { api } from "@/lib/api";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import ThemeProvider from "@/context/theme";
@@ -57,11 +57,11 @@ const App = ({
   );
 };
 
-export default App;
-
 /*
  *
  * tRPC WRAPPER
  *
  */
-// export default trpc.withTRPC(App);
+export default api.withTRPC(App);
+
+// export default App;

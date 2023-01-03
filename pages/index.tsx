@@ -5,9 +5,16 @@ import CardBase from "@/components/card";
 import IconBadge from "@/components/icon-badge";
 import Link from "next/link";
 
+import { api } from "@/lib/api";
+
 const IndexPage = () => {
+  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+
   return (
     <div>
+      <p className="text-2xl">
+        {hello.data ? hello.data.greeting : "Loading tRPC query..."}
+      </p>
       <MainHeader header="Your Company" />
 
       <div className="mb-2 grid gap-8 text-center text-sm">
