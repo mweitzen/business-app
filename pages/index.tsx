@@ -5,6 +5,7 @@ import CardBase from "@/components/card";
 import LabelText from "@/components/text-label";
 import IconBadge from "@/components/icon-badge";
 import { api } from "@/lib/api";
+import AuthShowcase from "@/components/auth-showcase";
 
 const IndexPage = () => {
   const { data, isLoading } = api.example.getSecretMessage.useQuery();
@@ -12,7 +13,9 @@ const IndexPage = () => {
   return (
     <div>
       <MainHeader header="Your Company" />
-      {isLoading ? <div>Loading...</div> : <div>{data || "Unauthorized"}</div>}
+      <div className="mb-6">
+        <AuthShowcase />
+      </div>
       <div className="mb-2 grid gap-8 text-center text-sm">
         {/*  */}
         {/* ADMIN DASHBOARD */}
