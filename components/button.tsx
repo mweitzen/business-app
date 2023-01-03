@@ -1,5 +1,5 @@
 import { WithChildren } from "@/types";
-import { classNames } from "@/lib/helpers";
+import { classNames } from "@/lib/common/classNames";
 
 const ButtonBase: React.FC<
   WithChildren & React.HTMLProps<HTMLButtonElement>

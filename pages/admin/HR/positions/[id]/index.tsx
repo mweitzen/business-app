@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+//
 import ButtonBase from "@/components/button";
 import PageHeader from "@/components/header-page";
 import LinkButton from "@/components/button-link";
@@ -25,12 +26,12 @@ const PositionDetailPage = () => {
       await axios.post(`/api/positions/${positionId}/post`),
   });
 
-  return isLoading ? (
-    <div>Loading...</div>
-  ) : (
+  return (
     <div>
       <PageHeader header={position.name} />
-      {position.posted ? (
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : position.posted ? (
         <LinkButton href={`/public/jobs/${positionId}`}>
           Visit Public Posting
         </LinkButton>

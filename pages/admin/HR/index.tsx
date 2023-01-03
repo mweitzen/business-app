@@ -4,8 +4,11 @@ import PageHeader from "@/components/header-page";
 import LinkButton from "@/components/button-link";
 import ButtonBase from "@/components/button";
 import LabelText from "@/components/text-label";
+import { usePathname } from "@/lib/hooks";
 
 const HumanResourcesHomePage = () => {
+  const pathname = usePathname();
+
   return (
     <div>
       <PageHeader header="HR Dashboard" />
@@ -14,11 +17,11 @@ const HumanResourcesHomePage = () => {
       <div className="mb-2 grid gap-6">
         {[
           {
-            href: "/admin/HR/positions/create",
+            href: `${pathname}/positions/create`,
             text: "Create Position",
           },
           {
-            href: "/admin/HR/positions",
+            href: `${pathname}/positions`,
             text: "Positions List",
           },
           {
@@ -26,7 +29,7 @@ const HumanResourcesHomePage = () => {
             text: "Public Posted Positions",
           },
           {
-            href: "/admin/HR/applicants",
+            href: `${pathname}/applicants`,
             text: "Applicant List",
           },
         ].map((link) => (

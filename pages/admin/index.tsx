@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "@/lib/hooks";
 //
 import CardBase from "@/components/card";
 import PageHeader from "@/components/header-page";
 
 const AdminDashboardPage = () => {
-  const { pathname } = useRouter();
+  const pathname = usePathname();
 
   return (
     <div>

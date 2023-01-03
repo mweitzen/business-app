@@ -1,10 +1,12 @@
+import Link from "next/link";
+//
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { Asset } from "@prisma/client";
 //
 import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
-import Link from "next/link";
 
 const UserAssetsPage = () => {
   const {
@@ -28,7 +30,7 @@ const UserAssetsPage = () => {
       <div>
         <div className="grid gap-y-4">
           {user ? (
-            user.assets.map((asset) => (
+            user.assets.map((asset: Asset) => (
               <AssetListItem key={asset.id} asset={asset} />
             ))
           ) : (

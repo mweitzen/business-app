@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { usePathname } from "@/lib/hooks";
 //
 import PageHeader from "@/components/header-page";
 import LinkButton from "@/components/button-link";
@@ -9,8 +10,9 @@ import LabelText from "@/components/text-label";
 const JobPostingDetailPage = () => {
   const {
     query: { id: positionId },
-    asPath,
   } = useRouter();
+
+  const pathname = usePathname();
 
   const { data: jobPosting, isLoading } = useQuery({
     queryKey: ["position", positionId],

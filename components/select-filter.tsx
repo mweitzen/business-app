@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { classNames } from "@/lib/helpers";
+import { classNames } from "@/lib/common/classNames";
 import { Listbox, Transition } from "@headlessui/react";
 import { OptionProps } from "@/types";
 

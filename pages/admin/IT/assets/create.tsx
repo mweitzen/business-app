@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "pages/_app";
 //
-import { classNames } from "@/lib/helpers";
+import { classNames } from "@/lib/common/classNames";
 import { WithChildren } from "@/types";
 //
 import { z } from "zod";

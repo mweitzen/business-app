@@ -1,5 +1,4 @@
 import PageHeader from "@/components/header-page";
-import React from "react";
 
 const PositionInterviewHistory = () => {
   return (

@@ -1,8 +1,12 @@
+import usePathname from "@/lib/hooks/usePathname";
+//
 import LinkButton from "@/components/button-link";
 import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
 
 const PublicPage = () => {
+  const pathname = usePathname();
+
   return (
     <div>
       <PageHeader header="Public Page" />
@@ -13,7 +17,7 @@ const PublicPage = () => {
             Publicly accessible job postings, attached to the internal system.
           </p>
         </div>
-        <LinkButton href="/public/jobs">View Posted Jobs</LinkButton>
+        <LinkButton href={`${pathname}/jobs`}>View Posted Jobs</LinkButton>
       </div>
     </div>
   );

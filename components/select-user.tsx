@@ -4,7 +4,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 //
 import { Listbox, Combobox, Transition } from "@headlessui/react";
-import { classNames } from "@/lib/helpers";
+import { classNames } from "@/lib/common/classNames";
 
 const SelectUser = () => {
   const [selected, setSelected] = useState();
