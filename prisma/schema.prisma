@@ -21,6 +21,7 @@ datasource db {
 model User {
   id                      String                    @id @default(cuid())
   email                   String                    @unique
+  emailVerified           Boolean?                  @default(false)
   personalEmail           String?
   image                   String?
   name                    String?
@@ -58,9 +59,9 @@ model User {
   assetHistory            AssetAssignment[]
   // * onboarding info
   isNewHire               Boolean                   @default(true) // ! cron job to check everday against end of onboarding, switch to false
-  onboardingProcess       OnboardingProcess         @relation(fields: [onboardingProcessId], references: [id])
-  onboardingProcessId     String                    @unique
-  startDate               DateTime?
+  onboardingProcess       OnboardingProcess?        @relation(fields: [onboardingProcessId], references: [id])
+  onboardingProcessId     String?                   @unique // ! required
+  startDate               DateTime? // ! required
   onboardingTasks         OnboardingTask[]
   // * company access
   // * labor profile
@@ -225,15 +226,15 @@ model Interview {
 model Position {
   id                    String               @id @default(cuid())
   name                  String
-  overview              String
+  overview              String?
   // internal
   department            Department           @relation(fields: [departmentId], references: [id])
   departmentId          String
   active                Boolean              @default(true)
   employee              User?
   employeeHistory       PositionHistory[]
-  supervisingPosition   Position             @relation(name: "SupervisorSubordinatePositions", fields: [supervisingPositionId], references: [id])
-  supervisingPositionId String
+  supervisingPosition   Position?            @relation(name: "SupervisorSubordinatePositions", fields: [supervisingPositionId], references: [id]) // ! required
+  supervisingPositionId String? // ! required
   subordinatePositions  Position[]           @relation(name: "SupervisorSubordinatePositions")
   // applicant process
   posted                Boolean              @default(false)

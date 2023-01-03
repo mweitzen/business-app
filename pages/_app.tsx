@@ -5,11 +5,12 @@ import type { AppProps } from "next/app";
 import { api } from "@/lib/api";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
+//
 import ThemeProvider from "@/context/theme";
+import DisplayProvider from "@/context/display";
 //
 import { NextPageWithLayout } from "@/types";
 import DefaultLayout from "@/layouts/default";
-import DisplayProvider from "@/context/display";
 
 /*
  *
@@ -20,6 +21,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
+      retry: false,
     },
   },
 });
@@ -63,5 +65,3 @@ const App = ({
  *
  */
 export default api.withTRPC(App);
-
-// export default App;

@@ -1,9 +1,6 @@
 import { createContext, useContext, useState } from "react";
+import { api } from "@/lib/api";
 //
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-//
-import getChoices from "@/lib/common/getChoices";
 import { OptionProps } from "@/types";
 
 interface IUsersContext {
@@ -15,7 +12,7 @@ interface IUsersContext {
   setSelectedFilterTypes: unknown;
   setSelectedFilterBrand: unknown;
   setSelectedFilterStatus: unknown;
-  users: any[];
+  users: any;
   isLoading: boolean;
 }
 
@@ -40,14 +37,15 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFilterBrand, setSelectedFilterBrand] = useState([]);
   const [selectedFilterStatus, setSelectedFilterStatus] = useState([]);
 
-  const { data: _users, isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const { data } = await axios.get("/api/users");
-      return data;
-    },
-    staleTime: Infinity,
-  });
+  // const { data: _users, isLoading } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: async () => {
+  //     const { data } = await axios.get("/api/users");
+  //     return data;
+  //   },
+  //   staleTime: Infinity,
+  // });
+  const { data: _users, isLoading } = api.user.getAll.useQuery();
 
   let users = _users;
   if (!!users) {

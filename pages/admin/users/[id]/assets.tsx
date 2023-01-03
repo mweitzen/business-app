@@ -1,27 +1,24 @@
 import Link from "next/link";
 //
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { Asset } from "@prisma/client";
 //
 import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
+import { api } from "@/lib/api";
 
 const UserAssetsPage = () => {
   const {
     query: { id: userId },
   } = useRouter();
 
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["user", userId, "assets"],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/users/${userId}/assets`);
-      return data;
-    },
+  const { data: user, isLoading } = api.user.getUsersAssets.useQuery({
+    userId: (userId as string) || "",
   });
 
   if (isLoading) return <div>Loading...</div>;
+
+  if (!user) return <div>Uh Oh Couldn't find</div>;
 
   return (
     <div>

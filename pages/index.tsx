@@ -1,22 +1,18 @@
-import MainHeader from "@/components/header-main";
-import LinkButton from "@/components/button-link";
-import LabelText from "@/components/text-label";
-import CardBase from "@/components/card";
-import IconBadge from "@/components/icon-badge";
 import Link from "next/link";
-
+//
+import MainHeader from "@/components/header-main";
+import CardBase from "@/components/card";
+import LabelText from "@/components/text-label";
+import IconBadge from "@/components/icon-badge";
 import { api } from "@/lib/api";
 
 const IndexPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { data, isLoading } = api.example.getSecretMessage.useQuery();
 
   return (
     <div>
-      <p className="text-2xl">
-        {hello.data ? hello.data.greeting : "Loading tRPC query..."}
-      </p>
       <MainHeader header="Your Company" />
-
+      {isLoading ? <div>Loading...</div> : <div>{data || "Unauthorized"}</div>}
       <div className="mb-2 grid gap-8 text-center text-sm">
         {/*  */}
         {/* ADMIN DASHBOARD */}
