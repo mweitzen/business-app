@@ -21,9 +21,9 @@ const applicants = async (req: NextApiRequest, res: NextApiResponse) => {
     // get applicants
     const { filter, search, orderBy } = query;
 
-    if (typeof search !== "string") return;
-
     if (!!search) {
+      if (typeof search !== "string") return;
+
       const data = await prisma.applicant.findMany({
         where: {
           NOT: {

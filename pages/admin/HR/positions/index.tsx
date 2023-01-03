@@ -22,7 +22,14 @@ const PositionsListPage = () => {
 
   return (
     <div>
-      <PageHeader header="Company Positions" />
+      <PageHeader header="Company Positions">
+        <Link
+          href={`${pathname}/create`}
+          className="grid h-8 w-8 place-content-center rounded-full text-xl shadow shadow-purple-300 dark:shadow-gray-800"
+        >
+          +
+        </Link>
+      </PageHeader>
 
       {isLoading ? (
         <div>Loading...</div>
