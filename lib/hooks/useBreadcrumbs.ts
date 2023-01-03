@@ -1,8 +1,7 @@
 import { usePathname } from "./usePathname";
 
 export const useBreadcrumbs = () => {
-  const _pathname = usePathname();
-  const pathname = _pathname.slice(1);
+  const pathname = usePathname();
 
   const paths = pathname.split("/");
 
@@ -11,8 +10,8 @@ export const useBreadcrumbs = () => {
     const breadcrumbSegment = paths.slice(0, sliceUpUntil).join("/");
 
     return {
-      href: `/${breadcrumbSegment}`,
-      segment: path,
+      href: breadcrumbSegment || "/",
+      segment: path || "Home",
     };
   });
 

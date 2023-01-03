@@ -157,7 +157,7 @@ const AdminDashboardPage = () => {
       {/* link grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {links.map((link) => (
-          <Link href={link.href}>
+          <Link href={link.href} key={link.href}>
             <CardBase>
               <div className="mb-2 flex items-center justify-between">
                 {link.icon}

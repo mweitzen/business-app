@@ -3,9 +3,11 @@ import Link, { LinkProps } from "next/link";
 import { classNames } from "@/lib/common/classNames";
 import { WithChildren } from "@/types";
 
-const LinkButton: React.FC<WithChildren & LinkProps> = ({
+type LinkButtonProps = WithChildren & LinkProps & { className?: string };
+
+const LinkButton: React.FC<LinkButtonProps> = ({
   children,
-  className,
+  className = "",
   ...props
 }) => {
   return (
