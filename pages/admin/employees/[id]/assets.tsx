@@ -24,6 +24,7 @@ const UserAssetsPage = () => {
   return (
     <div>
       <PageHeader header={`${user.name}'s Assets`} />
+
       <div>
         <div className="grid gap-y-4">
           {user ? (

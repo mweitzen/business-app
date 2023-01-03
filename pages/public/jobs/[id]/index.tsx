@@ -9,6 +9,7 @@ import LabelText from "@/components/text-label";
 const JobPostingDetailPage = () => {
   const {
     query: { id: positionId },
+    asPath,
   } = useRouter();
 
   const { data: jobPosting, isLoading } = useQuery({
@@ -45,9 +46,7 @@ const JobPostingDetailPage = () => {
             <div>
               <p>{jobPosting.description}</p>
             </div>
-            <LinkButton href={`/public/jobs/${positionId}/apply`}>
-              Apply to Posting
-            </LinkButton>
+            <LinkButton href={`${asPath}/apply`}>Apply to Posting</LinkButton>
           </div>
         </>
       )}

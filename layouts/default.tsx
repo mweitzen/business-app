@@ -7,6 +7,7 @@ import { useThemeContext } from "@/context";
 //
 import Topbar from "./topbar";
 import MobileSidebar from "./sidebar-mobile";
+import BreadcrumbsHeader from "@/components/header-breadcrumbs";
 
 /*
  *
@@ -68,6 +69,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
 
       <Topbar />
       <MobileSidebar />
+
       <main className="relative flex-grow overflow-x-hidden bg-default px-4 sm:px-8">
         {children}
       </main>

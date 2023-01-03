@@ -1,8 +1,11 @@
 import LinkButton from "@/components/button-link";
 import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
+import { useRouter } from "next/router";
 
 const InformationTechnologyHomePage = () => {
+  const { pathname } = useRouter();
+
   return (
     <div>
       <PageHeader header="IT Dashboard" />
@@ -10,15 +13,15 @@ const InformationTechnologyHomePage = () => {
       <div className="mb-2 grid gap-4">
         {[
           {
-            href: "/admin/IT/assets/create",
+            href: `${pathname}/assets/create`,
             text: "Create Asset",
           },
           {
-            href: "/admin/IT/assets",
+            href: `${pathname}/assets`,
             text: "Assets List",
           },
           {
-            href: "/admin/employees",
+            href: `/admin/employees`,
             text: "User List",
           },
         ].map((link) => (

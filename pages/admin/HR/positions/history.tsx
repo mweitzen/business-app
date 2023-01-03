@@ -1,7 +1,12 @@
+import PageHeader from "@/components/header-page";
 import React from "react";
 
 const PositionHistoryPage = () => {
-  return <div>PositionHistoryPage</div>;
+  return (
+    <div>
+      <PageHeader header="Position History Page" />
+    </div>
+  );
 };
 
 export default PositionHistoryPage;

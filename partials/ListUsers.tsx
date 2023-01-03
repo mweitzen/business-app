@@ -5,7 +5,7 @@ import { IFilterSelect } from "@/components/select-filter";
 import ListBase from "@/components/list";
 
 const UsersList = () => {
-  const router = useRouter();
+  const { push, asPath } = useRouter();
 
   const { users, isLoading, searchText, setSearchText } = useUsersContext();
 
@@ -57,7 +57,7 @@ const UsersList = () => {
               <tr
                 key={user.id}
                 className="odd:bg-slate-100 hover:cursor-pointer hover:bg-slate-200"
-                onClick={() => router.push(`/users/${user.id}/assets`)}
+                onClick={() => push(`${asPath}/${user.id}/assets`)}
               >
                 <td className="py-1.5 text-sm">{user.name}</td>
                 <td className="py-1.5 text-sm">{user.email}</td>

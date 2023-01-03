@@ -5,7 +5,7 @@ import { IFilterSelect } from "@/components/select-filter";
 import ListBase from "@/components/list";
 
 const AssetsList = () => {
-  const router = useRouter();
+  const { push, pathname } = useRouter();
 
   const {
     assets,
@@ -95,7 +95,7 @@ const AssetsList = () => {
               <tr
                 key={asset.id}
                 className="odd:bg-slate-100 hover:cursor-pointer hover:bg-slate-200"
-                onClick={() => router.push(`/assets/${asset.id}`)}
+                onClick={() => push(`${pathname}/${asset.id}`)}
               >
                 <td className="truncate py-1.5">{asset.name}</td>
                 <td className="hidden py-1.5 sm:block">{asset.brand}</td>

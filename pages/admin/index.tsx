@@ -1,29 +1,34 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+//
 import CardBase from "@/components/card";
-import MainHeader from "@/components/header-main";
+import PageHeader from "@/components/header-page";
 
-const IndexPage = () => {
+const AdminDashboardPage = () => {
+  const { pathname } = useRouter();
+
   return (
     <div>
-      <MainHeader header="Your Company Dashboard" />
+      <PageHeader header="Your Company Dashboard" />
 
+      {/* link grid */}
       <div className="grid grid-cols-1 gap-x-4 sm:grid-cols-2 md:grid-cols-3">
-        <Link href="/admin/IT">
+        <Link href={`${pathname}/IT`}>
           <CardBase>IT</CardBase>
         </Link>
-        <Link href="/admin/HR">
+        <Link href={`${pathname}/HR`}>
           <CardBase>HR</CardBase>
         </Link>
-        <Link href="/admin/finance">
+        <Link href={`${pathname}/finance`}>
           <CardBase>Finance</CardBase>
         </Link>
-        <Link href="/admin/facilities">
+        <Link href={`${pathname}/facilities`}>
           <CardBase>Facilities</CardBase>
         </Link>
-        <Link href="/admin/operations">
+        <Link href={`${pathname}/operations`}>
           <CardBase>Daily Operations</CardBase>
         </Link>
-        <Link href="/admin/employees">
+        <Link href={`${pathname}/employees`}>
           <CardBase>Employee Management</CardBase>
         </Link>
       </div>
@@ -31,4 +36,4 @@ const IndexPage = () => {
   );
 };
 
-export default IndexPage;
+export default AdminDashboardPage;

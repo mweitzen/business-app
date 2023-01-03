@@ -42,11 +42,6 @@ const App = ({
   Component,
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) => {
-  //
-  // const getLayout =
-  // Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>);
-  // return getLayout(
-
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>

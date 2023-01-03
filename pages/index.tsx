@@ -1,34 +1,49 @@
-import Link from "next/link";
 import MainHeader from "@/components/header-main";
+import LinkButton from "@/components/button-link";
+import LabelText from "@/components/text-label";
+import CardBase from "@/components/card";
 
 const IndexPage = () => {
   return (
     <div>
       <MainHeader header="Your Company" />
 
-      <div className="mb-2 grid gap-6">
-        {[
-          {
-            href: "/admin",
-            text: "Company Dashboard (Admin)",
-          },
-          {
-            href: "/personal",
-            text: "Personal Dashboard (Internal)",
-          },
-          {
-            href: "/public",
-            text: "Public Page",
-          },
-        ].map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="rounded-full bg-element py-4 px-4 text-center shadow shadow-purple-300 focus:ring-purple-600 active:ring-black dark:shadow-gray-800 md:mx-24"
-          >
-            {link.text}
-          </Link>
-        ))}
+      <div className="mb-2 grid gap-8 text-center text-sm">
+        {/*  */}
+        {/* ADMIN DASHBOARD */}
+        <div className="flex flex-col">
+          <CardBase>
+            <LabelText>Company Dashboard (Admin)</LabelText>
+            <p>
+              An administrative overview of the organization. Access is limited
+              to those with admin priviliges. Beyond admin privileges,
+              additional access to each resource is limited to who gets assigend
+              access.
+            </p>
+          </CardBase>
+          <LinkButton href="/admin">Go to Company Dashboard</LinkButton>
+        </div>
+
+        {/* EMPLOYEE DASHBOARD */}
+        <div className="flex flex-col">
+          <CardBase>
+            <LabelText>Personal Dashboard (Internal)</LabelText>
+            <p>
+              Individual experience, tailored to each internal employee's roles
+              and needs.
+            </p>
+          </CardBase>
+          <LinkButton href="/personal">Go to Personal Dashboard</LinkButton>
+        </div>
+
+        {/* PUBLIC PAGES */}
+        <div className="flex flex-col">
+          <CardBase>
+            <LabelText>Public Page</LabelText>
+            <p>Any publicly accessible resources or portals.</p>
+          </CardBase>
+          <LinkButton href="/public">Go to Public Page</LinkButton>
+        </div>
       </div>
     </div>
   );

@@ -19,12 +19,13 @@ const PositionsListPage = () => {
   return (
     <div>
       <PageHeader header="Company Positions" />
+
       {isLoading ? (
         <div>Loading...</div>
       ) : (
         <ListBase search={{}} filters={[]}>
           {positions.map((position: Position) => (
-            <Link key={position.id} href={`/positions/${position.id}`}>
+            <Link key={position.id} href={`/admin/HR/positions/${position.id}`}>
               <div className="flex gap-4">
                 <p>{position.name}</p>
                 <p className="text-xs uppercase">

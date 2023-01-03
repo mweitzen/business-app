@@ -22,7 +22,9 @@ import PageHeader from "@/components/header-page";
 const AssetDetailPage = () => {
   const {
     query: { id: assetId },
+    ...rest
   } = useRouter();
+  console.log(rest);
 
   const { data: asset, status } = useQuery({
     queryKey: ["asset", assetId],

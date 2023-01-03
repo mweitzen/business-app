@@ -1,11 +1,20 @@
 import LinkButton from "@/components/button-link";
-import MainHeader from "@/components/header-main";
+import PageHeader from "@/components/header-page";
+import LabelText from "@/components/text-label";
 
 const PublicPage = () => {
   return (
     <div>
-      <MainHeader header="Public Page" />
-      <LinkButton href="/public/jobs">Public Posted Jobs</LinkButton>
+      <PageHeader header="Public Page" />
+      <div className="flex flex-col gap-y-4">
+        <div>
+          <LabelText>Online Job Postings</LabelText>
+          <p>
+            Publicly accessible job postings, attached to the internal system.
+          </p>
+        </div>
+        <LinkButton href="/public/jobs">View Posted Jobs</LinkButton>
+      </div>
     </div>
   );
 };

@@ -1,13 +1,11 @@
-import Link from "next/link";
-import CardBase from "@/components/card";
-import MainHeader from "@/components/header-main";
+import PageHeader from "@/components/header-page";
 
-const IndexPage = () => {
+const EmployeeDashboardPage = () => {
   return (
     <div>
-      <MainHeader header="Your Personal Dashboard" />
+      <PageHeader header="Employee Dashboard" />
     </div>
   );
 };
 
-export default IndexPage;
+export default EmployeeDashboardPage;
