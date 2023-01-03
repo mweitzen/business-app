@@ -5,6 +5,7 @@ import LinkButton from "@/components/button-link";
 import ButtonBase from "@/components/button";
 import LabelText from "@/components/text-label";
 import { usePathname } from "@/lib/hooks";
+import CardBase from "@/components/card";
 
 const HumanResourcesHomePage = () => {
   const pathname = usePathname();
@@ -13,107 +14,75 @@ const HumanResourcesHomePage = () => {
     <div>
       <PageHeader header="HR Dashboard" />
 
-      <LabelText>Employee Lifecycle (Applicant)</LabelText>
-      <div className="mb-2 grid gap-6">
-        {[
-          {
-            href: `${pathname}/positions/create`,
-            text: "Create Position",
-          },
-          {
-            href: `${pathname}/positions`,
-            text: "Positions List",
-          },
-          {
-            href: "/public/jobs",
-            text: "Public Posted Positions",
-          },
-          {
-            href: `${pathname}/applicants`,
-            text: "Applicant List",
-          },
-        ].map((link) => (
-          <LinkButton key={link.href} href={link.href}>
-            {link.text}
-          </LinkButton>
-        ))}
-      </div>
+      <div className="space-y-4">
+        <CardBase>
+          <LabelText>Employee Lifecycle (Applicant)</LabelText>
+          <div className="mb-2 grid gap-6">
+            {[
+              {
+                href: `${pathname}/positions/create`,
+                text: "Create Position",
+              },
+              {
+                href: `${pathname}/positions`,
+                text: "Positions List",
+              },
+              {
+                href: "/public/jobs",
+                text: "Public Posted Positions",
+              },
+              {
+                href: `${pathname}/applicants`,
+                text: "Applicant List",
+              },
+            ].map((link) => (
+              <LinkButton key={link.href} href={link.href}>
+                {link.text}
+              </LinkButton>
+            ))}
+          </div>
+        </CardBase>
 
-      <LabelText>Hire employee (demo)</LabelText>
-      <div className="flex gap-x-2 py-2">
-        <ButtonBase
-          className="w-full"
-          onClick={async () => {
-            try {
-              const { data } = await axios.post(
-                "/api/positions/clccgp1tv00309kharj5hxcsm/assign",
-                {
-                  userId: "clccgp1r1000s9khaisnlv957",
-                }
-              );
-              console.log(data);
-              return data;
-            } catch (error) {
-              console.log("uh oh error");
-              console.log(error);
-            }
-          }}
-        >
-          Assign Position
-        </ButtonBase>
-        <ButtonBase
-          className="w-full"
-          onClick={async () => {
-            try {
-              const { data } = await axios.post(
-                "/api/applicants/clccgp1sd001f9khata18nmiy/hire",
-                {
-                  positionId: "clccgp1tv002x9khaqbc2ftt3",
-                }
-              );
-              console.log(data);
-              return data;
-            } catch (error) {
-              console.log("uh oh error");
-              console.log(error);
-            }
-          }}
-        >
-          Hire internal
-        </ButtonBase>
-        <ButtonBase
-          className="w-full"
-          onClick={async () => {
-            try {
-              const { data } = await axios.post(
-                "/api/applicants/clccgp1sd001e9khayfeocqpj/hire",
-                {
-                  positionId: "clccgp1tt00269khaha354vp9",
-                }
-              );
-              console.log(data);
-              return data;
-            } catch (error) {
-              console.log("uh oh error");
-              console.log(error);
-            }
-          }}
-        >
-          Hire external
-        </ButtonBase>
+        <CardBase>
+          <LabelText>Employee Lifecycle (Onboarding)</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>Employee Lifecycle (Performance Review)</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>Employee Lifecycle (Change of Position)</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>Employee Lifecycle (Offboarding)</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>Learning | Distributed Materials</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>Employee Files | Tax Documents</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>Benefits | Vendors</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
+
+        <CardBase>
+          <LabelText>External System(s)</LabelText>
+          <div className="mb-2 grid grid-cols-2 gap-4"></div>
+        </CardBase>
       </div>
-      <LabelText>Employee Lifecycle (Onboarding)</LabelText>
-      <div className="mb-2 grid grid-cols-2 gap-4"></div>
-      <LabelText>Employee Lifecycle (Change of Position)</LabelText>
-      <div className="mb-2 grid grid-cols-2 gap-4"></div>
-      <LabelText>Employee Lifecycle (Offboarding)</LabelText>
-      <div className="mb-2 grid grid-cols-2 gap-4"></div>
-      <LabelText>Distributed Materials</LabelText>
-      <div className="mb-2 grid grid-cols-2 gap-4"></div>
-      <LabelText>Employee Files</LabelText>
-      <div className="mb-2 grid grid-cols-2 gap-4"></div>
-      <LabelText>Tax Documents</LabelText>
-      <div className="mb-2 grid grid-cols-2 gap-4"></div>
     </div>
   );
 };

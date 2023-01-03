@@ -11,6 +11,7 @@ const InformationTechnologyHomePage = () => {
   return (
     <div>
       <PageHeader header="IT Dashboard" />
+
       <div className="grid gap-4">
         <CardBase>
           <LabelText>Asset Management Section</LabelText>
@@ -22,10 +23,12 @@ const InformationTechnologyHomePage = () => {
             <LinkButton href={``}>Service Tickets</LinkButton>
           </div>
         </CardBase>
+
         <CardBase>
           <LabelText>Internet Information</LabelText>
           <div className="mb-2 grid grid-cols-2 gap-4">Xfinity</div>
         </CardBase>
+
         <CardBase>
           <LabelText>Telephone Information</LabelText>
           <div className="mb-2 grid grid-cols-2 gap-4">Telnet</div>

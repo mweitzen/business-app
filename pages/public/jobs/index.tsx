@@ -22,7 +22,7 @@ const JobPostingPage = () => {
   return (
     <div>
       <PageHeader header="Job Postings" />
-      <div>
+      <div className="grid gap-4">
         {isLoading ? (
           <div>Loading....</div>
         ) : (

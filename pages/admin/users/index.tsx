@@ -5,7 +5,7 @@ import PageHeader from "@/components/header-page";
 const UsersListPage = () => {
   return (
     <UsersProvider>
-      <PageHeader header="Company Employees" />
+      <PageHeader header="All Company Users" />
 
       <UsersList />
     </UsersProvider>
