@@ -4,12 +4,9 @@ import MainHeader from "@/components/header-main";
 import CardBase from "@/components/card";
 import LabelText from "@/components/text-label";
 import IconBadge from "@/components/icon-badge";
-import { api } from "@/lib/api";
 import AuthShowcase from "@/components/auth-showcase";
 
 const IndexPage = () => {
-  const { data, isLoading } = api.example.getSecretMessage.useQuery();
-
   return (
     <div>
       <MainHeader header="Your Company" />

@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+//
 import { useRouter } from "next/router";
 import { usePathname } from "@/lib/hooks";
 //
@@ -14,19 +14,16 @@ const JobPostingDetailPage = () => {
 
   const pathname = usePathname();
 
-  const { data: jobPosting, isLoading } = useQuery({
-    queryKey: ["position", positionId],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/positions/${positionId}`);
-      return data;
-    },
+  const { data: jobPosting, isLoading } = api.position.getById.useQuery({
+    positionId: (positionId as string) || "",
   });
+
   return (
     <div>
       <PageHeader header="Apply to job" />
       {isLoading ? (
         <div>Loading...</div>
-      ) : (
+      ) : jobPosting ? (
         <div className="space-y-4">
           <div>
             <LabelText>Position Name</LabelText>
@@ -45,10 +42,12 @@ const JobPostingDetailPage = () => {
             <p>{jobPosting.laborStatus}</p>
           </div>
           <div>
-            <p>{jobPosting.description}</p>
+            <p>{jobPosting.overview}</p>
           </div>
           <LinkButton href={`${pathname}/apply`}>Apply to Posting</LinkButton>
         </div>
+      ) : (
+        <div>Oops.</div>
       )}
     </div>
   );

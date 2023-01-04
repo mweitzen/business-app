@@ -1,8 +1,7 @@
 import Link from "next/link";
-import axios from "axios";
 //
+import { api } from "@/lib/api";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
 //
 import { AssetStatus } from "@prisma/client";
 //
@@ -26,13 +25,8 @@ const AssetDetailPage = () => {
   } = useRouter();
   console.log(rest);
 
-  const { data: asset, status } = useQuery({
-    queryKey: ["asset", assetId],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/assets/${assetId}`);
-      return data;
-    },
-    retry: false,
+  const { data: asset, status } = api.asset.getByIdAdmin.useQuery({
+    assetId: (assetId as string) || "",
   });
 
   if (status === "error") {
@@ -52,7 +46,7 @@ const AssetDetailPage = () => {
       <CardBase>
         {status === "loading" ? (
           <div>Loading...</div>
-        ) : (
+        ) : asset ? (
           <div className="grid gap-y-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-widest text-muted">
@@ -94,6 +88,8 @@ const AssetDetailPage = () => {
             <ButtonBase>Submit a Service Ticket</ButtonBase>
             <ButtonBase>Retire Asset</ButtonBase>
           </div>
+        ) : (
+          <div>Oops. Error!</div>
         )}
       </CardBase>
     </div>

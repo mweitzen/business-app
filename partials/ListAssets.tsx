@@ -91,7 +91,7 @@ const AssetsList = () => {
               <td colSpan={5}>Loading</td>
             </tr>
           ) : assets?.length > 0 ? (
-            assets?.map((asset: any) => (
+            assets?.map((asset) => (
               <tr
                 key={asset.id}
                 className="odd:bg-slate-100 hover:cursor-pointer hover:bg-slate-200"

@@ -1,9 +1,6 @@
 import Link from "next/link";
 //
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { Position } from "@prisma/client";
-//
+import { api } from "@/lib/api";
 import { usePathname } from "@/lib/hooks";
 //
 import PageHeader from "@/components/header-page";
@@ -12,27 +9,27 @@ import CardBase from "@/components/card";
 const JobPostingPage = () => {
   const pathname = usePathname();
 
-  const { data: postedPositions, isLoading } = useQuery({
-    queryKey: ["jobPostings"],
-    queryFn: async () => {
-      const { data } = await axios.get("/api/positions?posted=true");
-      return data;
-    },
-  });
+  const { data: postedPositions, isLoading } =
+    api.position.getPostedPositions.useQuery();
+
   return (
     <div>
       <PageHeader header="Job Postings" />
       <div className="grid gap-4">
         {isLoading ? (
           <div>Loading....</div>
-        ) : (
-          postedPositions.map((position: Position) => (
+        ) : postedPositions ? (
+          postedPositions.map((position) => (
             <Link key={position.id} href={`${pathname}/${position.id}`}>
               <CardBase>
                 <div>{position.name}</div>
               </CardBase>
             </Link>
           ))
+        ) : (
+          <CardBase>
+            <p>No positions are posted currently.</p>
+          </CardBase>
         )}
       </div>
     </div>
