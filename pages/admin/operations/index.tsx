@@ -1,51 +1,32 @@
-import ButtonBase from "@/components/button";
-import LinkButton from "@/components/button-link";
-import CardBase from "@/components/card";
+import { usePathname } from "@/lib/hooks";
+//
 import PageHeader from "@/components/header-page";
-import LabelText from "@/components/text-label";
-import React from "react";
+import LinkCard from "@/components/card-link";
 
 const DailyOperationsHomePage = () => {
+  const pathname = usePathname();
+
   return (
     <div>
       <PageHeader header="Daily Operations. Business Logic" />
 
-      <div className="space-y-4">
-        <CardBase>
-          <LabelText>Calendars</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4">
-            <ButtonBase>View All</ButtonBase>
-            <ButtonBase>Create Calendar</ButtonBase>
-          </div>
-        </CardBase>
+      <div className="grid gap-4">
+        <LinkCard href={`${pathname}/calendars`} label="Calendars" />
 
-        <CardBase>
-          <LabelText>Program Management</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4">
-            <ButtonBase>View All</ButtonBase>
-            <ButtonBase>Create Program</ButtonBase>
-          </div>
-        </CardBase>
+        <LinkCard href={`${pathname}/programs`} label="Program Management" />
 
-        <CardBase>
-          <LabelText>Occurrence Management</LabelText>
-        </CardBase>
+        <LinkCard
+          href={`${pathname}/occurrences`}
+          label="Occurrence Management"
+        />
 
-        <CardBase>
-          <LabelText>Employee Staffing</LabelText>
-        </CardBase>
+        <LinkCard href={`${pathname}/staffing`} label="Employee Staffing" />
 
-        <CardBase>
-          <LabelText>Equipment Management</LabelText>
-        </CardBase>
+        <LinkCard href={`${pathname}/resources`} label="Equipment Management" />
 
-        <CardBase>
-          <LabelText>Task Manager</LabelText>
-        </CardBase>
+        <LinkCard href={``} label="Task Manager" />
 
-        <CardBase>
-          <LabelText>Location Management</LabelText>
-        </CardBase>
+        <LinkCard href={`${pathname}/locations`} label="Location Management" />
       </div>
     </div>
   );

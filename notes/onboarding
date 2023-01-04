@@ -19,3 +19,26 @@ i need to track:
 
 # do something [create, update, delete]
 i need to be able to:
+
+
+## UX flow
+
+    anonymous user / known user (external) / or company employee (internal):
+    - views public posted positions
+    - user decides to apply for positions
+    - if user exists in system, prepopulate
+    - fill in info and apply
+    - receive confirmation that your application was submitted
+    - display option to view your profile with applicant info
+
+    internal hr:
+    - recieve notification of new applicant
+    - view applicant info, including job they applied for
+    - manage the applicant from their detail screen
+        - request interview
+        - messsage
+        - make internal notes
+        - share applicant with internal employee
+        - adjust applicant rating
+        - hire or pass on applicant
+    

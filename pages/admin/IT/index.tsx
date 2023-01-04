@@ -1,11 +1,9 @@
 import { usePathname } from "@/lib/hooks";
 //
-import LinkButton from "@/components/button-link";
 import PageHeader from "@/components/header-page";
-import LabelText from "@/components/text-label";
-import CardBase from "@/components/card";
+import LinkCard from "@/components/card-link";
 
-const InformationTechnologyHomePage = () => {
+const ITDashboard = () => {
   const pathname = usePathname();
 
   return (
@@ -13,27 +11,18 @@ const InformationTechnologyHomePage = () => {
       <PageHeader header="IT Dashboard" />
 
       <div className="grid gap-4">
-        <CardBase>
-          <LabelText>Asset Management Section</LabelText>
-          <div className="mt-4 grid gap-4">
-            <LinkButton href={`${pathname}/assets`}>Assets List</LinkButton>
-            <LinkButton href={`${pathname}/assets/create`}>
-              Create Asset
-            </LinkButton>
-            <LinkButton href={``}>Service Tickets</LinkButton>
-          </div>
-        </CardBase>
-
-        <CardBase>
-          <LabelText>Internet Information</LabelText>
-        </CardBase>
-
-        <CardBase>
-          <LabelText>Telephone Information</LabelText>
-        </CardBase>
+        <LinkCard href={`${pathname}/services`} label="External Services" />
+        <LinkCard
+          href={`${pathname}/assets`}
+          label="Asset Management Section"
+        />
+        <LinkCard href={`${pathname}/tickets`} label="Service Tickets" />
+        <LinkCard href={`${pathname}/internet`} label="Internet Provider" />
+        <LinkCard href={`${pathname}/telephone`} label="Telephone Provider" />
+        <LinkCard href={`${pathname}/vendors`} label="Vendors" />
       </div>
     </div>
   );
 };
 
-export default InformationTechnologyHomePage;
+export default ITDashboard;
