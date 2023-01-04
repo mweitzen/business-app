@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 //
 import { classNames } from "@/lib/common/classNames";
 import { WithChildren } from "@/types";
+import { AssetType, AssetStatus } from "@prisma/client";
 //
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
@@ -93,7 +94,15 @@ const CreateAssetPage = () => {
   ) {
     formikHelpers.setSubmitting(false);
 
-    mutation.mutate(values);
+    mutation.mutate({
+      name: "New Tablet to the Block",
+      type: AssetType.TABLET,
+      brand: "Samsung",
+      serialNumber: "x1x1x1x1x1x",
+      orderNumber: "xxssdx",
+      purchasedFrom: "amazon.com",
+      purchasePrice: 359.99,
+    });
 
     router.push("/admin/IT/assets");
   }

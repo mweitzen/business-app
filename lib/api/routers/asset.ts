@@ -77,7 +77,7 @@ export const assetRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-        type: z.enum(["LAPTOP", "DESKTOP"]),
+        type: z.enum(["LAPTOP", "DESKTOP", "TABLET"]),
         brand: z.string(),
         serialNumber: z.string(),
         purchaseDate: z.date().optional(),
@@ -87,23 +87,21 @@ export const assetRouter = createTRPCRouter({
       })
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.$transaction(async (tx) => {
-        return await tx.asset.create({
-          data: {
-            name: input.name,
-            type: input.type,
-            brand: input.brand,
-            serialNumber: input.serialNumber,
-            purchase: {
-              create: {
-                purchaseDate: input.purchaseDate || new Date(),
-                purchasedFrom: input.purchasedFrom,
-                purchasePrice: input.purchasePrice,
-                orderNumber: input.orderNumber,
-              },
+      return ctx.prisma.asset.create({
+        data: {
+          name: input.name,
+          type: input.type,
+          brand: input.brand,
+          serialNumber: input.serialNumber,
+          purchase: {
+            create: {
+              purchaseDate: input.purchaseDate || new Date(),
+              purchasedFrom: input.purchasedFrom,
+              purchasePrice: input.purchasePrice,
+              orderNumber: input.orderNumber,
             },
           },
-        });
+        },
       });
     }),
 

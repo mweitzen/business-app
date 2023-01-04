@@ -2,6 +2,7 @@ import Link from "next/link";
 //
 import { api } from "@/lib/api";
 import { useRouter } from "next/router";
+import { usePathname } from "@/lib/hooks";
 //
 import { AssetStatus } from "@prisma/client";
 //
@@ -19,11 +20,11 @@ import PageHeader from "@/components/header-page";
  *
  */
 const AssetDetailPage = () => {
+  const pathname = usePathname();
+
   const {
     query: { id: assetId },
-    ...rest
   } = useRouter();
-  console.log(rest);
 
   const { data: asset, status } = api.asset.getByIdAdmin.useQuery({
     assetId: (assetId as string) || "",
@@ -81,7 +82,7 @@ const AssetDetailPage = () => {
                 <AssetUnassignModal asset={asset} />
               </>
             ) : null}
-            <Link href={`/assets/${asset.id}/history`} className="rounded-full">
+            <Link href={`${pathname}/history`} className="rounded-full">
               <ButtonBase className="w-full">Assignment History</ButtonBase>
             </Link>
             <ButtonBase>Mark a Condition Change</ButtonBase>

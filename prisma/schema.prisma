@@ -410,6 +410,6 @@ model AssetPurchase {
   purchaseDate  DateTime
   receivedDate  DateTime?
   orderNumber   String
-  purchasePrice Int
+  purchasePrice Float
   purchasedFrom String
 }

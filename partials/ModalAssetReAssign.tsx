@@ -6,6 +6,14 @@ import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
 import ButtonBase from "@/components/button";
 
+//
+const MOCK_USER_ID = "clcgvbd0900009kykktt3jut7";
+
+/*
+ *
+ * ASSIGN ASSET TO USER MODAL
+ *
+ */
 const AssetReAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
   const [displayStep, setDisplayStep] = useState<number>(1);
@@ -129,7 +137,7 @@ const AssetReAssignModal = ({ asset }: { asset: any }) => {
               onClick={() => {
                 mutation.mutate({
                   assetId: asset.id,
-                  userId: "clc9w976t00009ke4tedezn50",
+                  userId: MOCK_USER_ID,
                 });
                 handleClose();
               }}

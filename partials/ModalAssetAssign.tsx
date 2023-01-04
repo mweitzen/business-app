@@ -7,6 +7,14 @@ import SelectUser from "@/components/select-user";
 import ButtonBase from "@/components/button";
 import LabelText from "@/components/text-label";
 
+//
+const MOCK_USER_ID = "clcgvbd0900009kykktt3jut7";
+
+/*
+ *
+ * ASSIGN ASSET TO USER MODAL
+ *
+ */
 const AssetAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
   const [displayStep, setDisplayStep] = useState<number>(1);
@@ -118,7 +126,7 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
               className="w-full"
               onClick={async () => {
                 mutation.mutate({
-                  userId: "clc9w976t00009ke4tedezn50",
+                  userId: MOCK_USER_ID,
                   assetId: asset.id,
                 });
                 handleClose();

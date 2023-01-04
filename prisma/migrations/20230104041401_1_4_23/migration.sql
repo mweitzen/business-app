@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "AssetPurchase" ALTER COLUMN "purchasePrice" SET DATA TYPE DOUBLE PRECISION;
