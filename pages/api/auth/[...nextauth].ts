@@ -27,6 +27,19 @@ export const authOptions: NextAuthOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      const allowedDomains = ["@company.com"];
+      const userDomain = user && user.email?.slice(user.email?.indexOf("@"));
+      // const isAllowedToSignIn =
+      // userDomain && allowedDomains.includes(userDomain);
+      const isAllowedToSignIn = true;
+
+      if (isAllowedToSignIn) {
+        return true;
+      } else {
+        return "/unauthorized";
+      }
+    },
     session: ({ session, user }) => ({
       ...session,
       user: {

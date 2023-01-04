@@ -18,8 +18,9 @@ const AuthShowcase: React.FC = () => {
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="rounded-full bg-purple-400 px-10 py-3 font-semibold text-white no-underline transition hover:bg-purple-400/80"
+        className="rounded-full bg-purple-400 px-10 py-3 font-semibold text-white no-underline transition hover:bg-purple-400/80 disabled:cursor-not-allowed disabled:bg-gray-400"
         onClick={sessionData ? () => signOut() : () => signIn()}
+        disabled={status === "loading"}
       >
         {sessionData ? "Sign out" : "Sign in"}
       </button>
