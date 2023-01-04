@@ -1,6 +1,10 @@
 // *
 // *
+// *
+// *
 // * PRISMA
+// *
+// *
 // *
 // *
 generator client {
@@ -15,7 +19,11 @@ datasource db {
 
 // *
 // *
+// *
+// *
 // * USER
+// *
+// *
 // *
 // *
 model User {
@@ -65,6 +73,7 @@ model User {
   startDate               DateTime? // ! required
   onboardingTasks         OnboardingTask[]
   // * company access
+  accessCodes             BuildingAccessCodes[]
   // * labor profile
   hireDate                DateTime                  @default(now())
   laborStatus             LaborStatus?
@@ -79,7 +88,11 @@ enum PreferredContactMethods {
 
 // *
 // *
+// *
+// *
 // * AUTH
+// *
+// *
 // *
 // *
 model Account {
@@ -118,18 +131,17 @@ model VerificationToken {
 
 // *
 // *
+// *
+// *
 // * COMPANY / ORGANIZATION
+// *
+// *
 // *
 // *
 model Organization {
   id        String @id @default(cuid())
   name      String
   employees User[]
-}
-
-model Building {
-  id   String @id @default(cuid())
-  name String
 }
 
 model Department {
@@ -159,7 +171,58 @@ model Program {
 
 // *
 // *
+// *
+// *
+// * FACILITIES
+// *
+// *
+// *
+// *
+model Building {
+  id          String                @id @default(cuid())
+  name        String
+  location    Location              @relation(fields: [locationId], references: [id])
+  locationId  String                @unique
+  accessCodes BuildingAccessCodes[]
+}
+
+model BuildingAccessCodes {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  building   Building @relation(fields: [buildingId], references: [id])
+  buildingId String
+  createdAt  DateTime @default(now())
+  code       String
+  active     Boolean  @default(false)
+}
+
+// *
+// *
+// *
+// *
+// * LOCATIONS
+// *
+// *
+// *
+// *
+model Location {
+  id                String     @id @default(cuid())
+  building          Building?
+  isCompanyBuilding Boolean    @default(false)
+  name              String     @unique
+  insideOf          Location?  @relation(name: "LocationHierarchy", fields: [insideOfId], references: [id])
+  insideOfId        String?
+  inside            Location[] @relation(name: "LocationHierarchy")
+}
+
+// *
+// *
+// *
+// *
 // * LABOR PROFILE
+// *
+// *
 // *
 // *
 enum LaborStatus {
@@ -168,6 +231,15 @@ enum LaborStatus {
   CONTRACT
   SEASONAL
   TEMPORARY
+}
+
+enum SalaryUnit {
+  HOURLY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  ANNUAL
+  CONTRACT
 }
 
 // staffing groups (matched to paycom labor allocation profiles)
@@ -182,7 +254,11 @@ enum LaborStatus {
 
 // *
 // *
+// *
+// *
 // * EMPLOYEE LIFECYCLE [APPLICANT]
+// *
+// *
 // *
 // *
 model Applicant {
@@ -251,15 +327,6 @@ model Position {
   salaryUnit            SalaryUnit?
 }
 
-enum SalaryUnit {
-  HOURLY
-  WEEKLY
-  BIWEEKLY
-  MONTHLY
-  ANNUAL
-  CONTRACT
-}
-
 model PositionHistory {
   id         String   @id @default(cuid())
   active     Boolean  @default(true)
@@ -271,7 +338,11 @@ model PositionHistory {
 
 // *
 // *
+// *
+// *
 // * EMPLOYEE LIFECYCLE [ONBOARDING]
+// *
+// *
 // *
 // *
 model OnboardingTemplate {
@@ -352,7 +423,11 @@ enum TaskStatus {
 
 // *
 // *
-// * Asset Related Schema
+// *
+// *
+// * ASSET MANAGEMENT
+// *
+// *
 // *
 // *
 

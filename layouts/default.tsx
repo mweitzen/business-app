@@ -70,7 +70,7 @@ const DefaultLayout: React.FC<WithChildren> = ({ children }) => {
       <Topbar />
       <MobileSidebar />
 
-      <main className="relative flex-grow overflow-x-hidden bg-default px-4 sm:px-8">
+      <main className="relative flex-grow overflow-x-hidden bg-default px-4 pb-4 sm:px-8 sm:pb-8">
         {children}
       </main>
     </div>

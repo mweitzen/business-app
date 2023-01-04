@@ -10,9 +10,11 @@ const IndexPage = () => {
   return (
     <div>
       <MainHeader header="Your Company" />
+
       <div className="mb-6">
         <AuthShowcase />
       </div>
+
       <div className="mb-2 grid gap-8 text-center text-sm">
         {/*  */}
         {/* ADMIN DASHBOARD */}

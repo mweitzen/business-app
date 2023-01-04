@@ -15,7 +15,7 @@ const InformationTechnologyHomePage = () => {
       <div className="grid gap-4">
         <CardBase>
           <LabelText>Asset Management Section</LabelText>
-          <div className="mb-2 grid gap-4">
+          <div className="mt-4 grid gap-4">
             <LinkButton href={`${pathname}/assets`}>Assets List</LinkButton>
             <LinkButton href={`${pathname}/assets/create`}>
               Create Asset
@@ -26,12 +26,10 @@ const InformationTechnologyHomePage = () => {
 
         <CardBase>
           <LabelText>Internet Information</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4">Xfinity</div>
         </CardBase>
 
         <CardBase>
           <LabelText>Telephone Information</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4">Telnet</div>
         </CardBase>
       </div>
     </div>
