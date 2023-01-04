@@ -16,17 +16,19 @@ const ApplicantsListPage = () => {
     <div>
       <PageHeader header="Current Applicants" />
       <ListBase search={{}} filters={[]}>
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : applicants ? (
-          applicants.map((applicant) => (
-            <Link href={`${pathname}/${applicant.id}`}>
-              <CardBase key={applicant.id}>{applicant.name}</CardBase>
-            </Link>
-          ))
-        ) : (
-          <div>No Applicants.</div>
-        )}
+        <div className="grid gap-4">
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : applicants ? (
+            applicants.map((applicant) => (
+              <Link key={applicant.id} href={`${pathname}/${applicant.id}`}>
+                <CardBase key={applicant.id}>{applicant.name}</CardBase>
+              </Link>
+            ))
+          ) : (
+            <div>No Applicants.</div>
+          )}
+        </div>
       </ListBase>
     </div>
   );

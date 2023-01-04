@@ -31,7 +31,7 @@ export const applicantRouter = createTRPCRouter({
     .input(z.object({ applicantId: z.string(), positionId: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.$transaction(async (tx) => {
-        const applicant = await prisma.applicant.findUnique({
+        const applicant = await ctx.prisma.applicant.findUnique({
           where: {
             id: input.applicantId,
           },
@@ -59,7 +59,7 @@ export const applicantRouter = createTRPCRouter({
           });
 
           // find old position history
-          const oldPosition = await prisma.positionHistory.findFirst({
+          const oldPosition = await ctx.prisma.positionHistory.findFirst({
             where: {
               employeeId: user.id,
               active: true,

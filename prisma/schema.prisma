@@ -245,8 +245,18 @@ model Position {
   onboardingTasks       OnboardingTask[]
   // labor profile
   laborStatus           LaborStatus?
-  salaryRangeLow        Int?
-  salaryRangeHigh       Int?
+  salaryRangeLow        Float?
+  salaryRangeHigh       Float?
+  salaryUnit            SalaryUnit?
+}
+
+enum SalaryUnit {
+  HOURLY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  ANNUAL
+  CONTRACT
 }
 
 model PositionHistory {

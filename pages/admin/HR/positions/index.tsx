@@ -22,11 +22,11 @@ const PositionsListPage = () => {
         </Link>
       </PageHeader>
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <ListBase search={{}} filters={[]}>
-          {positions.map((position) => (
+      <ListBase search={{}} filters={[]}>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : positions ? (
+          positions.map((position) => (
             <Link key={position.id} href={`${pathname}/${position.id}`}>
               <div className="flex gap-4">
                 <p>{position.name}</p>
@@ -35,9 +35,11 @@ const PositionsListPage = () => {
                 </p>
               </div>
             </Link>
-          ))}
-        </ListBase>
-      )}
+          ))
+        ) : (
+          <div>Nothing here</div>
+        )}
+      </ListBase>
     </div>
   );
 };

@@ -6,8 +6,23 @@ export const positionRouter = createTRPCRouter({
    * @summary CREATE NEW POSITION
    */
   createPosition: protectedProcedure
-    .input(z.object({}))
-    .mutation(({ ctx, input }) => {}),
+    .input(
+      z.object({
+        name: z.string(),
+        overview: z.string().optional(),
+        departmentId: z.string(),
+        supervisingPositionId: z.string(),
+        posted: z.boolean().default(false),
+        salaryRangeLow: z.number().optional(),
+        salaryRangeHigh: z.number().optional(),
+        salaryUnit: z.enum([""]).optional(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.position.create({
+        data: input,
+      });
+    }),
 
   /**
    * @summary GET ALL
@@ -93,7 +108,27 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary POST A POSITION PUBLICLY
+   * @summary UN POST A POSITION PUBLICLY
+   */
+  unpostPosition: protectedProcedure
+    .input(
+      z.object({
+        positionId: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.position.update({
+        where: {
+          id: input.positionId,
+        },
+        data: {
+          posted: false,
+        },
+      });
+    }),
+
+  /**
+   * @summary ASSIGN POSITION TO A USER
    */
   assignPositionToUser: protectedProcedure
     .input(z.object({ positionId: z.string(), userId: z.string() }))
@@ -131,42 +166,43 @@ export const positionRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // // check if applicant email already exists
-      // const existingApplicant = await ctx.prisma.applicant.findUnique({
-      //   where: {
-      //     email: input.applicantData.email,
-      //   },
-      //   include: {
-      //     interestedIn: true,
-      //   },
-      // });
-      // // if existing, add interested positon
-      // if (existingApplicant) {
-      //   const updatedApplicant = await ctx.prisma.applicant.update({
-      //     where: {
-      //       id: existingApplicant.id,
-      //     },
-      //     data: {
-      //       interestedIn: {
-      //         connect: {
-      //           id: input.positionId,
-      //         },
-      //       },
-      //     },
-      //   });
-      // } else {
-      //   // if not, create applicant,
-      //   const newApplicant = await ctx.prisma.applicant.create({
-      //     data: {
-      //       name: input.applicantData.name,
-      //       email: input.applicantData.email,
-      //       interestedIn: {
-      //         connect: {
-      //           id: input.positionId,
-      //         },
-      //       },
-      //     },
-      //   });
-      // }
+      // check if applicant email already exists
+      const existingApplicant = await ctx.prisma.applicant.findUnique({
+        where: {
+          email: input.applicantData.email,
+        },
+        include: {
+          interestedIn: true,
+        },
+      });
+
+      // if existing, add interested positon
+      if (existingApplicant) {
+        return ctx.prisma.applicant.update({
+          where: {
+            id: existingApplicant.id,
+          },
+          data: {
+            interestedIn: {
+              connect: {
+                id: input.positionId,
+              },
+            },
+          },
+        });
+      } else {
+        // if not, create applicant,
+        return ctx.prisma.applicant.create({
+          data: {
+            name: input.applicantData.name,
+            email: input.applicantData.email,
+            interestedIn: {
+              connect: {
+                id: input.positionId,
+              },
+            },
+          },
+        });
+      }
     }),
 });

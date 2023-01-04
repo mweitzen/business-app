@@ -1,14 +1,23 @@
-import PageHeader from "@/components/header-page";
+import Link from "next/link";
+//
+import { api } from "@/lib/api";
 import { useRouter } from "next/router";
+//
+import PageHeader from "@/components/header-page";
 
 const ApplicantDetailPage = () => {
   const {
     query: { id: applicantId },
   } = useRouter();
-  // const;
+
+  const { data: applicant, isLoading } = api.applicant.getById.useQuery({
+    applicantId: (applicantId as string) || "",
+  });
+
   return (
     <div>
       <PageHeader header={`Applicant Info`} />
+
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -20,29 +29,56 @@ const ApplicantDetailPage = () => {
         </div>
         <div className="border-t border-gray-200">
           <dl>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Full name</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Margot Foster
+                {isLoading ? <span>Loading...</span> : applicant?.name}
               </dd>
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Application for
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Backend Developer
+                {isLoading ? (
+                  <span>Loading...</span>
+                ) : (
+                  applicant?.interestedIn.map((position, i) => (
+                    <Link
+                      key={position.id}
+                      href={`/admin/HR/positions/${position.id}`}
+                    >
+                      <span>
+                        {i + 1}) {position.name}{" "}
+                      </span>
+                    </Link>
+                  ))
+                )}
               </dd>
             </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Email address
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                margotfoster@example.com
+                {isLoading ? <span>Loading...</span> : applicant?.email}
               </dd>
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Is Current Employee?
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isLoading ? (
+                  <span>Loading...</span>
+                ) : applicant?.currentEmployee ? (
+                  "Yes"
+                ) : (
+                  "No"
+                )}
+              </dd>
+            </div>
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
                 Salary expectation
               </dt>
@@ -50,7 +86,7 @@ const ApplicantDetailPage = () => {
                 $120,000
               </dd>
             </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">About</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
@@ -60,7 +96,7 @@ const ApplicantDetailPage = () => {
                 reprehenderit deserunt qui eu.
               </dd>
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div className="px-4 py-5 odd:bg-gray-50 even:bg-white sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Attachments</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 <ul

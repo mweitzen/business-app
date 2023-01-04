@@ -14,7 +14,8 @@ const PositionDetailPage = () => {
     positionId: (positionId as string) || "",
   });
 
-  const mutation = api.position.postPosition.useMutation();
+  const postMutation = api.position.postPosition.useMutation();
+  const unpostMutation = api.position.unpostPosition.useMutation();
 
   return (
     <div>
@@ -23,13 +24,24 @@ const PositionDetailPage = () => {
         <div>Loading...</div>
       ) : position ? (
         position.posted ? (
-          <LinkButton href={`/public/jobs/${positionId}`}>
-            Visit Public Posting
-          </LinkButton>
+          <div className="grid gap-4">
+            <LinkButton href={`/public/jobs/${positionId}`}>
+              Visit Public Posting
+            </LinkButton>
+            <ButtonBase
+              onClick={() =>
+                unpostMutation.mutate({
+                  positionId: (positionId as string) || "",
+                })
+              }
+            >
+              Take Down Job Posting
+            </ButtonBase>
+          </div>
         ) : (
           <ButtonBase
             onClick={() =>
-              mutation.mutate({ positionId: (positionId as string) || "" })
+              postMutation.mutate({ positionId: (positionId as string) || "" })
             }
           >
             Post Position For Applicants
