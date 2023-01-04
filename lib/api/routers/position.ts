@@ -3,7 +3,13 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const positionRouter = createTRPCRouter({
   /**
-   * @summary CREATE NEW POSITION
+   *
+   *
+   *
+   * * CREATE NEW POSITION
+   *
+   *
+   *
    */
   createPosition: protectedProcedure
     .input(
@@ -15,7 +21,7 @@ export const positionRouter = createTRPCRouter({
         posted: z.boolean().default(false),
         salaryRangeLow: z.number().optional(),
         salaryRangeHigh: z.number().optional(),
-        salaryUnit: z.enum([""]).optional(),
+        // salaryUnit: z.enum([""]).optional(),
       })
     )
     .mutation(({ ctx, input }) => {
@@ -25,7 +31,13 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary GET ALL
+   *
+   *
+   *
+   * * GET ALL
+   *
+   *
+   *
    */
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.position.findMany({
@@ -42,7 +54,13 @@ export const positionRouter = createTRPCRouter({
   }),
 
   /**
-   * @summary GET BY ID
+   *
+   *
+   *
+   * * GET BY ID
+   *
+   *
+   *
    */
   getById: publicProcedure
     .input(z.object({ positionId: z.string() }))
@@ -58,7 +76,13 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary GET ADMIN VERSION OF POSITION
+   *
+   *
+   *
+   * * GET ADMIN VERSION OF POSITION
+   *
+   *
+   *
    */
   getByIdAdmin: protectedProcedure
     .input(z.object({ positionId: z.string() }))
@@ -77,7 +101,13 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary GET ONLY PUBLIC POSTED POSITIONS
+   *
+   *
+   *
+   * * GET ONLY PUBLIC POSTED POSITIONS
+   *
+   *
+   *
    */
   getPostedPositions: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.position.findMany({
@@ -88,7 +118,13 @@ export const positionRouter = createTRPCRouter({
   }),
 
   /**
-   * @summary POST A POSITION PUBLICLY
+   *
+   *
+   *
+   * * POST A POSITION PUBLICLY
+   *
+   *
+   *
    */
   postPosition: protectedProcedure
     .input(
@@ -108,7 +144,13 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary UN POST A POSITION PUBLICLY
+   *
+   *
+   *
+   * * UN POST A POSITION PUBLICLY
+   *
+   *
+   *
    */
   unpostPosition: protectedProcedure
     .input(
@@ -128,7 +170,13 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary ASSIGN POSITION TO A USER
+   *
+   *
+   *
+   * * ASSIGN POSITION TO A USER
+   *
+   *
+   *
    */
   assignPositionToUser: protectedProcedure
     .input(z.object({ positionId: z.string(), userId: z.string() }))
@@ -153,7 +201,13 @@ export const positionRouter = createTRPCRouter({
     }),
 
   /**
-   * @summary APPLY TO A POSITION
+   *
+   *
+   *
+   * * APPLY TO A POSITION
+   *
+   *
+   *
    */
   applyToPosition: publicProcedure
     .input(

@@ -2,18 +2,29 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const assetRouter = createTRPCRouter({
-  /*
+  /**
    *
-   * GET ALL
+   *
+   *
+   * * GET ALL
+   *
+   *
    *
    */
   getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.asset.findMany({ include: { assignedTo: true } });
+    return ctx.prisma.asset.findMany({
+      include: { assignedTo: true },
+      orderBy: [{ status: "asc" }, { type: "asc" }],
+    });
   }),
 
-  /*
+  /**
    *
-   * GET BY ID
+   *
+   *
+   * * GET BY ID
+   *
+   *
    *
    */
   getById: publicProcedure
@@ -26,9 +37,13 @@ export const assetRouter = createTRPCRouter({
       });
     }),
 
-  /*
+  /**
    *
-   * GET BY ID ADMIN
+   *
+   *
+   * * GET BY ID ADMIN
+   *
+   *
    *
    */
   getByIdAdmin: protectedProcedure
@@ -46,9 +61,13 @@ export const assetRouter = createTRPCRouter({
       });
     }),
 
-  /*
+  /**
    *
-   * GET ASSET ASSIGNMENT HISTORY
+   *
+   *
+   * * GET ASSET ASSIGNMENT HISTORY
+   *
+   *
    *
    */
   getAssetHistory: protectedProcedure
@@ -68,9 +87,13 @@ export const assetRouter = createTRPCRouter({
       });
     }),
 
-  /*
+  /**
    *
-   * CREATE ASSET
+   *
+   *
+   * * CREATE ASSET
+   *
+   *
    *
    */
   createAsset: protectedProcedure
@@ -105,9 +128,13 @@ export const assetRouter = createTRPCRouter({
       });
     }),
 
-  /*
+  /**
    *
-   * ASSIGN ASSET
+   *
+   *
+   * * ASSIGN ASSET
+   *
+   *
    *
    */
   assignToUser: protectedProcedure
@@ -164,9 +191,13 @@ export const assetRouter = createTRPCRouter({
       ]);
     }),
 
-  /*
+  /**
    *
-   * RE-ASSIGN
+   *
+   *
+   * * RE-ASSIGN ASSET
+   *
+   *
    *
    */
   reassignToNewUser: protectedProcedure
@@ -246,9 +277,13 @@ export const assetRouter = createTRPCRouter({
       ]);
     }),
 
-  /*
+  /**
    *
-   * UN-ASSIGN
+   *
+   *
+   * * UN-ASSIGN ASSET
+   *
+   *
    *
    */
   unassignFromUser: protectedProcedure
@@ -305,5 +340,75 @@ export const assetRouter = createTRPCRouter({
           },
         }),
       ]);
+    }),
+
+  /**
+   *
+   *
+   *
+   * * UPDATE ASSET CONDITION
+   *
+   *
+   *
+   */
+  updateCondition: protectedProcedure
+    .input(
+      z.object({
+        assetId: z.string(),
+        newCondition: z.any(),
+        notes: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const asset = await ctx.prisma.asset.findUnique({
+        where: {
+          id: input.assetId,
+        },
+      });
+
+      if (!asset) throw new Error("NO ASSET FOUND!");
+
+      return ctx.prisma.$transaction([
+        ctx.prisma.asset.update({
+          where: {
+            id: asset.id,
+          },
+          data: {
+            condition: input.newCondition,
+          },
+        }),
+        ctx.prisma.changeInAssetCondition.create({
+          data: {
+            assetId: asset.id,
+            oldCondition: asset.condition,
+            newCondition: input.newCondition,
+            assignedToId: asset.assignedToId,
+            notes: input.notes,
+          },
+        }),
+      ]);
+    }),
+
+  /**
+   *
+   *
+   *
+   * * RETIRE ASSET
+   *
+   *
+   *
+   */
+  retireAsset: protectedProcedure
+    .input(z.object({ assetId: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.asset.update({
+        where: {
+          id: input.assetId,
+        },
+        data: {
+          active: false,
+          status: "RETIRED",
+        },
+      });
     }),
 });

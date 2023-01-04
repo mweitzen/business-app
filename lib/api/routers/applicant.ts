@@ -2,7 +2,15 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
 export const applicantRouter = createTRPCRouter({
-  //
+  /**
+   *
+   *
+   *
+   * * GET ALL
+   *
+   *
+   *
+   */
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.applicant.findMany({
       where: {
@@ -13,6 +21,15 @@ export const applicantRouter = createTRPCRouter({
     });
   }),
 
+  /**
+   *
+   *
+   *
+   * * GET BY ID
+   *
+   *
+   *
+   */
   getById: publicProcedure
     .input(z.object({ applicantId: z.string() }))
     .query(({ ctx, input }) => {
@@ -27,6 +44,15 @@ export const applicantRouter = createTRPCRouter({
       });
     }),
 
+  /**
+   *
+   *
+   *
+   * * HIRE APPLICANT
+   *
+   *
+   *
+   */
   hire: protectedProcedure
     .input(z.object({ applicantId: z.string(), positionId: z.string() }))
     .mutation(({ ctx, input }) => {

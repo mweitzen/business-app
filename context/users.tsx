@@ -40,11 +40,11 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: _users, isLoading } = api.user.getAll.useQuery();
 
   let users = _users;
-  if (!!users) {
+  if (!!_users) {
     if (!!searchText) {
       users = _users.filter(
         (user) =>
-          user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          user.name?.toLowerCase().includes(searchText.toLowerCase()) ||
           user.email.toLowerCase().includes(searchText.toLowerCase())
       );
     }

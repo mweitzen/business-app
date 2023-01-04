@@ -57,6 +57,7 @@ model User {
   // * asset assignment
   assets                  Asset[]
   assetHistory            AssetAssignment[]
+  changesToAssetCondition ChangeInAssetCondition[]
   // * onboarding info
   isNewHire               Boolean                   @default(true) // ! cron job to check everday against end of onboarding, switch to false
   onboardingProcess       OnboardingProcess?        @relation(fields: [onboardingProcessId], references: [id])
@@ -356,31 +357,34 @@ enum TaskStatus {
 // *
 
 model Asset {
-  id             String            @id @default(cuid())
-  name           String            @unique
-  description    String?
-  imageUrl       String?
-  type           AssetType
-  brand          String
-  serialNumber   String
-  purchase       AssetPurchase     @relation(fields: [purchaseId], references: [id])
-  purchaseId     String            @unique
-  assignedTo     User?             @relation(fields: [assignedToId], references: [id])
-  assignedToId   String?
-  ownerHistory   AssetAssignment[]
-  condition      ConditionStatus   @default(NEW)
-  conditionNotes String?
-  status         AssetStatus       @default(AVAILABLE)
+  id                 String                   @id @default(cuid())
+  name               String                   @unique
+  description        String?
+  imageUrl           String?
+  type               AssetType
+  brand              String
+  serialNumber       String
+  purchase           AssetPurchase            @relation(fields: [purchaseId], references: [id])
+  purchaseId         String                   @unique
+  assignedTo         User?                    @relation(fields: [assignedToId], references: [id])
+  assignedToId       String?
+  ownerHistory       AssetAssignment[]
+  condition          ConditionStatus          @default(NEW)
+  conditionNotes     String?
+  changesInCondition ChangeInAssetCondition[]
+  status             AssetStatus              @default(AVAILABLE)
+  active             Boolean                  @default(true)
+  serviceTickets     ServiceTicket[]
 }
 
 enum AssetStatus {
-  RECYCLED
-  DONATED
   ASSIGNED
   AVAILABLE
-  REPAIR
+  SERVICING
+  RETIRED
   LOST
-  ORDERED
+  DONATED
+  RECYCLED
 }
 
 enum AssetType {
@@ -422,4 +426,24 @@ model AssetPurchase {
   orderNumber   String
   purchasePrice Float
   purchasedFrom String
+}
+
+model ChangeInAssetCondition {
+  id           String          @id @default(cuid())
+  date         DateTime        @default(now())
+  asset        Asset           @relation(fields: [assetId], references: [id])
+  assetId      String
+  oldCondition ConditionStatus
+  newCondition ConditionStatus
+  assignedTo   User?           @relation(fields: [assignedToId], references: [id])
+  assignedToId String?
+  notes        String
+}
+
+model ServiceTicket {
+  id      String @id @default(cuid())
+  easyId  Int    @unique @default(autoincrement())
+  summary String
+  asset   Asset  @relation(fields: [assetId], references: [id])
+  assetId String
 }
