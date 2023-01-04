@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { api } from "@/lib/api";
+import { queryClient } from "pages/_app";
 //
 import ModalBase from "@/components/modal";
 import ButtonBase from "@/components/button";
-import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "pages/_app";
 
 const AssetUnAssignModal = ({ asset }: { asset: any }) => {
   const [display, setDisplay] = useState(false);
@@ -15,13 +14,11 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
     asset.conditionNotes
   );
 
-  const mutation = useMutation({
-    mutationFn: (data) => axios.post(`/api/assets/${asset.id}/unassign`),
-    onSuccess: (data) => {
-      console.log("Successful mutation");
-      queryClient.invalidateQueries({ queryKey: ["asset", asset.id] });
-    },
-  });
+  const mutation = api.asset.unassignFromUser.useMutation();
+
+  // const mutation = useMutation({
+  //     queryClient.invalidateQueries({ queryKey: api.asset.queryKey });
+  // });
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -110,7 +107,7 @@ const AssetUnAssignModal = ({ asset }: { asset: any }) => {
             <ButtonBase
               className="w-full"
               onClick={() => {
-                mutation.mutate();
+                mutation.mutate({ assetId: asset.id });
                 handleClose();
               }}
             >

@@ -1,6 +1,5 @@
 import { usePathname } from "@/lib/hooks";
 //
-import LinkButton from "@/components/button-link";
 import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
 import CardBase from "@/components/card";

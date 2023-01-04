@@ -37,14 +37,6 @@ const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFilterBrand, setSelectedFilterBrand] = useState([]);
   const [selectedFilterStatus, setSelectedFilterStatus] = useState([]);
 
-  // const { data: _users, isLoading } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: async () => {
-  //     const { data } = await axios.get("/api/users");
-  //     return data;
-  //   },
-  //   staleTime: Infinity,
-  // });
   const { data: _users, isLoading } = api.user.getAll.useQuery();
 
   let users = _users;

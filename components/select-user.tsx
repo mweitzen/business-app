@@ -1,29 +1,20 @@
+import { api } from "@/lib/api";
+//
 import { Fragment, useState } from "react";
-//
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-//
-import { Listbox, Combobox, Transition } from "@headlessui/react";
-import { classNames } from "@/lib/common/classNames";
+import { Combobox, Transition } from "@headlessui/react";
 
 const SelectUser = () => {
   const [selected, setSelected] = useState();
   const [query, setQuery] = useState("");
 
-  const { data: users, isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const { data } = await axios.get("/api/users");
-      return data;
-    },
-  });
+  const { data: users, isLoading } = api.user.getAll.useQuery();
 
   if (isLoading) return <div>Loading...</div>;
 
   const filteredOptions =
     query === ""
       ? users
-      : users.filter((user: any) =>
+      : users.filter((user) =>
           user.name
             .toLowerCase()
             .replace(/\s+/g, "")

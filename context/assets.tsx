@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from "react";
 //
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-//
+import { api } from "@/lib/api";
 import getChoices from "@/lib/common/getChoices";
 import { OptionProps } from "@/types";
 
@@ -21,7 +19,7 @@ interface IAssetsContext {
     brands: string[];
     status: string[];
   };
-  isFetching: boolean;
+  isLoading: boolean;
 }
 
 const initialState: IAssetsContext = {
@@ -39,7 +37,7 @@ const initialState: IAssetsContext = {
     brands: [],
     status: [],
   },
-  isFetching: false,
+  isLoading: false,
 };
 
 const AssetsContext = createContext<IAssetsContext>(initialState);
@@ -50,14 +48,7 @@ const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedFilterBrand, setSelectedFilterBrand] = useState([]);
   const [selectedFilterStatus, setSelectedFilterStatus] = useState([]);
 
-  const { data: _assets, isFetching } = useQuery({
-    queryKey: ["assets"],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/assets`);
-      return data;
-    },
-    staleTime: Infinity,
-  });
+  const { data: _assets, isLoading } = api.asset.getAll.useQuery();
 
   const typeChoices = getChoices(_assets, "type");
   const brandChoices = getChoices(_assets, "brand");
@@ -112,7 +103,7 @@ const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
           brands: brandChoices,
           status: statusChoices,
         },
-        isFetching,
+        isLoading,
       }}
     >
       {children}

@@ -1,10 +1,9 @@
 import { useState } from "react";
-import axios from "axios";
+import { api } from "@/lib/api";
+import { queryClient } from "pages/_app";
 //
 import ModalBase from "@/components/modal";
 import SelectUser from "@/components/select-user";
-import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "pages/_app";
 import ButtonBase from "@/components/button";
 import LabelText from "@/components/text-label";
 
@@ -18,16 +17,12 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
   );
   const [user, setUser] = useState<{ id: string; name: string } | null>(null);
 
-  const mutation = useMutation({
-    mutationFn: (userId: string) =>
-      axios.post(`/api/assets/${asset.id}/assign`, {
-        userId,
-      }),
-    onSuccess: () => {
-      console.log("Successful mutation");
-      queryClient.invalidateQueries({ queryKey: ["asset", asset.id] });
-    },
-  });
+  const mutation = api.asset.assignToUser.useMutation();
+  //   onSuccess: () => {
+  //     console.log("Successful mutation");
+  //     queryClient.invalidateQueries({ queryKey: ["asset", asset.id] });
+  //   },
+  // });
 
   function handleClose() {
     setDisplay((prev) => !prev);
@@ -122,7 +117,10 @@ const AssetAssignModal = ({ asset }: { asset: any }) => {
             <ButtonBase
               className="w-full"
               onClick={async () => {
-                mutation.mutate("clc9w976t00009ke4tedezn50");
+                mutation.mutate({
+                  userId: "clc9w976t00009ke4tedezn50",
+                  assetId: asset.id,
+                });
                 handleClose();
               }}
             >

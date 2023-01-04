@@ -1,11 +1,9 @@
-import axios from "axios";
+import { usePathname } from "@/lib/hooks";
 //
 import PageHeader from "@/components/header-page";
-import LinkButton from "@/components/button-link";
-import ButtonBase from "@/components/button";
-import LabelText from "@/components/text-label";
-import { usePathname } from "@/lib/hooks";
 import CardBase from "@/components/card";
+import LabelText from "@/components/text-label";
+import LinkButton from "@/components/button-link";
 
 const HumanResourcesHomePage = () => {
   const pathname = usePathname();

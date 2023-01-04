@@ -1,9 +1,7 @@
-import axios from "axios";
 //
+import { api } from "@/lib/api";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "pages/_app";
 //
 import { classNames } from "@/lib/common/classNames";
 import { WithChildren } from "@/types";
@@ -73,14 +71,7 @@ const CreateAssetPage = () => {
     orderNumber: "",
   };
 
-  const mutation = useMutation({
-    mutationFn: (data: any) => axios.post("/api/assets/create", { data }),
-    onMutate: async () => {},
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["assets"] });
-    },
-    onError: () => {},
-  });
+  const mutation = api.asset.createAsset.useMutation();
 
   /*
    * HANDLERS
