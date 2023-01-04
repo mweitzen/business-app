@@ -40,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404).json("Asset does not exist");
   }
 
-  if (asset.status !== "assigned") {
+  if (asset.status !== "ASSIGNED") {
     return res
       .status(404)
       .json(
