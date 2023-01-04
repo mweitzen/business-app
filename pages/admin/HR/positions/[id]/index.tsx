@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { useRouter } from "next/router";
 //
 import ButtonBase from "@/components/button";
@@ -11,34 +10,33 @@ const PositionDetailPage = () => {
     query: { id: positionId },
   } = useRouter();
 
-  const { data: position, isLoading } = useQuery({
-    queryKey: ["position", positionId],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/positions/${positionId}`);
-      return data;
-    },
-    retry: false,
+  const { data: position, isLoading } = api.position.getById.useQuery({
+    positionId: (positionId as string) || "",
   });
 
-  const mutation = useMutation({
-    mutationKey: ["position", "posted"],
-    mutationFn: async () =>
-      await axios.post(`/api/positions/${positionId}/post`),
-  });
+  const mutation = api.position.postPosition.useMutation();
 
   return (
     <div>
-      <PageHeader header={position.name} />
+      <PageHeader header={position?.name || ""} />
       {isLoading ? (
         <div>Loading...</div>
-      ) : position.posted ? (
-        <LinkButton href={`/public/jobs/${positionId}`}>
-          Visit Public Posting
-        </LinkButton>
+      ) : position ? (
+        position.posted ? (
+          <LinkButton href={`/public/jobs/${positionId}`}>
+            Visit Public Posting
+          </LinkButton>
+        ) : (
+          <ButtonBase
+            onClick={() =>
+              mutation.mutate({ positionId: (positionId as string) || "" })
+            }
+          >
+            Post Position For Applicants
+          </ButtonBase>
+        )
       ) : (
-        <ButtonBase onClick={() => mutation.mutate()}>
-          Post Position For Applicants
-        </ButtonBase>
+        <div>Doesn't exist????</div>
       )}
     </div>
   );
