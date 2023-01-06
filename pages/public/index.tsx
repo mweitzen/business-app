@@ -28,7 +28,9 @@ const PublicPage = () => {
               Any resources: videos or documents, you are sharing publicly
               outside the organization.
             </p>
-            <LinkButton href="">View Public Materials</LinkButton>
+            <LinkButton href={`${pathname}/media`}>
+              View Public Materials
+            </LinkButton>
           </div>
         </CardBase>
       </div>

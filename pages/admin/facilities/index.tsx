@@ -3,6 +3,7 @@ import { usePathname } from "@/lib/hooks";
 import PageHeader from "@/components/header-page";
 import LabelText from "@/components/text-label";
 import CardBase from "@/components/card";
+import LinkCard from "@/components/card-link";
 
 const FacilitiesHomePage = () => {
   const pathname = usePathname();
@@ -11,31 +12,16 @@ const FacilitiesHomePage = () => {
     <div>
       <PageHeader header="Facilities Home Page" />
 
-      <div className="space-y-4">
-        <CardBase>
-          <LabelText>Buildings</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4"></div>
-        </CardBase>
+      <div className="grid gap-4">
+        <LinkCard href={`${pathname}/buildings`} label="Buildings" />
 
-        <CardBase>
-          <LabelText>Room Management</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4"></div>
-        </CardBase>
+        <LinkCard href={`${pathname}/rooms`} label="Room Management" />
 
-        <CardBase>
-          <LabelText>Security Systems</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4"></div>
-        </CardBase>
+        <LinkCard href={`${pathname}/security`} label="Security Systems" />
 
-        <CardBase>
-          <LabelText>Employee Access Control</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4"></div>
-        </CardBase>
+        <LinkCard href={`${pathname}/access`} label="Employee Access Control" />
 
-        <CardBase>
-          <LabelText>Vendors</LabelText>
-          <div className="mb-2 grid grid-cols-2 gap-4"></div>
-        </CardBase>
+        <LinkCard href={`${pathname}/vendors`} label="Vendors" />
       </div>
     </div>
   );

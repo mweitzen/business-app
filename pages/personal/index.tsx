@@ -1,36 +1,29 @@
+import { usePathname } from "@/lib/hooks";
+//
 import PageHeader from "@/components/header-page";
-import CardBase from "@/components/card";
-import LabelText from "@/components/text-label";
+import LinkCard from "@/components/card-link";
 
 const EmployeeDashboardPage = () => {
+  const pathname = usePathname();
+
   return (
     <div>
       <PageHeader header="Employee Dashboard" />
 
-      <div className="space-y-4">
-        <CardBase>
-          <LabelText>Apps</LabelText>
-        </CardBase>
+      <div className="grid gap-4">
+        <LinkCard href={`${pathname}/apps`} label="Apps" />
 
-        <CardBase>
-          <LabelText>Tasks</LabelText>
-        </CardBase>
+        <LinkCard href={`${pathname}/calendars`} label="Calendars" />
 
-        <CardBase>
-          <LabelText>Upcoming Occurrences</LabelText>
-        </CardBase>
-        <CardBase>
-          <LabelText>Calendars</LabelText>
-        </CardBase>
-        <CardBase>
-          <LabelText>Recent Files / Assigned</LabelText>
-        </CardBase>
-        <CardBase>
-          <LabelText>User Profile</LabelText>
-        </CardBase>
-        <CardBase>
-          <LabelText>Assets List</LabelText>
-        </CardBase>
+        <LinkCard href={`${pathname}/profile`} label="User Profile" />
+
+        {/* <LinkCard href={`${pathname}/`} label="Recent Files / Assigned" />
+
+        <LinkCard href={`${pathname}/`} label="Tasks" />
+
+        <LinkCard href={`${pathname}/`} label="Upcoming Occurrences" />
+
+        <LinkCard href={`${pathname}/`} label="Assets List" /> */}
       </div>
     </div>
   );
