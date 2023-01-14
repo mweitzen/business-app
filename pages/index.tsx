@@ -130,7 +130,7 @@ const IndexPage = () => {
               </div>
               <LabelText>Personal Dashboard (Internal)</LabelText>
               <p>
-                Individual experience, tailored to each internal employee's
+                Individual experience, tailored to each internal employee&apos;s
                 roles and needs.
               </p>
             </CardBase>

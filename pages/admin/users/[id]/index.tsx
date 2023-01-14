@@ -9,7 +9,7 @@ const UserDetailPage = () => {
   return (
     <div>
       <PageHeader header="User Detail Page" />
-      
+
       <div>
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
@@ -334,7 +334,7 @@ const UserDetailPage = () => {
                 Notifications
               </h3>
               <p className="mt-1 text-sm text-gray-600">
-                Decide which communications you'd like to receive and how.
+                Decide which communications you&apos;d like to receive and how.
               </p>
             </div>
           </div>

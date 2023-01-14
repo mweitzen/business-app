@@ -18,7 +18,7 @@ const UserAssetsPage = () => {
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!user) return <div>Uh Oh Couldn't find</div>;
+  if (!user) return <div>Uh Oh Couldn&apos;t find</div>;
 
   return (
     <div>
